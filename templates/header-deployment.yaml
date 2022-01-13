@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-header
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-header
+  template:
+    metadata:
+      labels:
+        app: georchestra-header
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      initContainers: []
+      containers:
+      - name: georchestra-header
+        image: georchestra/header:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+      volumes:
+        {{- .Values.georchestra.datadir.volume | toYaml | nindent 6 }}

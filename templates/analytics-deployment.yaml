@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-analytics
+  template:
+    metadata:
+      labels:
+        app: georchestra-analytics
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      initContainers: []
+      containers:
+      - name: georchestra-analytics
+        image: georchestra/analytics:latest
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+      volumes:
+        {{- .Values.georchestra.datadir.volume | toYaml | nindent 6 }}
+

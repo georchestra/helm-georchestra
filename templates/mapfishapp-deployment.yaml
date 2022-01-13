@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-mapfishapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-mapfishapp
+  template:
+    metadata:
+      labels:
+        app: georchestra-mapfishapp
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: georchestra-mapfishapp
+        image: georchestra/mapfishapp:latest
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
+      initContainers: []
+      volumes:
+        {{- .Values.georchestra.datadir.volume | toYaml | nindent 6 }}

@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-ldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-ldap
+  template:
+    metadata:
+      labels:
+        app: georchestra-ldap
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: georchestra-ldap
+        image: georchestra/ldap:latest
+        env:
+          - name: SLAPD_ORGANISATION
+            value: georchestra
+          - name: SLAPD_DOMAIN
+            value: georchestra.org
+          - name: SLAPD_PASSWORD
+            value: secret
+          - name: RUN_AS_UID
+            value: "0"
+          - name: RUN_AS_GID
+            value: "0"
+        ports:
+        - containerPort: 389
+          name: ldap

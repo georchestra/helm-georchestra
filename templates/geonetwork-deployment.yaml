@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-geonetwork
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-geonetwork
+  template:
+    metadata:
+      labels:
+        app: georchestra-geonetwork
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      initContainers: []
+      containers:
+      - name: georchestra-geonetwork
+        image: georchestra/geonetwork:latest
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+      volumes:
+        {{- .Values.georchestra.datadir.volume | toYaml | nindent 6 }}
+
