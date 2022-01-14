@@ -15,7 +15,25 @@ spec:
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
-      initContainers: []
+      initContainers:
+      - name: bootstrap-georchestra-datadir
+        image: bitnami/git
+        command:
+        - /bin/sh
+        - -c
+        - git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra
+        env:
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - name: GIT_SSH_COMMAND
+          value: ssh -i /ssh-secret/ssh-privatekey -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking no"
+        {{- end }}
+        volumeMounts:
+        - mountPath: /etc/georchestra
+          name: georchestra-datadir
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - mountPath: /ssh-secret
+          name: ssh-secret
+        {{- end }}      
       containers:
       - name: georchestra-extractorapp
         image: georchestra/extractorapp:latest
@@ -26,4 +44,11 @@ spec:
         - containerPort: 8080
           name: http-proxy
       volumes:
-        {{- .Values.georchestra.datadir.volume | toYaml | nindent 6 }}
+      - name: georchestra-datadir
+        emptyDir: {}
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      - name: ssh-secret
+        secret:
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+          defaultMode: 256
+      {{- end }}

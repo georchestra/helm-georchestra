@@ -1,4 +1,10 @@
 georchestra:
+  webapps:
+    header:
+        docker_image: georchestra/header:latest
+        extra_environment:
+        - name: JAVA_OPTS
+          value: -Dgeorchestra.datadir=/etc/georchestra
   datadir:
     volume:
     - name: georchestra-datadir
@@ -6,4 +12,4 @@ georchestra:
     git:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
-    initContainer: {}
+      #secret: my-private-ssh-key
