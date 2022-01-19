@@ -40,16 +40,25 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
+          - mountPath: /mnt/geonetwork_datadir
+            name: geonetwork-datadir
         ports:
         - containerPort: 8080
           name: http-proxy
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
+      - name: geonetwork-datadir
+        persistentVolumeClaim:
+          claimName: geonetwork-datadir
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
-          defaultMode: 256
+          defaultMode: 0400
+          items:
+          - key: ssh-privatekey
+            path: ssh-privatekey
+            mode: 0400
       {{- end }}
 

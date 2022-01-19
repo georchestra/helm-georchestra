@@ -36,7 +36,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-cas
-        image: georchestra/cas:latest
+        image: {{ .Values.georchestra.webapps.cas.docker_image }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
@@ -50,5 +50,9 @@ spec:
       - name: ssh-secret
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
-          defaultMode: 256
+          defaultMode: 0400
+          items:
+          - key: ssh-privatekey
+            path: ssh-privatekey
+            mode: 0400
       {{- end }}

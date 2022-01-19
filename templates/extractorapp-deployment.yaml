@@ -50,5 +50,9 @@ spec:
       - name: ssh-secret
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
-          defaultMode: 256
+          defaultMode: 0400
+          items:
+          - key: ssh-privatekey
+            path: ssh-privatekey
+            mode: 0400
       {{- end }}

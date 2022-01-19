@@ -2,9 +2,9 @@ georchestra:
   webapps:
     header:
         docker_image: georchestra/header:latest
-        extra_environment:
-        - name: JAVA_OPTS
-          value: -Dgeorchestra.datadir=/etc/georchestra
+        extra_environment: []
+    cas:
+        docker_image: georchestra/cas:latest
   datadir:
     volume:
     - name: georchestra-datadir
@@ -13,3 +13,7 @@ georchestra:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
       #secret: my-private-ssh-key
+  storage:
+    geonetwork_datadir_size: 2Gi
+    geoserver_datadir_size: 256Mi
+    geoserver_geodata_size: 2Gi
