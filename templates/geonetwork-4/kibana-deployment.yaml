@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-gn4-kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-gn4-kibana
+  template:
+    metadata:
+      labels:
+        app: georchestra-gn4-kibana
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      initContainers:
+      - name: bootstrap-kibana-configuration
+        image: debian
+      containers:
+      - name: kibana
+        image: kibana:7.9.0
+        env:
+          - name: ELASTICSEARCH_HOSTS
+            value: http://georchestra-gn4-elasticsearch-svc:9200
+        ports:
+        - containerPort: 5601
+          name: kibana
+        volumeMounts:
+          - mountPath: /usr/share/kibana/config
+            name: gn4-kibana-config
+      volumes:
+      - name: gn4-kibana-config
+        configMap:
+          name: gn4-kibana-config

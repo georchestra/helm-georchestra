@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gn4-kibana-config
+data:
+  kibana.yml: |-
+{{ .Files.Get "files/gn4-kibana-config.yaml" | indent 4 }}

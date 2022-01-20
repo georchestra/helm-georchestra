@@ -15,7 +15,6 @@ georchestra:
       #secret: my-private-ssh-key
   storage:
     gn4_es_data_size: 2Gi
-    gn4_kibana_config_data_size: 100Mi
     geonetwork_datadir_size: 2Gi
     geoserver_datadir_size: 256Mi
     geoserver_geodata_size: 2Gi

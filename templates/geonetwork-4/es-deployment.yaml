@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-gn4-elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-gn4-elasticsearch
+  template:
+    metadata:
+      labels:
+        app: georchestra-gn4-elasticsearch
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      securityContext:
+        fsGroup: 1000
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:7.9.0
+        env:
+          - name: ES_JAVA_OPTS
+            value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
+          - name: discovery.type
+            value: single-node
+        ports:
+        - containerPort: 9200
+          name: elastic
+        volumeMounts:
+          - mountPath: /usr/share/elasticsearch/data
+            name: gn4-es-data
+      volumes:
+      - name: gn4-es-data
+        persistentVolumeClaim:
+          claimName: gn4-es-data
