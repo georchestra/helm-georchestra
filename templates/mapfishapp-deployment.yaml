@@ -21,11 +21,14 @@ spec:
         command:
         - /bin/sh
         - -c
-        - git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra
+        - mkdir -p /root/.ssh ;
+          cp /ssh-secret/ssh-privatekey /root/.ssh/id_rsa ;
+          chmod 0600 /root/.ssh/id_rsa ;
+         git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra
         env:
         {{- if .Values.georchestra.datadir.git.ssh_secret }}
         - name: GIT_SSH_COMMAND
-          value: ssh -i /ssh-secret/ssh-privatekey -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking no"
+          value: ssh -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking no"
         {{- end }}
         volumeMounts:
         - mountPath: /etc/georchestra
@@ -52,8 +55,4 @@ spec:
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
-          items:
-          - key: ssh-privatekey
-            path: ssh-privatekey
-            mode: 0400
       {{- end }}

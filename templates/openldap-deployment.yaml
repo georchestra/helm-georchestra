@@ -32,3 +32,15 @@ spec:
         ports:
         - containerPort: 389
           name: ldap
+        volumeMounts:
+          - mountPath: /etc/ldap
+            name: openldap-config
+          - mountPath: /var/lib/ldap
+            name: openldap-data
+      volumes:
+      - name: openldap-data
+        persistentVolumeClaim:
+          claimName: openldap-data
+      - name: openldap-config
+        persistentVolumeClaim:
+          claimName: openldap-config
