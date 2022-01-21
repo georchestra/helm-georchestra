@@ -42,6 +42,7 @@ spec:
       containers:
       - name: georchestra-geonetwork
         image: georchestra/geonetwork:latest
+        imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir

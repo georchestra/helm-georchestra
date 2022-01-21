@@ -41,6 +41,7 @@ spec:
       containers:
       - name: georchestra-sp
         image: georchestra/security-proxy:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http-proxy

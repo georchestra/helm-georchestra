@@ -18,6 +18,7 @@ spec:
       containers:
       - name: georchestra-ldap
         image: georchestra/ldap:latest
+        imagePullPolicy: Always
         env:
           - name: SLAPD_ORGANISATION
             value: georchestra

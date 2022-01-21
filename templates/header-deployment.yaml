@@ -40,6 +40,7 @@ spec:
       containers:
       - name: georchestra-header
         image: {{ .Values.georchestra.webapps.header.docker_image }}
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
