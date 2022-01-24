@@ -1,12 +1,16 @@
 georchestra:
   webapps:
     header:
-        docker_image: georchestra/header:latest
-        extra_environment: []
+      docker_image: georchestra/header:latest
+      extra_environment: []
     cas:
-        docker_image: georchestra/cas:latest
+      docker_image: georchestra/cas:latest
+    geonetwork:
+      jetty_monitoring: true
     geoserver:
-        jetty_monitoring: true
+      jetty_monitoring: true
+    proxy:
+      jetty_monitoring: true      
   datadir:
     volume:
     - name: georchestra-datadir
