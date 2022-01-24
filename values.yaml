@@ -5,6 +5,8 @@ georchestra:
         extra_environment: []
     cas:
         docker_image: georchestra/cas:latest
+    geoserver:
+        jetty_monitoring: true
   datadir:
     volume:
     - name: georchestra-datadir
