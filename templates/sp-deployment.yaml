@@ -52,6 +52,9 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
         image: camptocamp/jmx-collectd:bullseye
@@ -68,9 +71,6 @@ spec:
           cat /collectd-template/collectd-jmx-jetty.conf | sed "s/localhost/$(hostname)/g" > /etc/collectd/collectd.conf.d/jmx.conf ;
           collectd -f
       {{- end }}
-        volumeMounts:
-          - mountPath: /etc/georchestra
-            name: georchestra-datadir
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
