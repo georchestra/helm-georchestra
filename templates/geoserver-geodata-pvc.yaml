@@ -4,7 +4,7 @@ metadata:
   name: geoserver-geodata
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   storageClassName: default
   resources:
     requests:
