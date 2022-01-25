@@ -47,7 +47,6 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
-      initContainers: []
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
