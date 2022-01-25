@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-import
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-import
+  template:
+    metadata:
+      labels:
+        app: georchestra-import
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: georchestra-import
+        image: georchestra/datafeeder-frontend:21.0-SNAPSHOT
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
