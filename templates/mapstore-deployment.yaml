@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-mapstore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-mapstore
+  template:
+    metadata:
+      labels:
+        app: georchestra-mapstore
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      initContainers:
+      - name: bootstrap-georchestra-datadir
+        image: bitnami/git
+        command:
+        - /bin/bash
+        - -c
+        - if [ ! -d "/mapstore_datadir/mapstore/" ] || [ "$FORCE_MAPSTORE_DATADIR" = "true" ]  ; then
+            echo "(Re)-Initializing a datadir for mapstore ..." ;
+            rm -rf /mapstore_datadir/* ;
+            mkdir -p /root/.ssh ;
+            cp /ssh-secret/ssh-privatekey /root/.ssh/id_rsa ;
+            chmod 0600 /root/.ssh/id_rsa ;
+            git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra ;
+            cp -r /etc/georchestra/* /mapstore_datadir ;
+            echo "Done." ;
+          fi ;
+        env:
+        - name: FORCE_MAPSTORE_DATADIR
+          value: "false"
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - name: GIT_SSH_COMMAND
+          value: ssh -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking no"
+        {{- end }}
+        volumeMounts:
+        - mountPath: /etc/georchestra
+          name: georchestra-datadir
+        - mountPath: /mapstore_datadir
+          name: mapstore-datadir
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - mountPath: /ssh-secret
+          name: ssh-secret
+        {{- end }}
+      containers:
+      - name: georchestra-mapstore
+        image: georchestra/mapstore:latest
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: mapstore-datadir
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+      volumes:
+      - name: georchestra-datadir
+        emptyDir: {}
+      - name: mapstore-datadir
+        persistentVolumeClaim:
+          claimName: mapstore-datadir
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      - name: ssh-secret
+        secret:
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+          defaultMode: 0400
+      {{- end }}

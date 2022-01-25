@@ -10,7 +10,7 @@ georchestra:
     geoserver:
       jetty_monitoring: true
     proxy:
-      jetty_monitoring: true      
+      jetty_monitoring: true
   datadir:
     volume:
     - name: georchestra-datadir
@@ -24,5 +24,6 @@ georchestra:
     geonetwork_datadir_size: 2Gi
     geoserver_datadir_size: 256Mi
     geoserver_geodata_size: 2Gi
+    mapstore_datadir_size: 256Mi
     openldap_data_size: 256Mi
     openldap_config_size: 1Mi
