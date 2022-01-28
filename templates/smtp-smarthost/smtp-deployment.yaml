@@ -1,0 +1,46 @@
+{{- if .Values.georchestra.smtp_smarthost.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: georchestra-smtp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: georchestra-smtp
+  template:
+    metadata:
+      labels:
+        app: georchestra-smtp
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: georchestra-smtp
+        image: camptocamp/exim:latest
+        env:
+        - name: RELAY_HOST
+          value: {{ .Values.georchestra.smtp_smarthost.relay_host }}
+        - name: RELAY_PORT
+          value: "{{ .Values.georchestra.smtp_smarthost.relay_port }}"
+        {{- if .Values.georchestra.smtp_smarthost.mailname }}
+        - name: MAILNAME
+          value: {{ .Values.georchestra.smtp_smarthost.mailname }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.postmaster }}
+        - name: POSTMASTER
+          value: {{ .Values.georchestra.smtp_smarthost.postmaster }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.relay_username }}
+        - name: RELAY_USERNAME
+          value: {{ .Values.georchestra.smtp_smarthost.relay_username }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.relay_password }}
+        - name: RELAY_PASSWORD
+          value: {{ .Values.georchestra.smtp_smarthost.relay_password }}
+        {{ end -}}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 25
+          name: smtp
+{{- end -}}
