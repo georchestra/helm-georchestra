@@ -3,6 +3,20 @@
 This repository holds a helm chart for geOrchestra. This README file aims to present
 some of the features and/or implementation choices.
 
+# Usage
+
+## Install
+
+```
+% helm install -f path/to/my/values.yaml georchestra .
+```
+
+## Upgrade
+
+```
+% helm upgrade -f path/to/my/values.yaml georchestra .
+```
+
 # geOrchestra Datadir bootstrap
 
 The helm chart provides the possibility to clone the datadir from a remote repository using git. A
