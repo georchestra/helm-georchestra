@@ -2,11 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: georchestra-gn4-elasticsearch-svc
+  name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   ports:
   - port: 9200
     protocol: TCP
     targetPort: 9200
   selector:
-    app: georchestra-gn4-elasticsearch
+    app: {{ include "georchestra.fullname" . }}-gn4-elasticsearch

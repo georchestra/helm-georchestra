@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: geoserver-geodata
+  name: {{ include "georchestra.fullname" . }}-geoserver-geodata
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   accessModes:
   - ReadWriteOnce

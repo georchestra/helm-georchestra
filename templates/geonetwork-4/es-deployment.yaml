@@ -2,16 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: georchestra-gn4-elasticsearch
+  name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: georchestra-gn4-elasticsearch
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: georchestra-gn4-elasticsearch
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        app: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -34,4 +37,4 @@ spec:
       volumes:
       - name: gn4-es-data
         persistentVolumeClaim:
-          claimName: gn4-es-data
+          claimName: {{ include "georchestra.fullname" . }}-gn4-es-data

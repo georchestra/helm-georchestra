@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: georchestra-monitoring-cm
+  name: {{ include "georchestra.fullname" . }}-monitoring-cm
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 data:
   collectd-jmx-jetty.conf: |
     LoadPlugin java

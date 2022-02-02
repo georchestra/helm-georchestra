@@ -2,16 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: georchestra-header
+  name: {{ include "georchestra.fullname" . }}-header
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: georchestra-header
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: georchestra-header
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        app: {{ include "georchestra.fullname" . }}-header
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -56,8 +59,6 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
-      imagePullSecrets:
-      - name: dockerhub-biotope-registry
       volumes:
       - name: georchestra-datadir
         emptyDir: {}

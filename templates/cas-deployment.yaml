@@ -2,16 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: georchestra-cas
+  name: {{ include "georchestra.fullname" . }}-cas
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: georchestra-cas
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: georchestra-cas
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        app: {{ include "georchestra.fullname" . }}-cas
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux

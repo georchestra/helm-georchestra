@@ -2,11 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: georchestra-ldap-svc
+  name: {{ include "georchestra.fullname" . }}-ldap-svc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   ports:
   - port: 389
     protocol: TCP
     targetPort: 389
   selector:
-    app: georchestra-ldap
+    app: {{ include "georchestra.fullname" . }}-ldap

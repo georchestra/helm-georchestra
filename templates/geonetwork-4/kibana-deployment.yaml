@@ -2,16 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: georchestra-gn4-kibana
+  name: {{ include "georchestra.fullname" . }}-gn4-kibana
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: georchestra-gn4-kibana
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: georchestra-gn4-kibana
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        app: {{ include "georchestra.fullname" . }}-gn4-kibana
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -23,7 +26,7 @@ spec:
         image: kibana:7.9.0
         env:
           - name: ELASTICSEARCH_HOSTS
-            value: http://georchestra-gn4-elasticsearch-svc:9200
+            value: http://{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc:9200
         ports:
         - containerPort: 5601
           name: kibana
@@ -33,4 +36,4 @@ spec:
       volumes:
       - name: gn4-kibana-config
         configMap:
-          name: gn4-kibana-config
+          name: {{ include "georchestra.fullname" . }}-gn4-kibana-config

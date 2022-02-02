@@ -2,16 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: georchestra-geoserver
+  name: {{ include "georchestra.fullname" . }}-geoserver
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: georchestra-geoserver
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: georchestra-geoserver
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        app: {{ include "georchestra.fullname" . }}-geoserver
       {{- $webapp := .Values.georchestra.webapps.geoserver }}
       {{- if $webapp.jetty_monitoring }}
       annotations:
@@ -79,10 +82,10 @@ spec:
         emptyDir: {}
       - name: geoserver-geodata
         persistentVolumeClaim:
-          claimName: geoserver-geodata
+          claimName: {{ include "georchestra.fullname" . }}-geoserver-geodata
       - name: geoserver-datadir
         persistentVolumeClaim:
-          claimName: geoserver-datadir
+          claimName: {{ include "georchestra.fullname" . }}-geoserver-datadir
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
         secret:
@@ -92,5 +95,5 @@ spec:
       {{- if $webapp.jetty_monitoring }}
       - name: georchestra-monitoring-cm
         configMap:
-          name: georchestra-monitoring-cm
+          name: {{ include "georchestra.fullname" . }}-monitoring-cm
       {{- end }}
