@@ -10,4 +10,4 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: {{ include "georchestra.fullname" . }}-datafeeder
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-datafeeder

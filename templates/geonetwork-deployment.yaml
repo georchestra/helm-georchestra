@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
-        app: {{ include "georchestra.fullname" . }}-geonetwork
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geonetwork
       {{- $webapp := .Values.georchestra.webapps.geonetwork }}
       {{- if $webapp.jetty_monitoring }}
       annotations:

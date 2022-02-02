@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: 5601
   selector:
-    app: {{ include "georchestra.fullname" . }}-gn4-kibana
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-kibana

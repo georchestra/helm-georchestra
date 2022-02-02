@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
-        app: {{ include "georchestra.fullname" . }}-mapfishapp
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-mapfishapp
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux

@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
-        app: {{ include "georchestra.fullname" . }}-smtp
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-smtp
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux

@@ -11,5 +11,5 @@ spec:
     protocol: TCP
     targetPort: 25
   selector:
-    app: {{ include "georchestra.fullname" . }}-smtp
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-smtp
 {{- end -}}

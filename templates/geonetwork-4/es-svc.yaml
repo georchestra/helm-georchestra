@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: 9200
   selector:
-    app: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch

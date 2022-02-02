@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: 389
   selector:
-    app: {{ include "georchestra.fullname" . }}-ldap
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-ldap

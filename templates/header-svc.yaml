@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: {{ include "georchestra.fullname" . }}-header
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
