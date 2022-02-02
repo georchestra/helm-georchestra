@@ -1,0 +1,135 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-analytics"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-analytics-svc:8080/analytics/']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-cas"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-cas-svc:8080/cas/login']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-console"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-console-svc:8080/console/public/orgs/areaConfig.json']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-geonetwork"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-geonetwork-svc:8080/geonetwork/srv/eng/catalog.search']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-geoserver"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-geoserver-svc:8080/geoserver/wms']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-header"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-header-svc:8080/header/']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-mapfishapp"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-mapfishapp-svc:8080/mapfishapp/']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-mapstore"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-mapstore-svc:8080/mapstore/']
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "georchestra.fullname" . }}-test-sp"
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      args: ['http://{{ include "georchestra.fullname" . }}-sp-svc:8080/_static/bootstrap_3.0.0/css/bootstrap-theme.min.css']
+  restartPolicy: Never
