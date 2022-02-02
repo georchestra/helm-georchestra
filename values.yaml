@@ -9,6 +9,7 @@ georchestra:
       jetty_monitoring: true
     geoserver:
       jetty_monitoring: true
+      extra_environment: []
     proxy:
       jetty_monitoring: true
   datadir:

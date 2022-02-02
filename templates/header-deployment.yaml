@@ -15,6 +15,7 @@ spec:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
+        {{- $webapp := .Values.georchestra.webapps.geoserver }}
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
@@ -51,8 +52,10 @@ spec:
           limits:
             cpu: 250m
             memory: 1024Mi
+        {{- if $webapp.extra_environment }}
         env:
-          {{- .Values.georchestra.webapps.header.extra_environment | toYaml | nindent 10 }}
+          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir

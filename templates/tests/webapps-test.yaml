@@ -5,6 +5,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-analytics"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -20,6 +21,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-cas"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -35,6 +37,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-console"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -50,6 +53,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-geonetwork"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -65,6 +69,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-geoserver"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -80,6 +85,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-header"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -95,6 +101,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-mapfishapp"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -110,6 +117,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-mapstore"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -125,6 +133,7 @@ metadata:
   name: "{{ include "georchestra.fullname" . }}-test-sp"
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.pod/purpose: test
   annotations:
     "helm.sh/hook": test
 spec:

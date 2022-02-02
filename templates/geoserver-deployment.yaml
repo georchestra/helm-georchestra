@@ -47,10 +47,28 @@ spec:
         - mountPath: /ssh-secret
           name: ssh-secret
         {{- end }}
+      - name: prepare-geoserver-webapp
+        image: georchestra/geoserver:latest
+        command:
+        - /bin/sh
+        - -c
+        - cp -r /var/lib/jetty/webapps/geoserver/* /mnt/geoserver_webapp ;
+          if [ -f /mnt/georchestra_datadir/geoserver/jetty-env.xml ] ; then
+            cp /mnt/georchestra_datadir/geoserver/jetty-env.xml /mnt/geoserver_webapp/WEB-INF/jetty-env.xml ;
+          fi ;
+        volumeMounts:
+          - name: georchestra-datadir
+            mountPath: /mnt/georchestra_datadir
+          - name: geoserver-webapp
+            mountPath: /mnt/geoserver_webapp
       containers:
       - name: georchestra-geoserver
         image: georchestra/geoserver:latest
         imagePullPolicy: Always
+        {{- if $webapp.extra_environment }}
+        env:
+          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
@@ -58,6 +76,8 @@ spec:
             name: geoserver-geodata
           - mountPath: /mnt/geoserver_datadir
             name: geoserver-datadir
+          - mountPath: /var/lib/jetty/webapps/geoserver
+            name: geoserver-webapp
         ports:
         - containerPort: 8080
           name: http-proxy
@@ -79,6 +99,8 @@ spec:
       {{- end }}
       volumes:
       - name: georchestra-datadir
+        emptyDir: {}
+      - name: geoserver-webapp
         emptyDir: {}
       - name: geoserver-geodata
         persistentVolumeClaim:
