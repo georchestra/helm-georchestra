@@ -25,6 +25,8 @@ spec:
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
+      securityContext:
+        fsGroup: 999
       initContainers:
       - name: bootstrap-georchestra-datadir
         image: bitnami/git
