@@ -41,6 +41,13 @@ spec:
             name: openldap-config
           - mountPath: /var/lib/ldap
             name: openldap-data
+        livenessProbe:
+          exec:
+            command:
+            - ldapsearch
+            - -x
+            - -Hldap://localhost:389/
+          initialDelaySeconds: 30
       volumes:
       - name: openldap-data
         persistentVolumeClaim:

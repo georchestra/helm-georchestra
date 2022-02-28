@@ -52,6 +52,11 @@ spec:
             name: georchestra-datadir
           - mountPath: /tmp/datafeeder
             name: datafeeder-uploads
+        livenessProbe:
+          tcpSocket:
+            port: http-proxy
+          periodSeconds: 10
+          initialDelaySeconds: 20
       volumes:
       - name: georchestra-datadir
         emptyDir: {}

@@ -61,6 +61,17 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
+        livenessProbe:
+          httpGet:
+            path: /geonetwork/srv/eng/catalog.search
+            port: 8080
+          periodSeconds: 10
+          timeoutSeconds: 5
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          failureThreshold: 5
+          periodSeconds: 50
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
         image: camptocamp/jmx-collectd:bullseye
