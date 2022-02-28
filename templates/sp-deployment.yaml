@@ -58,6 +58,16 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
+        livenessProbe:
+          httpGet:
+            path: /_static/bootstrap_3.0.0/css/bootstrap-theme.min.css
+            port: 8080
+          periodSeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          failureThreshold: 5
+          periodSeconds: 15
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
         image: camptocamp/jmx-collectd:bullseye

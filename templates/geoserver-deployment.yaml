@@ -83,6 +83,17 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
+        livenessProbe:
+          httpGet:
+            path: /geoserver/gwc/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities
+            port: 8080
+          periodSeconds: 10
+          timeoutSeconds: 5
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          failureThreshold: 5
+          periodSeconds: 40
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
         image: camptocamp/jmx-collectd:bullseye

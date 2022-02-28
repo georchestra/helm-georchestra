@@ -24,3 +24,14 @@ spec:
         ports:
         - containerPort: 80
           name: http
+        livenessProbe:
+          httpGet:
+            path: /index.html
+            port: 80
+          periodSeconds: 10
+          timeoutSeconds: 5
+        startupProbe:
+          tcpSocket:
+            port: 80
+          failureThreshold: 5
+          periodSeconds: 5

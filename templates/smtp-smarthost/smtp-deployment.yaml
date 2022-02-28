@@ -46,4 +46,8 @@ spec:
         ports:
         - containerPort: 25
           name: smtp
+        livenessProbe:
+          tcpSocket:
+            port: smtp            
+          initialDelaySeconds: 30
 {{- end -}}

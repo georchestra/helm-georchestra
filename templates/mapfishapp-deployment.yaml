@@ -50,6 +50,16 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
+        livenessProbe:
+          httpGet:
+            path: /mapfishapp/
+            port: 8080
+          periodSeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          failureThreshold: 5
+          periodSeconds: 30
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
