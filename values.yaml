@@ -7,6 +7,7 @@ georchestra:
       docker_image: georchestra/cas:latest
     geonetwork:
       jetty_monitoring: true
+      ogc_api_records: true
     geoserver:
       jetty_monitoring: true
       extra_environment: []

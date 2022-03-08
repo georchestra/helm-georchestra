@@ -1,0 +1,73 @@
+{{- if .Values.georchestra.webapps.geonetwork.ogc_api_records -}}
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-gn4-ogc-api-records
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-ogc-api-records
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      securityContext:
+        fsGroup: 999
+      initContainers:
+      - name: bootstrap-georchestra-datadir
+        image: bitnami/git
+        command:
+        - /bin/sh
+        - -c
+        - mkdir -p /root/.ssh ;
+          cp /ssh-secret/ssh-privatekey /root/.ssh/id_rsa ;
+          chmod 0600 /root/.ssh/id_rsa ;
+         git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra
+        env:
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - name: GIT_SSH_COMMAND
+          value: ssh -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking no"
+        {{- end }}
+        volumeMounts:
+        - mountPath: /etc/georchestra
+          name: georchestra-datadir
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - mountPath: /ssh-secret
+          name: ssh-secret
+        {{- end }}
+      containers:
+      - name: ogc-api-records
+        image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+        env:
+        - name: LANG
+          value: en_US.UTF-8
+        - name: SERVER_SERVLET_CONTEXT_PATH
+          value: /ogc-api-records
+        - name: SPRING_CONFIG_LOCATION
+          value: file:///etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml
+        - name: SPRING_PROFILES_ACTIVE
+          value: standalone
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+        volumeMounts:
+        - mountPath: /etc/georchestra
+          name: georchestra-datadir
+      volumes:
+      - name: georchestra-datadir
+        emptyDir: {}
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      - name: ssh-secret
+        secret:
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+          defaultMode: 0400
+      {{- end }}      
+{{- end -}}
