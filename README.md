@@ -56,6 +56,15 @@ Then a default datadir is present in the git repository, the Mapstore deployment
 
 then the Mapstore2 datadir is (re)initialized.
 
+# CAS 6 theme customizations
+
+An initContainer will take care of overriding the `themes` and `templates` subdirectory from the webapp classpath, if
+such ones exist into the georchestra data directory.
+
+As a result, it is possible to override the default georchestra theme by creating a `cas/themes` and a `cas/templates` subdirectory
+into the georchestra datadir.
+
+
 # About livenessProbes
 
 The healthchecks for the different webapps have been implemented using `livenessProbe`s and `startupProbe`s.
