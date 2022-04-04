@@ -31,7 +31,7 @@ georchestra:
     mapstore:
       docker_image: georchestra/mapstore:latest
     openldap:
-      docker_image: georchestra/ldap:latest:latest
+      docker_image: georchestra/ldap:latest
     proxy:
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: true
