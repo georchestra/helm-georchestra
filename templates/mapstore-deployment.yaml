@@ -52,7 +52,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-mapstore
-        image: georchestra/mapstore:latest
+        image: {{ .Values.georchestra.webapps.mapstore.docker_image }}
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra

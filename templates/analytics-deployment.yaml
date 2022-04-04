@@ -42,7 +42,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-analytics
-        image: georchestra/analytics:latest
+        image: {{ .Values.georchestra.webapps.analytics.docker_image }}
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra

@@ -42,7 +42,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-console
-        image: georchestra/console:latest
+        image: {{ .Values.georchestra.webapps.console.docker_image }}
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra

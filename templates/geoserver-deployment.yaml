@@ -65,7 +65,7 @@ spec:
             mountPath: /mnt/geoserver_webapp
       containers:
       - name: georchestra-geoserver
-        image: georchestra/geoserver:latest
+        image: {{ .Values.georchestra.webapps.geoserver.docker_image }}
         imagePullPolicy: Always
         {{- if $webapp.extra_environment }}
         env:

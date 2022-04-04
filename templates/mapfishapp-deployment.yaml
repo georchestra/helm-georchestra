@@ -42,7 +42,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-mapfishapp
-        image: georchestra/mapfishapp:latest
+        image: {{ .Values.georchestra.webapps.mapfishapp.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

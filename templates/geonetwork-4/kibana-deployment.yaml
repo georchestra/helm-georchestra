@@ -23,7 +23,7 @@ spec:
         image: debian
       containers:
       - name: kibana
-        image: kibana:7.9.0
+        image: {{ .Values.georchestra.webapps.geonetwork.kibana_image }}
         env:
           - name: ELASTICSEARCH_HOSTS
             value: http://{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc:9200

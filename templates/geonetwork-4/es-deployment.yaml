@@ -22,7 +22,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: elasticsearch
-        image: elasticsearch:7.9.0
+        image: {{ .Values.georchestra.webapps.geonetwork.es_image }}
         env:
           - name: ES_JAVA_OPTS
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true

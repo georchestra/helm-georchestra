@@ -1,17 +1,39 @@
 georchestra:
   webapps:
+    analytics:
+      docker_image: georchestra/analytics:latest
+    cas:
+      docker_image: georchestra/cas:latest
+    console:
+      docker_image: georchestra/console:latest
+    datafeeder:
+      docker_image: georchestra/datafeeder:latest
+    datafeeder_frontend:
+      docker_image: georchestra/datafeeder-frontend:latest
+    extractorapp:
+      docker_image: georchestra/extractorapp:latest
+    geonetwork:
+      docker_image: georchestra/geonetwork:latest
+      jetty_monitoring: true
+      ogc_api_records: true
+      ogc_api_records_image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+      es_image: elasticsearch:7.9.0
+      kibana_image: kibana:7.9.0
+    geoserver:
+      docker_image: georchestra/geoserver:latest
+      jetty_monitoring: true
+      extra_environment: []
     header:
       docker_image: georchestra/header:latest
       extra_environment: []
-    cas:
-      docker_image: georchestra/cas:latest
-    geonetwork:
-      jetty_monitoring: true
-      ogc_api_records: true
-    geoserver:
-      jetty_monitoring: true
-      extra_environment: []
+    mapfishapp:
+      docker_image: georchestra/mapfishapp:latest
+    mapstore:
+      docker_image: georchestra/mapstore:latest
+    openldap:
+      docker_image: georchestra/ldap:latest:latest
     proxy:
+      docker_image: georchestra/security-proxy:latest
       jetty_monitoring: true
   datadir:
     volume:

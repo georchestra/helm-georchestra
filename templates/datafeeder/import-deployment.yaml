@@ -19,7 +19,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: georchestra-import
-        image: georchestra/datafeeder-frontend:21.0-SNAPSHOT
+        image: {{ .Values.georchestra.webapps.datafeeder_frontend.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 80

@@ -42,7 +42,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-datafeeder
-        image: georchestra/datafeeder:latest
+        image: {{ .Values.georchestra.webapps.datafeeder.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

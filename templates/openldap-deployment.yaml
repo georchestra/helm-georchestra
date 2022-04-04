@@ -20,7 +20,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: georchestra-ldap
-        image: georchestra/ldap:latest
+        image: {{ .Values.georchestra.webapps.openldap.docker_image }}
         imagePullPolicy: Always
         env:
           - name: SLAPD_ORGANISATION

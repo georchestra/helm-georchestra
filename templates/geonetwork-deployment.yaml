@@ -51,7 +51,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-geonetwork
-        image: georchestra/geonetwork:latest
+        image: {{ .Values.georchestra.webapps.geonetwork.docker_image }}
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra

@@ -1,5 +1,5 @@
 {{- if .Values.georchestra.webapps.geonetwork.ogc_api_records -}}
---- 
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -45,7 +45,7 @@ spec:
         {{- end }}
       containers:
       - name: ogc-api-records
-        image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+        image: {{ .Values.georchestra.webapps.geonetwork.ogc_api_records_image }}
         env:
         - name: LANG
           value: en_US.UTF-8
@@ -69,5 +69,5 @@ spec:
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
-      {{- end }}      
+      {{- end }}
 {{- end -}}

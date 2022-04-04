@@ -50,7 +50,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-sp
-        image: georchestra/security-proxy:latest
+        image: {{ .Values.georchestra.webapps.proxy.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
