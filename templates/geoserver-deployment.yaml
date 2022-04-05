@@ -50,7 +50,7 @@ spec:
           name: ssh-secret
         {{- end }}
       - name: prepare-geoserver-webapp
-        image: georchestra/geoserver:latest
+        image: {{ .Values.georchestra.webapps.geoserver.docker_image }}
         command:
         - /bin/sh
         - -c
