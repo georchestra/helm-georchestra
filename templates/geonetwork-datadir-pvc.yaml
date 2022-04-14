@@ -7,7 +7,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: default
+  storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
   resources:
     requests:
       storage: {{ .Values.georchestra.storage.geonetwork_datadir_size }}
