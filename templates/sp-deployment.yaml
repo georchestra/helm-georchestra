@@ -63,6 +63,7 @@ spec:
             path: /_static/bootstrap_3.0.0/css/bootstrap-theme.min.css
             port: 8080
           periodSeconds: 10
+          timeoutSeconds: 3
         startupProbe:
           tcpSocket:
             port: 8080
