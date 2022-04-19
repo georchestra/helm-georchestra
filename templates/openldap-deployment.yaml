@@ -55,3 +55,7 @@ spec:
       - name: openldap-config
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-openldap-config
+      {{- if .Values.georchestra.webapps.openldap.registry_secret }}
+      imagePullSecrets:
+      - name: {{ .Values.georchestra.webapps.openldap.registry_secret }}
+      {{- end }}

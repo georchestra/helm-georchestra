@@ -99,3 +99,7 @@ spec:
         configMap:
           name: {{ include "georchestra.fullname" . }}-monitoring-cm
       {{- end }}
+      {{- if .Values.georchestra.webapps.proxy.registry_secret }}
+      imagePullSecrets:
+      - name: {{ .Values.georchestra.webapps.proxy.registry_secret }}
+      {{- end }}

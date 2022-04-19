@@ -35,3 +35,7 @@ spec:
             port: 80
           failureThreshold: 5
           periodSeconds: 5
+      {{- if .Values.georchestra.webapps.datafeeder_frontend.registry_secret }}
+      imagePullSecrets:
+      - name: {{ .Values.georchestra.webapps.datafeeder_frontend.registry_secret }}
+      {{- end }}

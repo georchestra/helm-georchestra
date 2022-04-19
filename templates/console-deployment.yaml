@@ -69,3 +69,7 @@ spec:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
       {{- end }}
+      {{- if .Values.georchestra.webapps.console.registry_secret }}
+      imagePullSecrets:
+      - name: {{ .Values.georchestra.webapps.console.registry_secret }}
+      {{- end }}

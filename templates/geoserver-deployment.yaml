@@ -132,3 +132,7 @@ spec:
         configMap:
           name: {{ include "georchestra.fullname" . }}-monitoring-cm
       {{- end }}
+      {{- if .Values.georchestra.webapps.geoserver.registry_secret }}
+      imagePullSecrets:
+      - name: {{ .Values.georchestra.webapps.geoserver.registry_secret }}
+      {{- end }}

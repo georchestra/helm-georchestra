@@ -1,19 +1,33 @@
 georchestra:
   webapps:
+    # Note: if a secret is needed to fetch the images from a private registry,
+    # it can be specified using the "registry_secret" value on each images.
+    #
+    # If images are publicly available, the parameter should be left commented
+    # out.
+    #
     analytics:
       docker_image: georchestra/analytics:latest
+      #registry_secret: default
     cas:
       docker_image: georchestra/cas:latest
+      #registry_secret: default
     console:
       docker_image: georchestra/console:latest
+      #registry_secret: default
     datafeeder:
       docker_image: georchestra/datafeeder:latest
+      #registry_secret: default
     datafeeder_frontend:
       docker_image: georchestra/datafeeder-frontend:latest
+      #registry_secret: default
     extractorapp:
       docker_image: georchestra/extractorapp:latest
+      #registry_secret: default
     geonetwork:
       docker_image: georchestra/geonetwork:latest
+      # the registry secret is only used for the GeoNetwork image
+      #registry_secret: default
       jetty_monitoring: true
       ogc_api_records: true
       ogc_api_records_image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
@@ -23,18 +37,24 @@ georchestra:
       docker_image: georchestra/geoserver:latest
       jetty_monitoring: true
       extra_environment: []
+      #registry_secret: default
     header:
       docker_image: georchestra/header:latest
       extra_environment: []
+      #registry_secret: default
     mapfishapp:
       docker_image: georchestra/mapfishapp:latest
+      #registry_secret: default
     mapstore:
       docker_image: georchestra/mapstore:latest
+      #registry_secret: default
     openldap:
       docker_image: georchestra/ldap:latest
+      #registry_secret: default
     proxy:
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: true
+      #registry_secret: default
   datadir:
     volume:
     - name: georchestra-datadir
