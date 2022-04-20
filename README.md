@@ -115,3 +115,16 @@ sufficient to populate the database initially.
 
 The `datafeeder` (backend) requires now a valid account passed as a base64-encoded HTTP header (the `sec-user` header, maybe some others). As a result, testing via a HTTP request for liveness is not easy. We still can pass some headers to the request, but if it requires a valid account,
 then maybe we shall stick to a simpler `tcpSocket` one.
+
+# Update strategy
+
+The default update strategy in kubernetes being RollingUpdate, we can fall into a situation where new containers are created but never started because waiting for the volumes to be released from the former pods.
+
+As a result, several containers run with a `.strategy.type` set to `recreate` instead of `RollingUpdate`. This is basically the case for
+every deployments which are making use of Persistent volumes:
+
+* elasticsearch (used by GeoNetwork4)
+* geonetwork
+* geoserver
+* mapstore
+* openldap
