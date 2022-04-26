@@ -19,7 +19,7 @@ spec:
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       securityContext:
         fsGroup: 1000
       containers:

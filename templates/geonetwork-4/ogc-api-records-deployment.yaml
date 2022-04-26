@@ -18,7 +18,7 @@ spec:
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-ogc-api-records
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       securityContext:
         fsGroup: 999
       initContainers:

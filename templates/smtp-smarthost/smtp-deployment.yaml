@@ -17,7 +17,7 @@ spec:
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-smtp
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       containers:
       - name: georchestra-smtp
         image: camptocamp/exim:latest
@@ -48,6 +48,6 @@ spec:
           name: smtp
         livenessProbe:
           tcpSocket:
-            port: smtp            
+            port: smtp
           initialDelaySeconds: 30
 {{- end -}}

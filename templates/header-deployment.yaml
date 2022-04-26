@@ -18,7 +18,7 @@ spec:
         {{- $webapp := .Values.georchestra.webapps.geoserver }}
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       initContainers:
       - name: bootstrap-georchestra-datadir
         image: bitnami/git

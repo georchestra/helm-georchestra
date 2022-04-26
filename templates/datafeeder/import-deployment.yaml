@@ -16,7 +16,7 @@ spec:
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-import
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       containers:
       - name: georchestra-import
         image: {{ .Values.georchestra.webapps.datafeeder_frontend.docker_image }}

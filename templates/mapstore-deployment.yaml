@@ -19,7 +19,7 @@ spec:
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-mapstore
     spec:
       nodeSelector:
-        "beta.kubernetes.io/os": linux
+        "kubernetes.io/os": linux
       initContainers:
       - name: bootstrap-georchestra-datadir
         image: bitnami/git
