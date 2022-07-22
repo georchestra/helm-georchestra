@@ -64,12 +64,12 @@ spec:
           name: http-proxy
         livenessProbe:
           httpGet:
-            path: /mapstore/rest/config/load/config.json
+            path: /mapstore/configs/config.json
             port: 8080
           periodSeconds: 10
         startupProbe:
           httpGet:
-            path: /mapstore/rest/config/load/config.json
+            path: /mapstore/configs/config.json
             port: 8080
           failureThreshold: 5
           periodSeconds: 15
