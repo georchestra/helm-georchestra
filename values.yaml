@@ -62,7 +62,7 @@ georchestra:
     git:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
-      #secret: my-private-ssh-key
+      # ssh_secret: my-private-ssh-key
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
   # uncomment the `pv_name` entries below.
