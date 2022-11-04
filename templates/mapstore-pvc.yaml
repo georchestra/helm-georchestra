@@ -7,7 +7,12 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  {{- if .Values.georchestra.storage.storage_class_name }}
   storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
+  {{- end }}
+  {{- if .Values.georchestra.storage.mapstore_datadir.pv_name }}
+  volumeName: {{ .Values.georchestra.storage.mapstore_datadir.pv_name }}
+  {{- end }}
   resources:
     requests:
-      storage: {{ .Values.georchestra.storage.mapstore_datadir_size }}
+      storage: {{ .Values.georchestra.storage.mapstore_datadir.size }}

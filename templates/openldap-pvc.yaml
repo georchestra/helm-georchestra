@@ -7,10 +7,15 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  {{- if .Values.georchestra.storage.storage_class_name }}
   storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
+  {{- end }}
+  {{- if .Values.georchestra.storage.openldap_data.pv_name }}
+  volumeName: {{ .Values.georchestra.storage.openldap_data.pv_name }}
+  {{- end }}
   resources:
     requests:
-      storage: {{ .Values.georchestra.storage.openldap_data_size }}
+      storage: {{ .Values.georchestra.storage.openldap_data.size }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -19,7 +24,12 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  {{- if .Values.georchestra.storage.storage_class_name }}
   storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
+  {{- end }}
+  {{- if .Values.georchestra.storage.openldap_config.pv_name }}
+  volumeName: {{ .Values.georchestra.storage.openldap_config.pv_name }}
+  {{- end }}
   resources:
     requests:
-      storage: {{ .Values.georchestra.storage.openldap_config_size }}
+      storage: {{ .Values.georchestra.storage.openldap_config.size }}

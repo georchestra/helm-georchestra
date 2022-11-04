@@ -63,15 +63,35 @@ georchestra:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
       #secret: my-private-ssh-key
+  # Some cloud providers automatically create & assign PVs to PVCs
+  # some other need to create a PV first ; if so, then you can
+  # uncomment the `pv_name` entries below.
   storage:
-    gn4_es_data_size: 2Gi
-    geonetwork_datadir_size: 2Gi
-    geoserver_datadir_size: 256Mi
-    geoserver_geodata_size: 2Gi
-    mapstore_datadir_size: 256Mi
-    openldap_data_size: 256Mi
-    openldap_config_size: 1Mi
-    storage_class_name: default
+    gn4_es:
+      # pv_name: gn4_es_data
+      size: 2Gi
+    geonetwork_datadir:
+      # pv_name: geonetwork_datadir
+      size: 2Gi
+    geoserver_datadir:
+      # pv_name: geoserver_datadir
+      size: 256Mi
+    geoserver_geodata:
+      # pv_name: geoserver_geodata
+      size: 2Gi
+    mapstore_datadir:
+      # pv_name: mapstore_datadir
+      size: 256Mi
+    openldap_data:
+      # pv_name: openldap_data
+      size: 256Mi
+    openldap_config:
+      # pv_name: openldap_config
+      size: 1Mi
+
+    # We also might need to specify a custom storageClass
+    # Leave it commented if not needed
+    # storage_class_name: default
   smtp_smarthost:
     enabled: false
     # mailname: georchestra-127-0-1-1.traefik.me
