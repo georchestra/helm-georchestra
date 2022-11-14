@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.webapps.geonetwork.ogc_api_records -}}
+{{- if .Values.georchestra.webapps.geonetwork.ogc_api_records.activated -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -45,7 +45,7 @@ spec:
         {{- end }}
       containers:
       - name: ogc-api-records
-        image: {{ .Values.georchestra.webapps.geonetwork.ogc_api_records_image }}
+        image: {{ .Values.georchestra.webapps.geonetwork.ogc_api_records.image }}
         env:
         - name: LANG
           value: en_US.UTF-8
@@ -55,6 +55,9 @@ spec:
           value: file:///etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml
         - name: SPRING_PROFILES_ACTIVE
           value: standalone
+        {{- with .Values.georchestra.webapps.geonetwork.ogc_api_records.env_variables }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
         ports:
         - containerPort: 8080
           name: http-proxy

@@ -1,3 +1,9 @@
+# 0.2.10
+
+variables for the `ogc_api_records` geonetwork microservice have been renamed.
+
+Please double-check your `values.yaml` before upgrading to this version. 
+
 # 0.2.9
 
 Persistent volumes have been reworked:

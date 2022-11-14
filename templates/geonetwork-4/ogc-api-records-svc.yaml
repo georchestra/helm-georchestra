@@ -1,5 +1,5 @@
-{{- if .Values.georchestra.webapps.geonetwork.ogc_api_records -}}
---- 
+{{- if .Values.georchestra.webapps.geonetwork.ogc_api_records.activated -}}
+---
 apiVersion: v1
 kind: Service
 metadata:

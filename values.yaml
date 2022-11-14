@@ -29,8 +29,16 @@ georchestra:
       # the registry secret is only used for the GeoNetwork image
       #registry_secret: default
       jetty_monitoring: true
-      ogc_api_records: true
-      ogc_api_records_image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+      ogc_api_records:
+        activated: true
+        image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+        env_variables:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:postgresql://database:5432/georchestra
+          - name: SPRING_DATASOURCE_USERNAME
+            value: geonetwork
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: georchestra
       es_image: elasticsearch:7.9.0
       kibana_image: kibana:7.9.0
     geoserver:
