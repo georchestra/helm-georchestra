@@ -5,6 +5,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-extractorapp-svc
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-extractorapp
 spec:
   ports:
   - port: 8080

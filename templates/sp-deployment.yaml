@@ -6,16 +6,19 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-sp
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-sp
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-sp
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-sp
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-sp
       {{- $webapp := .Values.georchestra.webapps.proxy }}
       {{- if $webapp.jetty_monitoring }}
       annotations:

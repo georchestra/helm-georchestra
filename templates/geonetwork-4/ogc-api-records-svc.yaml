@@ -6,6 +6,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-gn4-ogc-api-records-svc
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-ogc-api-records
 spec:
   ports:
   - port: 8080

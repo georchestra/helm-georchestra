@@ -1,8 +1,16 @@
+# 0.2.11
+
+"Label ALL THE THING !"
+
+Setting a more convenient label to be able to select each pod individually. Before this,
+when trying to connect onto a pod with `kubectl exec` we could end up in the wrong one,
+because the same labels were shared across each objects.
+
 # 0.2.10
 
 variables for the `ogc_api_records` geonetwork microservice have been renamed.
 
-Please double-check your `values.yaml` before upgrading to this version. 
+Please double-check your `values.yaml` before upgrading to this version.
 
 # 0.2.9
 

@@ -4,6 +4,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-geoserver-datadir
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
 spec:
   accessModes:
   - ReadWriteOnce

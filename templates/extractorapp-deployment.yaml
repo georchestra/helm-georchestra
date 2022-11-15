@@ -5,16 +5,19 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-extractorapp
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-extractorapp
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-extractorapp
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-extractorapp
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-extractorapp
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

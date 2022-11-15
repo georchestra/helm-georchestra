@@ -4,16 +4,19 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-import
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder-import
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder-import
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-import
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder-import
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

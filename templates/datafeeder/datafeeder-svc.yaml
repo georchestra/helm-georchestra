@@ -4,6 +4,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-datafeeder-svc
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder
 spec:
   ports:
   - port: 8080

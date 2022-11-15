@@ -5,6 +5,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-geoserver-svc
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
 spec:
   ports:
   - port: 8080

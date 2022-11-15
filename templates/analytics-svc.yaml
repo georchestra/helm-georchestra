@@ -4,7 +4,8 @@ kind: Service
 metadata:
   name: {{ include "georchestra.fullname" . }}-analytics-svc
   labels:
-      {{- include "georchestra.labels" . | nindent 4 }}
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-analytics
 spec:
   ports:
   - port: 8080

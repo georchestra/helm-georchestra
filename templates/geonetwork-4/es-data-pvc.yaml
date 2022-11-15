@@ -4,6 +4,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-gn4-es-data
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
 spec:
   accessModes:
   - ReadWriteOnce

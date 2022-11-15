@@ -5,17 +5,20 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-header
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-header
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-header
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
-        {{- $webapp := .Values.georchestra.webapps.geoserver }}
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-header
+        {{- $webapp := .Values.georchestra.webapps.header }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

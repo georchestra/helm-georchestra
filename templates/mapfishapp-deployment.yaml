@@ -5,16 +5,19 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-mapfishapp
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-mapfishapp
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-mapfishapp
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-mapfishapp
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-mapfishapp
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

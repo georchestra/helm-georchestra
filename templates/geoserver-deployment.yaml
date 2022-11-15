@@ -5,6 +5,7 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-geoserver
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
 spec:
   replicas: 1
   strategy:
@@ -12,11 +13,13 @@ spec:
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geoserver
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
       {{- $webapp := .Values.georchestra.webapps.geoserver }}
       {{- if $webapp.jetty_monitoring }}
       annotations:

@@ -5,16 +5,19 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-smtp
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-smtp
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

@@ -5,16 +5,19 @@ metadata:
   name: {{ include "georchestra.fullname" . }}-datafeeder
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder
 spec:
   replicas: 1
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder
   template:
     metadata:
       labels:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-datafeeder
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
