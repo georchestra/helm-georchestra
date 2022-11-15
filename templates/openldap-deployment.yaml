@@ -52,6 +52,8 @@ spec:
             - ldapsearch
             - -x
             - -Hldap://localhost:389/
+            - -bdc=georchestra,dc=org
+            - cn=admin,dc=georchestra,dc=org
           initialDelaySeconds: 30
       volumes:
       - name: openldap-data
