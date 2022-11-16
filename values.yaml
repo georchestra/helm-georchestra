@@ -57,6 +57,7 @@ georchestra:
       docker_image: georchestra/mapstore:latest
       #registry_secret: default
     openldap:
+      activated: true
       docker_image: georchestra/ldap:latest
       #registry_secret: default
     proxy:

@@ -1,3 +1,4 @@
+{{- if .Values.georchestra.webapps.openldap.activated }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -66,3 +67,5 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.georchestra.webapps.openldap.registry_secret }}
       {{- end }}
+
+{{- end }}
