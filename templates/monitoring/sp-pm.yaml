@@ -1,0 +1,17 @@
+{{- if .Values.georchestra.webapps.proxy.jetty_monitoring }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "georchestra.fullname" . }}-sp-pm
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    org.georchestra.service/name: georchestra-sp
+spec:
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      org.georchestra.service/name: {{ include "georchestra.fullname" . }}-sp
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-sp
+  podMetricsEndpoints:
+  - port: prometheus
+{{- end }}
