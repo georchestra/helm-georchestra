@@ -25,10 +25,14 @@ spec:
       - name: georchestra-smtp
         image: camptocamp/exim:latest
         env:
+        {{- if .Values.georchestra.smtp_smarthost.relay_host }}
         - name: RELAY_HOST
           value: {{ .Values.georchestra.smtp_smarthost.relay_host }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.relay_port }}
         - name: RELAY_PORT
-          value: "{{ .Values.georchestra.smtp_smarthost.relay_port }}"
+          value: {{ .Values.georchestra.smtp_smarthost.relay_port | quote }}
+        {{- end -}}
         {{- if .Values.georchestra.smtp_smarthost.mailname }}
         - name: MAILNAME
           value: {{ .Values.georchestra.smtp_smarthost.mailname }}
