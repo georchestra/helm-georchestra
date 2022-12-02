@@ -41,20 +41,17 @@ exposed JMX metrics will be configured. The following annotations will be set on
     prometheus.io/scrape: "true"
 ```
 
-If a `prometheus` instance is deployed into the cluster, it will configure itself and be able to scrape the
+Some `podMonitor` objects will be created as well for each concerned pods (sp, gn, gs).
+
+As a result, if the `prometheus` operator is deployed into the cluster, it will configure itself and be able to scrape the
 exposed metrics.
 
 # Mapstore2 / geOrchestra datadir
 
-The strategy is a bit different compared to the other deployments from geOrchestra. `Mapstore2` requires to be able
-to write into its datadir (e.g. plugins uploaded by the administrators).
+On the mapstore2 webapp, we are using the following strategy:
 
-Then a default datadir is present in the git repository, the Mapstore deployment provides 2 options:
-
-* If the Mapstore2 part of the geOrchestra datadir is not present, or
-* If the `FORCE_MAPSTORE_DATADIR` environment variable is set
-
-then the Mapstore2 datadir is (re)initialized.
+* the `georchestra_datadir` is bootstrapped from a git repository the same way as the other geOrchestra components
+* we mount the mapstore dynamic datadir onto `/mnt/mapstore2`
 
 # CAS 6 theme customizations
 
