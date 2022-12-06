@@ -110,3 +110,4 @@ georchestra:
     # relay_port: 25
     # relay_username:  aaaa
     # relay_password:  aaaa
+    extra_environment: []
