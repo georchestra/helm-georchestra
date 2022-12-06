@@ -66,6 +66,10 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
+        {{- if $webapp.extra_environment }}
+        env:
+          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /geonetwork/srv/eng/catalog.search

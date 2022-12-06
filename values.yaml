@@ -29,6 +29,7 @@ georchestra:
       # the registry secret is only used for the GeoNetwork image
       #registry_secret: default
       jetty_monitoring: true
+      extra_environment: []
       ogc_api_records:
         activated: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
