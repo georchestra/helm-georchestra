@@ -88,12 +88,16 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
+        {{- if $webapp.custom_liveness_probe }}
+        {{ $webapp.custom_liveness_probe | toYaml | nindent 8 }}
+        {{- else }}
         livenessProbe:
           httpGet:
             path: /geoserver/gwc/service/wmts?SERVICE=WMTS&REQUEST=GetCapabilities
             port: 8080
           periodSeconds: 10
           timeoutSeconds: 5
+        {{- end }}
         startupProbe:
           tcpSocket:
             port: 8080
