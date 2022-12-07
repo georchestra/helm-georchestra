@@ -85,6 +85,8 @@ spec:
             name: geoserver-datadir
           - mountPath: /var/lib/jetty/webapps/geoserver
             name: geoserver-webapp
+          - mountPath: /mnt/geoserver_tiles
+            name: geoserver-tiles
         ports:
         - containerPort: 8080
           name: http-proxy
@@ -124,6 +126,9 @@ spec:
         emptyDir: {}
       - name: geoserver-webapp
         emptyDir: {}
+      - name: geoserver-tiles
+        persistentVolumeClaim:
+          claimName: {{ include "georchestra.fullname" . }}-geoserver-tiles
       - name: geoserver-geodata
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-geoserver-geodata

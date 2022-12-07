@@ -98,7 +98,9 @@ georchestra:
     openldap_config:
       # pv_name: openldap_config
       size: 1Mi
-
+    geoserver_tiles:
+      # pv_name: geoserver_tiles
+      size: 2Gi
     # We also might need to specify a custom storageClass
     # Leave it commented if not needed
     # storage_class_name: default
