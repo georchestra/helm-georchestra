@@ -63,6 +63,9 @@ spec:
             name: georchestra-datadir
           - mountPath: /mnt/geonetwork_datadir
             name: geonetwork-datadir
+        {{- if $webapp.extra_volumeMounts }}
+          {{ $webapp.extra_volumeMounts | toYaml | nindent 10 }}
+        {{- end }}
         ports:
         - containerPort: 8080
           name: http-proxy
@@ -108,6 +111,9 @@ spec:
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
+      {{- end }}
+      {{- if $webapp.extra_volumes }}
+          {{ $webapp.extra_volumes | toYaml | nindent 6 }}
       {{- end }}
       {{- if $webapp.jetty_monitoring }}
       - name: georchestra-monitoring-cm

@@ -30,6 +30,13 @@ georchestra:
       #registry_secret: default
       jetty_monitoring: true
       extra_environment: []
+      # volumes is the deployment-compliant specification of the pod's extra volume
+      # It should match with an item from the extra_volumeName.name variable below.
+      extra_volumes: []
+      # volumeMounts is the deployment-compliant specification of the georchestra-GeoNetwork
+      # container extra volume. It should match an item from the extra_volumes.name
+      # variable above.
+      extra_volumeMounts: []
       ogc_api_records:
         activated: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
