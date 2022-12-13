@@ -1,4 +1,5 @@
 ---
+{{- $webapp := .Values.georchestra.webapps.mapfishapp -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +26,7 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       containers:
       - name: georchestra-mapfishapp
-        image: {{ .Values.georchestra.webapps.mapfishapp.docker_image }}
+        image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -52,7 +53,7 @@ spec:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
       {{- end }}
-      {{- if .Values.georchestra.webapps.mapfishapp.registry_secret }}
+      {{- if $webapp.registry_secret }}
       imagePullSecrets:
-      - name: {{ .Values.georchestra.webapps.mapfishapp.registry_secret }}
+      - name: {{ $webapp.registry_secret }}
       {{- end }}

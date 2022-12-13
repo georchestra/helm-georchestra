@@ -1,5 +1,5 @@
 ---
-# sp
+{{- $webapp := .Values.georchestra.webapps.proxy -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,7 +19,7 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-sp
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-sp
-      {{- $webapp := .Values.georchestra.webapps.proxy }}
+
       {{- if $webapp.jetty_monitoring }}
       annotations:
         prometheus.io/path: /metrics
@@ -33,7 +33,7 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       containers:
       - name: georchestra-sp
-        image: {{ .Values.georchestra.webapps.proxy.docker_image }}
+        image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -82,7 +82,7 @@ spec:
         configMap:
           name: {{ include "georchestra.fullname" . }}-monitoring-cm
       {{- end }}
-      {{- if .Values.georchestra.webapps.proxy.registry_secret }}
+      {{- if $webapp.registry_secret }}
       imagePullSecrets:
-      - name: {{ .Values.georchestra.webapps.proxy.registry_secret }}
+      - name: {{ $webapp.registry_secret }}
       {{- end }}

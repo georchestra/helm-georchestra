@@ -1,4 +1,5 @@
 ---
+{{- $webapp := .Values.georchestra.webapps.geoserver -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,7 +21,7 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geoserver
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
-      {{- $webapp := .Values.georchestra.webapps.geoserver }}
+
       {{- if $webapp.jetty_monitoring }}
       annotations:
         prometheus.io/path: /metrics
@@ -35,7 +36,7 @@ spec:
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       - name: prepare-geoserver-webapp
-        image: {{ .Values.georchestra.webapps.geoserver.docker_image }}
+        image: {{ $webapp.docker_image }}
         command:
         - /bin/sh
         - -c
@@ -50,7 +51,7 @@ spec:
             mountPath: /mnt/geoserver_webapp
       containers:
       - name: georchestra-geoserver
-        image: {{ .Values.georchestra.webapps.geoserver.docker_image }}
+        image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         {{- if $webapp.extra_environment }}
         env:
@@ -126,7 +127,7 @@ spec:
         configMap:
           name: {{ include "georchestra.fullname" . }}-monitoring-cm
       {{- end }}
-      {{- if .Values.georchestra.webapps.geoserver.registry_secret }}
+      {{- if $webapp.registry_secret }}
       imagePullSecrets:
-      - name: {{ .Values.georchestra.webapps.geoserver.registry_secret }}
+      - name: {{ $webapp.registry_secret }}
       {{- end }}

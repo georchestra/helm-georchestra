@@ -1,4 +1,5 @@
 ---
+{{- $webapp := .Values.georchestra.webapps.header -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +19,6 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-header
-        {{- $webapp := .Values.georchestra.webapps.header }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
@@ -26,7 +26,7 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       containers:
       - name: georchestra-header
-        image: {{ .Values.georchestra.webapps.header.docker_image }}
+        image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         resources:
           requests:
@@ -64,7 +64,7 @@ spec:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
       {{- end }}
-      {{- if .Values.georchestra.webapps.header.registry_secret }}
+      {{- if $webapp.registry_secret }}
       imagePullSecrets:
-      - name: {{ .Values.georchestra.webapps.header.registry_secret }}
+      - name: {{ $webapp.registry_secret }}
       {{- end }}

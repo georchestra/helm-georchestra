@@ -1,4 +1,5 @@
 ---
+{{- $webapp := .Values.georchestra.webapps.analytics -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +26,7 @@ spec:
       {{- include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       containers:
       - name: georchestra-analytics
-        image: {{ .Values.georchestra.webapps.analytics.docker_image }}
+        image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra
@@ -52,7 +53,7 @@ spec:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
       {{- end }}
-      {{- if .Values.georchestra.webapps.analytics.registry_secret }}
+      {{- if $webapp.registry_secret }}
       imagePullSecrets:
-      - name: {{ .Values.georchestra.webapps.analytics.registry_secret }}
+      - name: {{ $webapp.registry_secret }}
       {{- end }}

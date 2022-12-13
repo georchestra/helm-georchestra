@@ -1,3 +1,5 @@
+---
+{{- $webapp := .Values.georchestra.webapps.datafeeder_frontend -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +24,7 @@ spec:
         "kubernetes.io/os": linux
       containers:
       - name: georchestra-import
-        image: {{ .Values.georchestra.webapps.datafeeder_frontend.docker_image }}
+        image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -38,7 +40,7 @@ spec:
             port: 80
           failureThreshold: 5
           periodSeconds: 5
-      {{- if .Values.georchestra.webapps.datafeeder_frontend.registry_secret }}
+      {{- if $webapp.registry_secret }}
       imagePullSecrets:
-      - name: {{ .Values.georchestra.webapps.datafeeder_frontend.registry_secret }}
+      - name: {{ $webapp.registry_secret }}
       {{- end }}
