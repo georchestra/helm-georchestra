@@ -9,7 +9,7 @@
     cp /ssh-secret/ssh-privatekey /root/.ssh/id_rsa ;
     chmod 0600 /root/.ssh/id_rsa ;
     {{- end }}
-    if [ ! -d /etc/georchestra ] ; then
+    if [ ! -f /etc/georchestra/default.properties ] ; then
       git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra ;
     fi ;
   {{- if .Values.georchestra.datadir.git.ssh_secret }}
