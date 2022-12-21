@@ -8,12 +8,14 @@ georchestra:
     #
     analytics:
       docker_image: georchestra/analytics:latest
+      extra_environment: []
       #registry_secret: default
     cas:
       docker_image: georchestra/cas:latest
       #registry_secret: default
     console:
       docker_image: georchestra/console:latest
+      extra_environment: []
       #registry_secret: default
     datafeeder:
       docker_image: georchestra/datafeeder:latest
@@ -23,6 +25,7 @@ georchestra:
       #registry_secret: default
     extractorapp:
       docker_image: georchestra/extractorapp:latest
+      extra_environment: []
       #registry_secret: default
     geonetwork:
       docker_image: georchestra/geonetwork:latest
@@ -60,6 +63,7 @@ georchestra:
       #registry_secret: default
     mapfishapp:
       docker_image: georchestra/mapfishapp:latest
+      extra_environment: []
       #registry_secret: default
     mapstore:
       docker_image: georchestra/mapstore:latest
@@ -71,6 +75,7 @@ georchestra:
     proxy:
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: true
+      extra_environment: []
       #registry_secret: default
   datadir:
     volume:
