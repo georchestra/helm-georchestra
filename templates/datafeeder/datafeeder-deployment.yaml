@@ -28,6 +28,10 @@ spec:
       - name: georchestra-datafeeder
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
+        {{- if $webapp.extra_environment }}
+        env:
+          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
         ports:
         - containerPort: 8080
           name: http-proxy
