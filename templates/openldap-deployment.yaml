@@ -40,6 +40,9 @@ spec:
             value: "0"
           - name: RUN_AS_GID
             value: "0"
+        {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
         ports:
         - containerPort: 389
           name: ldap
