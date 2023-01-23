@@ -25,6 +25,13 @@ spec:
         "kubernetes.io/os": linux
       securityContext:
         fsGroup: 1000
+      initContainers:
+      - name: fix-permissions-pvc
+        image: busybox:latest
+        command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]   
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/data
+          name: gn4-es-data
       containers:
       - name: elasticsearch
         image: {{ .Values.georchestra.webapps.geonetwork.es_image }}
