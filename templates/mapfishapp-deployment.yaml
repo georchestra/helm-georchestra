@@ -1,6 +1,5 @@
-{{- if .Values.georchestra.webapps.mapfishapp.enable -}}
+{{- if .Values.georchestra.webapps.mapfishapp.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.mapfishapp -}}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

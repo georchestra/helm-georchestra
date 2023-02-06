@@ -1,6 +1,5 @@
-{{- if .Values.georchestra.webapps.header.enable -}}
+{{- if .Values.georchestra.webapps.header.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.header -}}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

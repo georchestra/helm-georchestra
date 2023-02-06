@@ -1,6 +1,5 @@
-{{- if .Values.georchestra.webapps.geonetwork.enable -}}
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.geonetwork -}}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

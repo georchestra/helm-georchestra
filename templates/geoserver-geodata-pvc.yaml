@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.webapps.geoserver.enable -}}
+{{- if .Values.georchestra.webapps.geoserver.enabled -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

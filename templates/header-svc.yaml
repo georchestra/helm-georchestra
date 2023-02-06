@@ -1,5 +1,4 @@
-{{- if .Values.georchestra.webapps.header.enable -}}
----
+{{- if .Values.georchestra.webapps.header.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:

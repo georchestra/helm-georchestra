@@ -1,4 +1,4 @@
-{{- if and .Values.georchestra.webapps.datafeeder.enable .Values.georchestra.webapps.datafeeder_frontend.enable -}}
+{{- if and .Values.georchestra.webapps.datafeeder.enabled .Values.georchestra.webapps.datafeeder_frontend.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:

@@ -1,6 +1,5 @@
-{{- if .Values.georchestra.webapps.mapstore.enable -}}
+{{- if .Values.georchestra.webapps.mapstore.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.mapstore -}}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

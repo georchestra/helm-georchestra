@@ -1,6 +1,5 @@
-{{- if .Values.georchestra.webapps.proxy.enable -}}
+{{- if .Values.georchestra.webapps.proxy.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.proxy -}}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.webapps.analytics.enable -}}
+{{- if .Values.georchestra.webapps.analytics.enabled -}}
 ---
 apiVersion: v1
 kind: Pod
@@ -16,7 +16,7 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-analytics-svc:8080/analytics/']
   restartPolicy: Never
 {{- end }}
-{{- if .Values.georchestra.webapps.cas.enable -}}
+{{- if .Values.georchestra.webapps.cas.enabled -}}
 ---
 apiVersion: v1
 kind: Pod
@@ -34,7 +34,7 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-cas-svc:8080/cas/login']
   restartPolicy: Never
 {{- end }}
-{{- if .Values.georchestra.webapps.console.enable -}}
+{{- if .Values.georchestra.webapps.console.enabled -}}
 ---
 apiVersion: v1
 kind: Pod
@@ -52,8 +52,8 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-console-svc:8080/console/public/orgs/areaConfig.json']
   restartPolicy: Never
 {{- end }}
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
 ---
-{{- if .Values.georchestra.webapps.geonetwork.enable -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -70,8 +70,8 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-geonetwork-svc:8080/geonetwork/srv/eng/catalog.search']
   restartPolicy: Never
 {{- end}}
+{{- if .Values.georchestra.webapps.geoserver.enabled -}}
 ---
-{{- if .Values.georchestra.webapps.geoserver.enable -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -88,8 +88,8 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-geoserver-svc:8080/geoserver/wms']
   restartPolicy: Never
 {{- end }}
+{{- if .Values.georchestra.webapps.header.enabled -}}
 ---
-{{- if .Values.georchestra.webapps.header.enable -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -106,8 +106,8 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-header-svc:8080/header/']
   restartPolicy: Never
 {{- end }}
+{{- if .Values.georchestra.webapps.mapfishapp.enabled -}}
 ---
-{{- if .Values.georchestra.webapps.mapfishapp.enable -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -124,8 +124,8 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-mapfishapp-svc:8080/mapfishapp/']
   restartPolicy: Never
 {{- end }}
+{{- if .Values.georchestra.webapps.mapstore.enabled -}}
 ---
-{{- if .Values.georchestra.webapps.mapstore.enable -}}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -142,8 +142,8 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-mapstore-svc:8080/mapstore/']
   restartPolicy: Never
 {{- end }}
+{{- if .Values.georchestra.webapps.proxy.enabled -}}
 ---
-{{- if .Values.georchestra.webapps.proxy.enable -}}
 apiVersion: v1
 kind: Pod
 metadata:

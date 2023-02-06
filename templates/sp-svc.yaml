@@ -1,5 +1,4 @@
-{{- if .Values.georchestra.webapps.proxy.enable -}}
----
+{{- if .Values.georchestra.webapps.proxy.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
