@@ -1,3 +1,4 @@
+{{- if .Values.georchestra.webapps.cas.enable -}}
 ---
 apiVersion: v1
 kind: Service
@@ -14,3 +15,4 @@ spec:
     targetPort: 8080
   selector:
     org.georchestra.service/name: {{ include "georchestra.fullname" . }}-cas
+{{- end }}

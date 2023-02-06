@@ -7,27 +7,34 @@ georchestra:
     # out.
     #
     analytics:
+      enable: true
       docker_image: georchestra/analytics:latest
       extra_environment: []
       #registry_secret: default
     cas:
+      enable: true
       docker_image: georchestra/cas:latest
       #registry_secret: default
     console:
+      enable: true
       docker_image: georchestra/console:latest
       extra_environment: []
       #registry_secret: default
     datafeeder:
+      enable: true # won't deploy if datafeeder_frontend is not enable
       docker_image: georchestra/datafeeder:latest
       #registry_secret: default
     datafeeder_frontend:
+      enable: true # won't deploy if datafeeder is not enable
       docker_image: georchestra/datafeeder-frontend:latest
       #registry_secret: default
     extractorapp:
+      enable: true
       docker_image: georchestra/extractorapp:latest
       extra_environment: []
       #registry_secret: default
     geonetwork:
+      enable: true
       docker_image: georchestra/geonetwork:latest
       # the registry secret is only used for the GeoNetwork image
       #registry_secret: default
@@ -41,7 +48,7 @@ georchestra:
       # variable above.
       extra_volumeMounts: []
       ogc_api_records:
-        activated: true
+        enable: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
         env_variables:
           - name: SPRING_DATASOURCE_URL
@@ -53,26 +60,31 @@ georchestra:
       es_image: elasticsearch:7.9.0
       kibana_image: kibana:7.9.0
     geoserver:
+      enable: true
       docker_image: georchestra/geoserver:latest
       jetty_monitoring: true
       extra_environment: []
       #registry_secret: default
     header:
+      enable: true
       docker_image: georchestra/header:latest
       extra_environment: []
       #registry_secret: default
     mapfishapp:
+      enable: true
       docker_image: georchestra/mapfishapp:latest
       extra_environment: []
       #registry_secret: default
     mapstore:
+      enable: true
       docker_image: georchestra/mapstore:latest
       #registry_secret: default
     openldap:
-      activated: true
+      enable: true
       docker_image: georchestra/ldap:latest
       #registry_secret: default
     proxy:
+      enable: true
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: true
       extra_environment: []

@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.webapps.geoserver.jetty_monitoring }}
+{{- if and .Values.georchestra.webapps.geoserver.enable .Values.georchestra.webapps.geoserver.jetty_monitoring -}}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:

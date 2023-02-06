@@ -1,3 +1,4 @@
+{{- if .Values.georchestra.webapps.geonetwork.enable -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,3 +51,4 @@ spec:
       - name: gn4-es-data
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-gn4-es-data
+{{- end }}

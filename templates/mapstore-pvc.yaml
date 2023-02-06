@@ -1,3 +1,4 @@
+{{- if .Values.georchestra.webapps.mapstore.enable -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -17,3 +18,4 @@ spec:
   resources:
     requests:
       storage: {{ .Values.georchestra.storage.mapstore_datadir.size }}
+{{- end }}

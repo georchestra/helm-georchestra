@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.storage.geoserver_tiles }}
+{{- if and .Values.georchestra.webapps.geoserver.enable .Values.georchestra.storage.geoserver_tiles -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

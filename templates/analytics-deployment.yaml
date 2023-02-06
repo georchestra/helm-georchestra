@@ -1,5 +1,6 @@
----
+{{- if .Values.georchestra.webapps.analytics.enable -}}
 {{- $webapp := .Values.georchestra.webapps.analytics -}}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -61,3 +62,4 @@ spec:
       imagePullSecrets:
       - name: {{ $webapp.registry_secret }}
       {{- end }}
+{{- end }}

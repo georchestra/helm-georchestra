@@ -1,3 +1,4 @@
+{{- if .Values.georchestra.webapps.header.enable -}}
 ---
 apiVersion: v1
 kind: Service
@@ -13,3 +14,4 @@ spec:
     targetPort: 8080
   selector:
     org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
+{{- end }}

@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.webapps.openldap.activated }}
+{{- if .Values.georchestra.webapps.openldap.enable -}}
 {{- $webapp := .Values.georchestra.webapps.openldap -}}
 ---
 apiVersion: apps/v1
