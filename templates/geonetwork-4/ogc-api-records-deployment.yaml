@@ -1,5 +1,6 @@
 {{- if and .Values.georchestra.webapps.geonetwork.enabled .Values.georchestra.webapps.geonetwork.ogc_api_records.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.geonetwork.ogc_api_records -}}
+{{- $database := .Values.database -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,6 +39,9 @@ spec:
           value: file:///etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml
         - name: SPRING_PROFILES_ACTIVE
           value: standalone
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}?user=${PGUSER}&password=${PGPASSWORD}&currentSchema=geonetwork
+        {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
         {{- with $webapp.env_variables }}
           {{- toYaml . | nindent 8 }}
         {{- end }}

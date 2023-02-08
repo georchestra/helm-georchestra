@@ -1,5 +1,7 @@
 {{- if and .Values.georchestra.webapps.datafeeder.enabled .Values.georchestra.webapps.datafeeder_frontend.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.datafeeder -}}
+{{- $database := .Values.database -}}
+{{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,10 +30,55 @@ spec:
       - name: georchestra-datafeeder
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{- if $webapp.extra_environment }}
         env:
+          {{- include "georchestra.common-envs" . | nindent 8 }}
+          {{- if .Values.georchestra.smtp_smarthost.enabled }}
+        - name: SMTPHOST
+          value: "{{ include "georchestra.fullname" . }}-smtp-svc"
+        - name: SMTPPORT
+          value: "25"
+          {{- end }}
+        {{ if $database.builtin }}
+        {{- $database_secret_datafeeder_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+        - name: PGHOST
+          value: "{{ .Release.Name }}-database"
+        - name: PGDATABASE
+          value: "datafeeder"
+        {{ else }}
+        - name: PGHOST
+          valueFrom:
+            secretKeyRef:
+                name: {{ $database_secret_datafeeder_name }}
+                key: host
+                optional: false
+        - name: PGDATABASE
+          valueFrom:
+            secretKeyRef:
+                name: {{ $database_secret_datafeeder_name }}
+                key: dbname
+                optional: false
+        {{ end }}
+        - name: PGPORT
+          valueFrom:
+            secretKeyRef:
+                name: {{ $database_secret_datafeeder_name }}
+                key: port
+                optional: false
+        - name: PGUSER
+          valueFrom:
+            secretKeyRef:
+                name: {{ $database_secret_datafeeder_name }}
+                key: user
+                optional: false
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+                name: {{ $database_secret_datafeeder_name }}
+                key: password
+                optional: false
+          {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 8 }}
-        {{- end }}
+          {{- end }}
         ports:
         - containerPort: 8080
           name: http-proxy
