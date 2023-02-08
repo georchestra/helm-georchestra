@@ -35,10 +35,39 @@ spec:
       - name: georchestra-sp
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{- if $webapp.extra_environment }}
         env:
+        - name: ANALYTICS_URL
+          value: "{{ include "georchestra.fullname" . }}-analytics-svc"
+        - name: ATLAS_URL
+          value: "{{ include "georchestra.fullname" . }}-atlas-svc"
+        - name: CAS_URL
+          value: "{{ include "georchestra.fullname" . }}-cas-svc"
+        - name: CONSOLE_URL
+          value: "{{ include "georchestra.fullname" . }}-console-svc"
+        - name: EXTRACTORAPP_URL
+          value: "{{ include "georchestra.fullname" . }}-extractorapp-svc"
+        - name: GEONETWORK_URL
+          value: "{{ include "georchestra.fullname" . }}-geonetwork-svc"
+        - name: GEOSERVER_URL
+          value: "{{ include "georchestra.fullname" . }}-geoserver-svc"
+        - name: HEADER_URL
+          value: "{{ include "georchestra.fullname" . }}-header-svc"
+        - name: MAPFISHAPP_URL
+          value: "{{ include "georchestra.fullname" . }}-mapfishapp-svc"
+        - name: GEOWEBCACHE_URL
+          value: "{{ include "georchestra.fullname" . }}-geowebcache-svc"
+        - name: MAPSTORE_URL
+          value: "{{ include "georchestra.fullname" . }}-mapstore-svc"
+        - name: DATAFEEDER_URL
+          value: "{{ include "georchestra.fullname" . }}-datafeeder-svc"
+        - name: IMPORT_URL
+          value: "{{ include "georchestra.fullname" . }}-import-svc"
+          {{- include "georchestra.common-envs" . | nindent 8 }}
+          {{- include "georchestra.ldap-envs" . | nindent 8 }}
+          {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
+          {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 8 }}
-        {{- end }}
+          {{- end }}
         ports:
         - containerPort: 8080
           name: http-proxy

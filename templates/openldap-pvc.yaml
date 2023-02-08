@@ -18,6 +18,7 @@ spec:
   resources:
     requests:
       storage: {{ .Values.georchestra.storage.openldap_data.size }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
