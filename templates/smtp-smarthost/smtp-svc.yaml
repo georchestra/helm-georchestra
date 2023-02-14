@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.smtp_smarthost.enabledd -}}
+{{- if .Values.georchestra.smtp_smarthost.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:

@@ -1,4 +1,4 @@
-{{- if .Values.georchestra.smtp_smarthost.enabledd -}}
+{{- if .Values.georchestra.smtp_smarthost.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
