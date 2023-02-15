@@ -1,0 +1,16 @@
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "georchestra.fullname" . }}-geonetwork-svc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geonetwork
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geonetwork
+{{- end }}

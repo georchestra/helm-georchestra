@@ -1,0 +1,33 @@
+name: Helm publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chart Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: georchestra
+      - name: Helm Installation
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.2
+      - name: Run script file
+        run: |
+          rm -rf georchestra/.git
+        shell: bash
+      - name: Helm Package
+        run: helm package georchestra -d georchestra
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: georchestra
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

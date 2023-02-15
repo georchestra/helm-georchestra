@@ -1,0 +1,139 @@
+georchestra:
+  webapps:
+    # Note: if a secret is needed to fetch the images from a private registry,
+    # it can be specified using the "registry_secret" value on each images.
+    #
+    # If images are publicly available, the parameter should be left commented
+    # out.
+    #
+    analytics:
+      enabled: true
+      docker_image: georchestra/analytics:latest
+      extra_environment: []
+      #registry_secret: default
+    cas:
+      enabled: true
+      docker_image: georchestra/cas:latest
+      #registry_secret: default
+    console:
+      enabled: true
+      docker_image: georchestra/console:latest
+      extra_environment: []
+      #registry_secret: default
+    datafeeder:
+      enabled: true # won't deploy if datafeeder_frontend is not enable
+      docker_image: georchestra/datafeeder:latest
+      #registry_secret: default
+    datafeeder_frontend:
+      enabled: true # won't deploy if datafeeder is not enable
+      docker_image: georchestra/datafeeder-frontend:latest
+      #registry_secret: default
+    extractorapp:
+      enabled: true
+      docker_image: georchestra/extractorapp:latest
+      extra_environment: []
+      #registry_secret: default
+    geonetwork:
+      enabled: true
+      docker_image: georchestra/geonetwork:latest
+      # the registry secret is only used for the GeoNetwork image
+      #registry_secret: default
+      jetty_monitoring: true
+      extra_environment: []
+      # volumes is the deployment-compliant specification of the pod's extra volume
+      # It should match with an item from the extra_volumeName.name variable below.
+      extra_volumes: []
+      # volumeMounts is the deployment-compliant specification of the georchestra-GeoNetwork
+      # container extra volume. It should match an item from the extra_volumes.name
+      # variable above.
+      extra_volumeMounts: []
+      ogc_api_records:
+        enabled: true
+        image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+        env_variables:
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:postgresql://database:5432/georchestra
+          - name: SPRING_DATASOURCE_USERNAME
+            value: geonetwork
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: georchestra
+      es_image: elasticsearch:7.9.0
+      kibana_image: kibana:7.9.0
+    geoserver:
+      enabled: true
+      docker_image: georchestra/geoserver:latest
+      jetty_monitoring: true
+      extra_environment: []
+      #registry_secret: default
+    header:
+      enabled: true
+      docker_image: georchestra/header:latest
+      extra_environment: []
+      #registry_secret: default
+    mapfishapp:
+      enabled: true
+      docker_image: georchestra/mapfishapp:latest
+      extra_environment: []
+      #registry_secret: default
+    mapstore:
+      enabled: true
+      docker_image: georchestra/mapstore:latest
+      #registry_secret: default
+    openldap:
+      enabled: true
+      docker_image: georchestra/ldap:latest
+      #registry_secret: default
+    proxy:
+      enabled: true
+      docker_image: georchestra/security-proxy:latest
+      jetty_monitoring: true
+      extra_environment: []
+      #registry_secret: default
+  datadir:
+    volume:
+    - name: georchestra-datadir
+      emptyDir: {}
+    git:
+      url: https://github.com/georchestra/datadir.git
+      ref: docker-master
+      #ssh_secret: my-private-ssh-key
+  # Some cloud providers automatically create & assign PVs to PVCs
+  # some other need to create a PV first ; if so, then you can
+  # uncomment the `pv_name` entries below.
+  storage:
+    gn4_es:
+      # pv_name: gn4_es_data
+      size: 2Gi
+    geonetwork_datadir:
+      # pv_name: geonetwork_datadir
+      size: 2Gi
+    geoserver_datadir:
+      # pv_name: geoserver_datadir
+      size: 256Mi
+    geoserver_geodata:
+      # pv_name: geoserver_geodata
+      size: 2Gi
+    mapstore_datadir:
+      # pv_name: mapstore_datadir
+      size: 256Mi
+    openldap_data:
+      # pv_name: openldap_data
+      size: 256Mi
+    openldap_config:
+      # pv_name: openldap_config
+      size: 1Mi
+    geoserver_tiles:
+      # pv_name: geoserver_tiles
+      size: 2Gi
+    # We also might need to specify a custom storageClass
+    # Leave it commented if not needed
+    # storage_class_name: default
+  smtp_smarthost:
+    enabled: false
+    # mailname: georchestra-127-0-1-1.traefik.me
+    # postmaster: postmaster@georchestra-127-0-1-1.traefik.me
+    # relay_host: my-external-smtp
+    # relay_port: 25
+    # relay_username:  aaaa
+    # relay_password:  aaaa
+    extra_environment: []

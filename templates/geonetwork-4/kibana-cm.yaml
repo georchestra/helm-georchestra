@@ -1,0 +1,12 @@
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "georchestra.fullname" . }}-gn4-kibana-config
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-kibana
+data:
+  kibana.yml: |-
+{{ .Files.Get "files/gn4-kibana-config.yaml" | indent 4 }}
+{{- end }}

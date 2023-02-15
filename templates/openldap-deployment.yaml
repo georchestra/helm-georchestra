@@ -1,0 +1,74 @@
+{{- if .Values.georchestra.webapps.openldap.enabled -}}
+{{- $webapp := .Values.georchestra.webapps.openldap -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-ldap
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-ldap
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-ldap
+  template:
+    metadata:
+      labels:
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-ldap
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-ldap
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: georchestra-ldap
+        image: {{ $webapp.docker_image }}
+        imagePullPolicy: Always
+        env:
+          - name: SLAPD_ORGANISATION
+            value: georchestra
+          - name: SLAPD_DOMAIN
+            value: georchestra.org
+          - name: SLAPD_PASSWORD
+            value: secret
+          - name: RUN_AS_UID
+            value: "0"
+          - name: RUN_AS_GID
+            value: "0"
+        {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
+        ports:
+        - containerPort: 389
+          name: ldap
+        volumeMounts:
+          - mountPath: /etc/ldap
+            name: openldap-config
+          - mountPath: /var/lib/ldap
+            name: openldap-data
+        livenessProbe:
+          exec:
+            command:
+            - ldapsearch
+            - -x
+            - -Hldap://localhost:389/
+            - -bdc=georchestra,dc=org
+            - cn=admin,dc=georchestra,dc=org
+          initialDelaySeconds: 30
+      volumes:
+      - name: openldap-data
+        persistentVolumeClaim:
+          claimName: {{ include "georchestra.fullname" . }}-openldap-data
+      - name: openldap-config
+        persistentVolumeClaim:
+          claimName: {{ include "georchestra.fullname" . }}-openldap-config
+      {{- if $webapp.registry_secret }}
+      imagePullSecrets:
+      - name: {{ $webapp.registry_secret }}
+      {{- end }}
+
+{{- end }}

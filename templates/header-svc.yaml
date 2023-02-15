@@ -1,0 +1,16 @@
+{{- if .Values.georchestra.webapps.header.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "georchestra.fullname" . }}-header-svc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-header
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
+{{- end }}

@@ -1,0 +1,53 @@
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+  template:
+    metadata:
+      labels:
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+      - name: fix-permissions-pvc
+        image: busybox:latest
+        command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]   
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/data
+          name: gn4-es-data
+      containers:
+      - name: elasticsearch
+        image: {{ .Values.georchestra.webapps.geonetwork.es_image }}
+        env:
+          - name: ES_JAVA_OPTS
+            value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
+          - name: discovery.type
+            value: single-node
+        ports:
+        - containerPort: 9200
+          name: elastic
+        volumeMounts:
+          - mountPath: /usr/share/elasticsearch/data
+            name: gn4-es-data
+      volumes:
+      - name: gn4-es-data
+        persistentVolumeClaim:
+          claimName: {{ include "georchestra.fullname" . }}-gn4-es-data
+{{- end }}

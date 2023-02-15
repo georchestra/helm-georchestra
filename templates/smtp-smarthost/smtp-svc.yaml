@@ -1,0 +1,16 @@
+{{- if .Values.georchestra.smtp_smarthost.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "georchestra.fullname" . }}-smtp-svc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
+spec:
+  ports:
+  - port: 25
+    protocol: TCP
+    targetPort: 25
+  selector:
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-smtp
+{{- end -}}

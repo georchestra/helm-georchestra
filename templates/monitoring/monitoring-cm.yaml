@@ -1,0 +1,165 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "georchestra.fullname" . }}-monitoring-cm
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+data:
+  collectd-jmx-jetty.conf: |
+    LoadPlugin java
+
+    <Plugin "java">
+       JVMArg "-Djava.class.path=/usr/share/collectd/java/collectd-api.jar:/usr/share/collectd/java/generic-jmx.jar"
+       LoadPlugin "org.collectd.java.GenericJMX"
+
+       <Plugin "GenericJMX">
+       # Garbage collector information
+       <MBean "garbage_collector">
+         ObjectName "java.lang:type=GarbageCollector,*"
+         InstancePrefix "gc-"
+         InstanceFrom "name"
+
+         <Value>
+           Type "invocations"
+           #InstancePrefix ""
+           #InstanceFrom ""
+           Table false
+           Attribute "CollectionCount"
+         </Value>
+         <Value>
+           Type "total_time_in_ms"
+           InstancePrefix "collection_time"
+           #InstanceFrom ""
+           Table false
+           Attribute "CollectionTime"
+         </Value>
+       </MBean>
+
+       # Generic heap/nonheap memory usage.
+       <MBean "memory">
+         ObjectName "java.lang:type=Memory"
+         #InstanceFrom ""
+         InstancePrefix "memory"
+
+         # Creates four values: committed, init, max, used
+         <Value>
+           Type "memory"
+           #InstancePrefix ""
+           #InstanceFrom ""
+           Table true
+           Attribute "HeapMemoryUsage"
+           InstancePrefix "heap-"
+         </Value>
+
+         # Creates four values: committed, init, max, used
+         <Value>
+           Type "memory"
+           #InstancePrefix ""
+           #InstanceFrom ""
+           Table true
+           Attribute "NonHeapMemoryUsage"
+           InstancePrefix "nonheap-"
+         </Value>
+       </MBean>
+
+
+       <MBean "jetty">
+         ObjectName "org.eclipse.jetty.server.handler:type=statisticshandler,id=0"
+         InstancePrefix "jetty"
+         #InstanceFrom "name"
+
+         <Value>
+           Type "response_time"
+           Table false
+           Attribute "requestTimeMax"
+           InstancePrefix "requestTimeMax"
+         </Value>
+         <Value>
+           Type "response_time"
+           Table false
+           Attribute "requestTimeMean"
+           InstancePrefix "requestTimeMean"
+         </Value>
+         <Value>
+           Type "response_time"
+           Table false
+           Attribute "requestTimeStdDev"
+           InstancePrefix "requestTimeStdDev"
+         </Value>
+
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "asyncRequestsWaiting"
+           InstancePrefix "asyncRequestsWaiting"
+         </Value>
+
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "requestsActive"
+           InstancePrefix "requestsActive"
+         </Value>
+
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "responses1xx"
+           InstancePrefix "responses1xx"
+         </Value>
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "responses2xx"
+           InstancePrefix "responses2xx"
+         </Value>
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "responses3xx"
+           InstancePrefix "responses3xx"
+         </Value>
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "responses4xx"
+           InstancePrefix "responses4xx"
+         </Value>
+         <Value>
+           Type "requests"
+           Table false
+           Attribute "responses5xx"
+           InstancePrefix "responses5xx"
+         </Value>
+       </MBean>
+
+       <MBean "jetty_defaultsessioncache">
+         ObjectName "org.eclipse.jetty.server.session:context=*,type=defaultsessioncache,id=0"
+         InstancePrefix "jetty_defaultsessioncache_"
+         InstanceFrom "context"
+         <Value>
+           Type "count"
+           Table false
+           Attribute "sessionsCurrent"
+           InstancePrefix "sessionsCurrent"
+         </Value>
+         <Value>
+           Type "count"
+           Table false
+           Attribute "sessionsTotal"
+           InstancePrefix "sessionsTotal"
+         </Value>
+       </MBean>
+
+         <Connection>
+                 ServiceURL "service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi"
+                 Host "localhost"
+                 Collect "garbage_collector"
+                 Collect "memory"
+
+                 Collect "jetty"
+                 Collect "jetty_defaultsessioncache"
+
+         </Connection>
+       </Plugin>
+    </Plugin>

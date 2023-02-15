@@ -1,0 +1,63 @@
+{{- if .Values.georchestra.smtp_smarthost.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-smtp
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
+  template:
+    metadata:
+      labels:
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-smtp
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: georchestra-smtp
+        image: camptocamp/exim:latest
+        env:
+        {{- if .Values.georchestra.smtp_smarthost.relay_host }}
+        - name: RELAY_HOST
+          value: {{ .Values.georchestra.smtp_smarthost.relay_host }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.relay_port }}
+        - name: RELAY_PORT
+          value: {{ .Values.georchestra.smtp_smarthost.relay_port | quote }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.mailname }}
+        - name: MAILNAME
+          value: {{ .Values.georchestra.smtp_smarthost.mailname }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.postmaster }}
+        - name: POSTMASTER
+          value: {{ .Values.georchestra.smtp_smarthost.postmaster }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.relay_username }}
+        - name: RELAY_USERNAME
+          value: {{ .Values.georchestra.smtp_smarthost.relay_username }}
+        {{- end -}}
+        {{- if .Values.georchestra.smtp_smarthost.relay_password }}
+        - name: RELAY_PASSWORD
+          value: {{ .Values.georchestra.smtp_smarthost.relay_password }}
+        {{ end -}}
+        {{- if .Values.georchestra.smtp_smarthost.extra_environment }}
+        {{- .Values.georchestra.smtp_smarthost.extra_environment | toYaml | nindent 8 }}
+        {{- end }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 25
+          name: smtp
+        livenessProbe:
+          tcpSocket:
+            port: smtp
+          initialDelaySeconds: 30
+{{- end -}}

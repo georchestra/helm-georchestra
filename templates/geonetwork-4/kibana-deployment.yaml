@@ -1,0 +1,43 @@
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-gn4-kibana
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-kibana
+  template:
+    metadata:
+      labels:
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-kibana
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-kibana
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      initContainers:
+      - name: bootstrap-kibana-configuration
+        image: debian
+      containers:
+      - name: kibana
+        image: {{ .Values.georchestra.webapps.geonetwork.kibana_image }}
+        env:
+          - name: ELASTICSEARCH_HOSTS
+            value: http://{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc:9200
+        ports:
+        - containerPort: 5601
+          name: kibana
+        volumeMounts:
+          - mountPath: /usr/share/kibana/config
+            name: gn4-kibana-config
+      volumes:
+      - name: gn4-kibana-config
+        configMap:
+          name: {{ include "georchestra.fullname" . }}-gn4-kibana-config
+{{- end }}

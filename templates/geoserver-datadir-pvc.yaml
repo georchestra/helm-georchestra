@@ -1,0 +1,21 @@
+{{- if .Values.georchestra.webapps.geoserver.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "georchestra.fullname" . }}-geoserver-datadir
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
+spec:
+  accessModes:
+  - ReadWriteOnce
+  {{- if .Values.georchestra.storage.storage_class_name }}
+  storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
+  {{- end }}
+  {{- if .Values.georchestra.storage.geoserver_datadir.pv_name }}
+  volumeName: {{ .Values.georchestra.storage.geoserver_datadir.pv_name }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.georchestra.storage.geoserver_datadir.size }}
+{{- end }}
