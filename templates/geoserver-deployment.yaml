@@ -76,7 +76,7 @@ spec:
           - name: GEODATA_PGDATABASE
             value: "geodata"
           {{ else }}
-          {{- $database_secret_geodata_name := $database.geodata.auth.existingSecret -}}
+          {{- $database_secret_geodata_name = $database.geodata.auth.existingSecret -}}
           - name: GEODATA_PGHOST
             valueFrom:
               secretKeyRef:
@@ -117,7 +117,7 @@ spec:
           - name: DATAFEEDER_PGDATABASE
             value: "datafeeder"
           {{ else }}
-          {{- $database_secret_datafeeder_name := $database.datafeeder.auth.existingSecret -}}
+          {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
           - name: DATAFEEDER_PGHOST
             valueFrom:
               secretKeyRef:
