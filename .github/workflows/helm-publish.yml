@@ -27,11 +27,11 @@ jobs:
       - name: Run script file
         run: |
           rm -rf georchestra/.git
-          rm -rf georchestra-gh-pages/.git
         shell: bash
       - name: Helm Package
         run: |
           helm package georchestra -d georchestra-gh-pages
+          helm package georchestra -d georchestra-gh-pages --version $(helm show chart . |grep version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
           cd georchestra-gh-pages && helm repo index .
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
