@@ -54,7 +54,7 @@ spec:
             mountPath: /mnt/geoserver_webapp
       - name: fix-permissions-pvc
         image: busybox:latest
-        command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]   
+        command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]
         volumeMounts:
         - mountPath: /mnt/geoserver_datadir
           name: geoserver-datadir
@@ -76,6 +76,7 @@ spec:
           - name: GEODATA_PGDATABASE
             value: "geodata"
           {{ else }}
+          {{- $database_secret_geodata_name := $database.geodata.auth.existingSecret -}}
           - name: GEODATA_PGHOST
             valueFrom:
               secretKeyRef:
@@ -116,6 +117,7 @@ spec:
           - name: DATAFEEDER_PGDATABASE
             value: "datafeeder"
           {{ else }}
+          {{- $database_secret_datafeeder_name := $database.datafeeder.auth.existingSecret -}}
           - name: DATAFEEDER_PGHOST
             valueFrom:
               secretKeyRef:
