@@ -29,6 +29,7 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
+          {{- include "georchestra.common-envs" . | nindent 8 }}
           {{- include "georchestra.ldap-envs" . | nindent 8 }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
           {{- if $webapp.extra_environment }}
