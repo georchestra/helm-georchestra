@@ -139,4 +139,10 @@ Insert common environment variables
 {{- define "georchestra.common-envs" -}}
 - name: FQDN
   value: "{{ .Values.fqdn }}"
+{{- if .Values.georchestra.smtp_smarthost.enabled }}
+- name: SMTPHOST
+  value: "{{ include "georchestra.fullname" . }}-smtp-svc"
+- name: SMTPPORT
+  value: "25"
+{{- end }}
 {{- end }}

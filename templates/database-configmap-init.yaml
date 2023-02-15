@@ -1,0 +1,18 @@
+{{- if .Values.database.builtin -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "georchestra.fullname" . }}-database-init
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+data:
+  00_init.sql: |-
+    create database geodata;
+    grant all privileges on database geodata to georchestra;
+    create database datafeeder;
+    grant all privileges on database datafeeder to georchestra;
+    \c datafeeder;
+    CREATE SCHEMA datafeeder;
+    CREATE SEQUENCE datafeeder.hibernate_sequence;
+    GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
+{{- end }}

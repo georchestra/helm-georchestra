@@ -143,7 +143,7 @@ georchestra:
     # relay_password:  aaaa
     extra_environment: []
 
-fqdn: "georchestra-127-0-1-1.traefik.me"
+fqdn: "ed-dev.pigeosolutions.fr"
 
 ldap:
   #host: "myldaphost" # uncomment for external host
@@ -171,19 +171,27 @@ database:
     ssl: false
     username: georchestra
   primary: # section of parameters for builtin database
+    extraVolumeMounts:
+      - name: "00-initsql"
+        mountPath: "/docker-entrypoint-initdb.d/00_init.sql"
+        subPath: "00_init.sql"
+    extraVolumes:
+      - name: "00-initsql"
+        configMap:
+          name: "{{ .Release.Name }}-database-init"
     initdb:
       username: georchestra
       password: georchestra
-      scripts:
-        00_init.sql: |
-          create database geodata;
-          grant all privileges on database geodata to georchestra;
-          create database datafeeder;
-          grant all privileges on database datafeeder to georchestra;
-          use datafeeder;
-          CREATE SCHEMA datafeeder;
-          CREATE SEQUENCE datafeeder.hibernate_sequence;
-          GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
+      # scripts:
+      #   00_init.sql: |
+      #     create database geodata;
+      #     grant all privileges on database geodata to georchestra;
+      #     create database datafeeder;
+      #     grant all privileges on database datafeeder to georchestra;
+      #     \c datafeeder;
+      #     CREATE SCHEMA datafeeder;
+      #     CREATE SEQUENCE datafeeder.hibernate_sequence;
+      #     GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
       #scriptsConfigMap: georchestra-postgresql-init !!!!!!!!!
 # geodata:
 #   auth:
