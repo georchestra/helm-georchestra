@@ -55,13 +55,7 @@ georchestra:
       ogc_api_records:
         enabled: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
-        env_variables:
-          - name: SPRING_DATASOURCE_URL
-            value: jdbc:postgresql://database:5432/georchestra
-          - name: SPRING_DATASOURCE_USERNAME
-            value: geonetwork
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: georchestra
+        env_variables: []
       es_image: elasticsearch:7.9.0
       kibana_image: kibana:7.9.0
     geoserver:
