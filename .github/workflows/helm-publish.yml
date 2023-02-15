@@ -32,7 +32,7 @@ jobs:
       - name: Helm Package
         run: |
           helm package georchestra -d georchestra-gh-pages
-          cd georchestra-gh-pages && helm repo index
+          cd georchestra-gh-pages && helm repo index .
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
