@@ -39,6 +39,7 @@ spec:
         - name: PGDATABASE
           value: "datafeeder"
         {{ else }}
+        {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
         - name: PGHOST
           valueFrom:
             secretKeyRef:
