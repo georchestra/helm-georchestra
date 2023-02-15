@@ -3,12 +3,22 @@ entries:
   georchestra:
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-15T15:24:01.350997528Z"
+    created: "2023-02-15T16:07:38.243364912Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
-    digest: 345a4451572e31c73a531a51ed84be8ebf8d3707e4912b8d1bf485e666cd669c
+    digest: a26f10f96b680eb158386cb717042d65fc0d22cc35a38b41ea2350cd1a40dcd7
     name: georchestra
     type: application
     urls:
     - georchestra-0.2.11.tgz
     version: 0.2.11
-generated: "2023-02-15T15:24:01.349645526Z"
+  - apiVersion: v2
+    appVersion: "22.0"
+    created: "2023-02-15T16:07:38.242210619Z"
+    description: A Helm chart to deploy geOrchestra instances into k8s clusters.
+    digest: 4eaca94e7bce85854379363218b07c8d77b33f0db22b362858e4e6dfa606cf6f
+    name: georchestra
+    type: application
+    urls:
+    - georchestra-0.2.11-main-3665bc2.tgz
+    version: 0.2.11-main-3665bc2
+generated: "2023-02-15T16:07:38.240880926Z"
