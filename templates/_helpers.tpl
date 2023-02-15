@@ -66,39 +66,42 @@ Insert database georchestra environment variables
 */}}
 {{- define "georchestra.database-georchestra-envs" -}}
 {{- $database := .Values.database -}}
+{{- $database_secret_georchestra_name := "" -}}
 {{- if $database.builtin }}
+{{- $database_secret_georchestra_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
 - name: PGHOST
   value: "{{ .Release.Name }}-database"
 {{- else }}
+{{- $database_secret_georchestra_name = .Values.database.auth.existingSecret -}}
 - name: PGHOST
   valueFrom:
     secretKeyRef:
-        name: {{ include "georchestra.fullname" . }}-database-georchestra-secret
+        name: {{ $database_secret_georchestra_name }}
         key: host
         optional: false
 {{- end }}
 - name: PGPORT
   valueFrom:
     secretKeyRef:
-        name: {{ include "georchestra.fullname" . }}-database-georchestra-secret
+        name: {{ $database_secret_georchestra_name }}
         key: port
         optional: false
 - name: PGDATABASE
   valueFrom:
     secretKeyRef:
-        name: {{ include "georchestra.fullname" . }}-database-georchestra-secret
+        name: {{ $database_secret_georchestra_name }}
         key: dbname
         optional: false
 - name: PGUSER
   valueFrom:
     secretKeyRef:
-        name: {{ include "georchestra.fullname" . }}-database-georchestra-secret
+        name: {{ $database_secret_georchestra_name }}
         key: user
         optional: false
 - name: PGPASSWORD
   valueFrom:
     secretKeyRef:
-        name: {{ include "georchestra.fullname" . }}-database-georchestra-secret
+        name: {{ $database_secret_georchestra_name }}
         key: password
         optional: false
 {{- end }}
