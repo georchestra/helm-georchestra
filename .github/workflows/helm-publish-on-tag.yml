@@ -1,0 +1,41 @@
+name: Helm publish on new tag
+
+on:  
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: main Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          path: georchestra
+      - name: gh-pages Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: 'gh-pages'
+          path: georchestra-gh-pages
+      - name: Helm Installation
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.2
+      - name: Run script file
+        run: |
+          rm -rf georchestra/.git
+        shell: bash
+      - name: Helm Package
+        run: |
+          helm package georchestra -d georchestra-gh-pages
+          cd georchestra-gh-pages && helm repo index .
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: georchestra-gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
