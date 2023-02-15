@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  publish:
+  publish-on-tag:
     runs-on: ubuntu-latest
     steps:
       - name: main Checkout
