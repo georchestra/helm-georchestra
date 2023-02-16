@@ -37,7 +37,7 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" $ | nindent 6 }}
       - name: fix-permissions-pvc
         image: busybox:latest
-        command: ["sh", "-c", "chown -R 999:999 /mnt/geonetwork_datadir"]   
+        command: ["sh", "-c", "chown -R 999:999 /mnt/geonetwork_datadir"]
         volumeMounts:
         - mountPath: /mnt/geonetwork_datadir
           name: geonetwork-datadir
@@ -73,11 +73,11 @@ spec:
         - containerPort: 8080
           name: http-proxy
         env:
-        - name: GEORCHESTRA_CONSOLE_URL
+        - name: GEORCHESTRA_CONSOLE_HOST
           value: "{{ include "georchestra.fullname" . }}-console-svc"
-        - name: ES_FEATUREPROXY_TARGETURI
-          value: "{{ include "georchestra.fullname" . }}-gn4-kibana-svc"
-        - name: KB_URL
+        - name: ES_HOST
+          value: "{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc"
+        - name: KB_HOST
           value: "{{ include "georchestra.fullname" . }}-gn4-kibana-svc"
           {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
           {{- if $webapp.extra_environment }}

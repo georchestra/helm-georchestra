@@ -36,31 +36,31 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
-        - name: ANALYTICS_URL
+        - name: ANALYTICS_HOST
           value: "{{ include "georchestra.fullname" . }}-analytics-svc"
-        - name: ATLAS_URL
+        - name: ATLAS_HOST
           value: "{{ include "georchestra.fullname" . }}-atlas-svc"
-        - name: CAS_URL
+        - name: CAS_HOST
           value: "{{ include "georchestra.fullname" . }}-cas-svc"
-        - name: CONSOLE_URL
+        - name: CONSOLE_HOST
           value: "{{ include "georchestra.fullname" . }}-console-svc"
-        - name: EXTRACTORAPP_URL
+        - name: EXTRACTORAPP_HOST
           value: "{{ include "georchestra.fullname" . }}-extractorapp-svc"
-        - name: GEONETWORK_URL
+        - name: GEONETWORK_HOST
           value: "{{ include "georchestra.fullname" . }}-geonetwork-svc"
-        - name: GEOSERVER_URL
+        - name: GEOSERVER_HOST
           value: "{{ include "georchestra.fullname" . }}-geoserver-svc"
-        - name: HEADER_URL
+        - name: HEADER_HOST
           value: "{{ include "georchestra.fullname" . }}-header-svc"
-        - name: MAPFISHAPP_URL
+        - name: MAPFISHAPP_HOST
           value: "{{ include "georchestra.fullname" . }}-mapfishapp-svc"
-        - name: GEOWEBCACHE_URL
+        - name: GEOWEBCACHE_HOST
           value: "{{ include "georchestra.fullname" . }}-geowebcache-svc"
-        - name: MAPSTORE_URL
+        - name: MAPSTORE_HOST
           value: "{{ include "georchestra.fullname" . }}-mapstore-svc"
-        - name: DATAFEEDER_URL
+        - name: DATAFEEDER_HOST
           value: "{{ include "georchestra.fullname" . }}-datafeeder-svc"
-        - name: IMPORT_URL
+        - name: IMPORT_HOST
           value: "{{ include "georchestra.fullname" . }}-import-svc"
           {{- include "georchestra.common-envs" . | nindent 8 }}
           {{- include "georchestra.ldap-envs" . | nindent 8 }}
