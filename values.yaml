@@ -29,7 +29,10 @@ georchestra:
       # - name: SMTPPORT
       #   value: "25"
       #registry_secret: default
+      envsubst:
+        enabled: true
     datafeeder_frontend:
+      # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true # won't deploy if datafeeder is not enable
       docker_image: georchestra/datafeeder-frontend:latest
       #registry_secret: default
@@ -56,6 +59,8 @@ georchestra:
         enabled: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
         env_variables: []
+        envsubst:
+          enabled: true
       es_image: elasticsearch:7.9.0
       kibana_image: kibana:7.9.0
     geoserver:
@@ -88,6 +93,8 @@ georchestra:
       jetty_monitoring: false
       extra_environment: []
       #registry_secret: default
+      envsubst:
+        enabled: true
   datadir:
     volume:
     - name: georchestra-datadir

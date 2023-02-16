@@ -27,6 +27,22 @@ spec:
         fsGroup: 999
       initContainers:
       {{- include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
+      {{- if .Values.georchestra.webapps.geonetwork.ogc_api_records.envsubst.enabled }}
+      - name: envsubst
+        image: georchestra/k8s-initcontainer-envsubst
+        volumeMounts:
+        - mountPath: /etc/georchestra
+          name: georchestra-datadir
+        env:
+        - name: DEBUG
+          value: "yes"
+        - name: SUBST_FILES
+          value: "/etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml"
+        - name: ES_HOST
+          value: "{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc"
+          {{- include "georchestra.common-envs" . | nindent 8 }}
+      {{- end }}
+
       containers:
       - name: ogc-api-records
         image: {{ $webapp.image }}
