@@ -31,41 +31,42 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
-          {{- include "georchestra.common-envs" . | nindent 8 }}
+        {{- include "georchestra.common-envs" . | nindent 8 }}
+        {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
         {{ if $database.builtin }}
         {{- $database_secret_datafeeder_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
-        - name: PGHOST
+        - name: DF_PGHOST
           value: "{{ .Release.Name }}-database"
-        - name: PGDATABASE
+        - name: DF_PGDATABASE
           value: "datafeeder"
         {{ else }}
         {{- $database_secret_datafeeder_name = $database.auth.existingSecret -}}
-        - name: PGHOST
+        - name: DF_PGHOST
           valueFrom:
             secretKeyRef:
                 name: {{ $database_secret_datafeeder_name }}
                 key: host
                 optional: false
-        - name: PGDATABASE
+        - name: DF_PGDATABASE
           valueFrom:
             secretKeyRef:
                 name: {{ $database_secret_datafeeder_name }}
                 key: dbname
                 optional: false
         {{ end }}
-        - name: PGPORT
+        - name: DF_PGPORT
           valueFrom:
             secretKeyRef:
                 name: {{ $database_secret_datafeeder_name }}
                 key: port
                 optional: false
-        - name: PGUSER
+        - name: DF_PGUSER
           valueFrom:
             secretKeyRef:
                 name: {{ $database_secret_datafeeder_name }}
                 key: user
                 optional: false
-        - name: PGPASSWORD
+        - name: DF_PGPASSWORD
           valueFrom:
             secretKeyRef:
                 name: {{ $database_secret_datafeeder_name }}
