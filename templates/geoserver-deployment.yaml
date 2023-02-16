@@ -70,7 +70,6 @@ spec:
           # This should match the conventions from the datadir geoserver/jetty-env.xml file
           - name: JNDI_GEODATA_JDBC_URL
             value: jdbc:postgresql://${GEODATA_PGHOST}:${GEODATA_PGPORT}/${GEODATA_PGDATABASE}
-          - name:
           {{ if $database.builtin }}
           {{- $database_secret_geodata_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: GEODATA_PGHOST
