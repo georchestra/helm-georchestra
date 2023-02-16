@@ -45,6 +45,10 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
+        - name: GEONETWORK_HOST
+          value: "{{ include "georchestra.fullname" . }}-geonetwork-svc"
+        - name: GEOSERVER_HOST
+          value: "{{ include "georchestra.fullname" . }}-geoserver-svc"
         {{- include "georchestra.common-envs" . | nindent 8 }}
         {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
         {{ if $database.builtin }}
