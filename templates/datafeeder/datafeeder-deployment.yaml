@@ -26,6 +26,20 @@ spec:
         "kubernetes.io/os": linux
       initContainers:
       {{- include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
+      {{- if .Values.georchestra.webapps.datafeeder.envsubst.enabled }}
+      - name: envsubst
+        image: georchestra/k8s-initcontainer-envsubst
+        volumeMounts:
+        - mountPath: /etc/georchestra
+          name: georchestra-datadir
+        env:
+        - name: DEBUG
+          value: "yes"
+        - name: SUBST_FILES
+          value: "/etc/georchestra/datafeeder/frontend-config.json"
+          {{- include "georchestra.common-envs" . | nindent 8 }}
+      {{- end }}
+
       containers:
       - name: georchestra-datafeeder
         image: {{ $webapp.docker_image }}
