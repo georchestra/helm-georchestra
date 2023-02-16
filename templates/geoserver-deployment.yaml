@@ -67,8 +67,10 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
+          # This should match the conventions from the datadir geoserver/jetty-env.xml file
           - name: JNDI_GEODATA_JDBC_URL
-            value: jdbc:postgresql://${GEODATA_PGHOST}:${GEODATA_PGPORT}/${GEODATA_PGDATABASE}?user=${GEODATA_PGUSER}&password=${GEODATA_PGPASSWORD}
+            value: jdbc:postgresql://${GEODATA_PGHOST}:${GEODATA_PGPORT}/${GEODATA_PGDATABASE}
+          - name:
           {{ if $database.builtin }}
           {{- $database_secret_geodata_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: GEODATA_PGHOST
@@ -96,20 +98,20 @@ spec:
                   name: {{ $database_secret_geodata_name }}
                   key: port
                   optional: false
-          - name: GEODATA_PGUSER
+          - name: JNDI_GEODATA_JDBC_USERNAME
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_geodata_name }}
                   key: user
                   optional: false
-          - name: GEODATA_PGPASSWORD
+          - name: JNDI_GEODATA_JDBC_PASSWORD
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_geodata_name }}
                   key: password
                   optional: false
           - name: JNDI_DATAFEEDER_JDBC_URL
-            value: jdbc:postgresql://${DATAFEEDER_PGHOST}:${DATAFEEDER_PGPORT}/${DATAFEEDER_PGDATABASE}?user=${DATAFEEDER_PGUSER}&password=${DATAFEEDER_PGPASSWORD}
+            value: jdbc:postgresql://${DATAFEEDER_PGHOST}:${DATAFEEDER_PGPORT}/${DATAFEEDER_PGDATABASE}
           {{ if $database.builtin }}
           {{- $database_secret_datafeeder_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: DATAFEEDER_PGHOST
@@ -137,13 +139,13 @@ spec:
                   name: {{ $database_secret_datafeeder_name }}
                   key: port
                   optional: false
-          - name: DATAFEEDER_PGUSER
+          - name: JNDI_DATAFEEDER_JDBC_USERNAME
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
                   key: user
                   optional: false
-          - name: DATAFEEDER_PGPASSWORD
+          - name: JNDI_DATAFEEDER_JDBC_PASSWORD
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
