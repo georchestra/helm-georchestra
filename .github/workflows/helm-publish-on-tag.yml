@@ -20,7 +20,9 @@ jobs:
 
       - name: Configure Git and move chart to subfolder
         run: |
-          mkdir georchestra && mv * georchestra
+          shopt -s extglob dotglob
+          mkdir georchestra && mv !(georchestra) georchestra
+          shopt -u dotglob
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - name: Install Helm
