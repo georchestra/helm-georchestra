@@ -30,8 +30,14 @@ jobs:
           rm -rf georchestra/.git
         shell: bash
       - name: Helm Package
+        if: github.event_name = 'push'
         run: |
           helm package georchestra -d georchestra-gh-pages --version $(helm show chart georchestra |grep version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
+          cd georchestra-gh-pages && helm repo index .
+      - name: Helm Package
+        if: github.event_name = 'pull_request'
+        run: |
+          helm package georchestra -d georchestra-gh-pages --version $(helm show chart georchestra |grep version: | awk '{print $2}')-"$GITHUB_HEAD_REF"-"${GITHUB_SHA::7}"
           cd georchestra-gh-pages && helm repo index .
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
