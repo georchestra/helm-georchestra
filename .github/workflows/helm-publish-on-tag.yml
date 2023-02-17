@@ -1,12 +1,16 @@
-name: Helm publish on new tag
+name: Release Charts on new version
 
-on:  
+on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main
 
 jobs:
-  publish-on-tag:
+  chart-publish-on-new-version:
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: main Checkout
@@ -14,28 +18,19 @@ jobs:
         with:
           fetch-depth: 0
           path: georchestra
-      - name: gh-pages Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: 'gh-pages'
-          path: georchestra-gh-pages
-      - name: Helm Installation
-        uses: azure/setup-helm@v3
-        with:
-          version: v3.10.2
-      - name: Run script file
+
+      - name: Configure Git
         run: |
-          rm -rf georchestra/.git
-        shell: bash
-      - name: Helm Package
-        run: |
-          helm package georchestra -d georchestra-gh-pages
-          cd georchestra-gh-pages && helm repo index .
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v3
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Install Helm
+        uses: azure/setup-helm@v1
         with:
-          target_branch: gh-pages
-          build_dir: georchestra-gh-pages
+          version: v3.8.1
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@main
+        with:
+          charts_dir: '.'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

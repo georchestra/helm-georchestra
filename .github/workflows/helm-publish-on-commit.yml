@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: 'gh-pages'
-          path: georchestra-gh-pages
+          path: gh-pages
       - name: Helm Installation
         uses: azure/setup-helm@v3
         with:
@@ -31,13 +31,14 @@ jobs:
         shell: bash
       - name: Helm Package
         run: |
-          echo $(helm show chart georchestra |grep version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
-          helm package georchestra -d georchestra-gh-pages --version $(helm show chart georchestra |grep version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
-          cd georchestra-gh-pages && helm repo index .
+          helm package georchestra -d gh-pages --version $(helm show chart georchestra |grep ^version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
+          cd gh-pages
+          find . -type f -mtime +180 -delete
+          helm repo index . --merge index.yam
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
-          build_dir: georchestra-gh-pages
+          build_dir: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
