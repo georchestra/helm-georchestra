@@ -1,6 +1,0 @@
-releases:
-  - name: georchestra
-    namespace: geotest
-    chart: ./
-    #values:
-    #  - values-helmfile.yaml
