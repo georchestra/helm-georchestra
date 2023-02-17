@@ -194,21 +194,21 @@ database:
       #     CREATE SEQUENCE datafeeder.hibernate_sequence;
       #     GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
       #scriptsConfigMap: georchestra-postgresql-init !!!!!!!!!
-# geodata:
-#   auth:
-#     database: geodata
-#     existingSecret: mysecret
-#     host: geodata
-#     password: geodata
-#     port: "5432"
-#     ssl: false
-#     username: geodata
-# datafeeder:
-#   auth:
-#     database: datafeeder
-#     existingSecret: mysecret
-#     host: datafeeder
-#     port: "5432"
-#     ssl: false
-#     password: datafeeder
-#     username: datafeeder
+  geodata:
+   auth:
+     database: geodata
+     # existingSecret: mysecret
+     host: geodata
+     password: geodata
+     port: "5432"
+     ssl: false
+     username: geodata
+  datafeeder:
+   auth:
+     database: datafeeder
+     # existingSecret: mysecret
+     host: datafeeder
+     port: "5432"
+     ssl: false
+     password: datafeeder
+     username: datafeeder
