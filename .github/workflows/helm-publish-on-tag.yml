@@ -21,7 +21,7 @@ jobs:
       - name: Configure Git and move chart to subfolder
         run: |
           shopt -s extglob dotglob
-          mkdir georchestra && mv !(georchestra) georchestra
+          mkdir georchestra && mv !(georchestra) georchestra && mv georchestra/.git .
           shopt -u dotglob
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
