@@ -31,6 +31,7 @@ jobs:
         shell: bash
       - name: Helm Package
         run: |
+          echo $(helm show chart georchestra |grep version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
           helm package georchestra -d georchestra-gh-pages --version $(helm show chart georchestra |grep version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
           cd georchestra-gh-pages && helm repo index .
       - name: Deploy to GitHub Pages
