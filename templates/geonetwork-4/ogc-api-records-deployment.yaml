@@ -56,7 +56,9 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: standalone
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}?user=${PGUSER}&password=${PGPASSWORD}&currentSchema=geonetwork
+          value: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}?user=${PGUSER}&currentSchema=geonetwork
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: ${PGPASSWORD}
         {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
         {{- with $webapp.env_variables }}
           {{- toYaml . | nindent 8 }}
