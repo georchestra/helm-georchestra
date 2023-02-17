@@ -23,8 +23,16 @@ georchestra:
     datafeeder:
       enabled: true # won't deploy if datafeeder_frontend is not enable
       docker_image: georchestra/datafeeder:latest
+      extra_environment:
+      # - name: SMTPHOST
+      #   value: "my_smtp_host"
+      # - name: SMTPPORT
+      #   value: "25"
       #registry_secret: default
+      envsubst:
+        enabled: true
     datafeeder_frontend:
+      # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true # won't deploy if datafeeder is not enable
       docker_image: georchestra/datafeeder-frontend:latest
       #registry_secret: default
@@ -38,7 +46,7 @@ georchestra:
       docker_image: georchestra/geonetwork:latest
       # the registry secret is only used for the GeoNetwork image
       #registry_secret: default
-      jetty_monitoring: true
+      jetty_monitoring: false
       extra_environment: []
       # volumes is the deployment-compliant specification of the pod's extra volume
       # It should match with an item from the extra_volumeName.name variable below.
@@ -50,19 +58,15 @@ georchestra:
       ogc_api_records:
         enabled: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
-        env_variables:
-          - name: SPRING_DATASOURCE_URL
-            value: jdbc:postgresql://database:5432/georchestra
-          - name: SPRING_DATASOURCE_USERNAME
-            value: geonetwork
-          - name: SPRING_DATASOURCE_PASSWORD
-            value: georchestra
+        env_variables: []
+        envsubst:
+          enabled: true
       es_image: elasticsearch:7.9.0
       kibana_image: kibana:7.9.0
     geoserver:
       enabled: true
       docker_image: georchestra/geoserver:latest
-      jetty_monitoring: true
+      jetty_monitoring: false
       extra_environment: []
       #registry_secret: default
     header:
@@ -86,16 +90,18 @@ georchestra:
     proxy:
       enabled: true
       docker_image: georchestra/security-proxy:latest
-      jetty_monitoring: true
+      jetty_monitoring: false
       extra_environment: []
       #registry_secret: default
+      envsubst:
+        enabled: true
   datadir:
     volume:
     - name: georchestra-datadir
       emptyDir: {}
     git:
       url: https://github.com/georchestra/datadir.git
-      ref: docker-master
+      ref: k8s-envs-master
       #ssh_secret: my-private-ssh-key
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
@@ -129,7 +135,7 @@ georchestra:
     # Leave it commented if not needed
     # storage_class_name: default
   smtp_smarthost:
-    enabled: false
+    enabled: true
     # mailname: georchestra-127-0-1-1.traefik.me
     # postmaster: postmaster@georchestra-127-0-1-1.traefik.me
     # relay_host: my-external-smtp
@@ -137,3 +143,72 @@ georchestra:
     # relay_username:  aaaa
     # relay_password:  aaaa
     extra_environment: []
+
+fqdn: "ed-dev.pigeosolutions.fr"
+
+ldap:
+  #host: "myldaphost" # uncomment for external host
+  port: "389"
+  adminPassword: "secret"
+  scheme: "ldap"
+  baseDn: "dc=georchestra,dc=org"
+  usersRdn: "ou=users"
+  adminDn: "cn=admin,dc=georchestra,dc=org"
+  rolesRdn: "ou=roles"
+  orgsRdn: "ou=orgs"
+
+database:
+  builtin: true
+  image: # section of parameters for builtin database
+    repository: georchestra/database
+    tag: latest
+  auth:
+    database: georchestra
+#   existingSecret: mysecret
+#   host: georchestra
+    password: georchestra
+    postgresPassword: georchestra
+    port: "5432"
+    ssl: false
+    username: georchestra
+  primary: # section of parameters for builtin database
+    extraVolumeMounts:
+      - name: "00-initsql"
+        mountPath: "/docker-entrypoint-initdb.d/00_init.sql"
+        subPath: "00_init.sql"
+    extraVolumes:
+      - name: "00-initsql"
+        configMap:
+          name: "{{ .Release.Name }}-database-init"
+    initdb:
+      username: georchestra
+      password: georchestra
+      # scripts:
+      #   00_init.sql: |
+      #     create database geodata;
+      #     grant all privileges on database geodata to georchestra;
+      #     create database datafeeder;
+      #     grant all privileges on database datafeeder to georchestra;
+      #     \c datafeeder;
+      #     CREATE SCHEMA datafeeder;
+      #     CREATE SEQUENCE datafeeder.hibernate_sequence;
+      #     GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
+      #scriptsConfigMap: georchestra-postgresql-init !!!!!!!!!
+  geodata:
+   auth:
+     database: geodata
+     # existingSecret: mysecret
+     host: geodata
+     password: geodata
+     port: "5432"
+     ssl: false
+     username: geodata
+  datafeeder:
+   auth:
+     database: datafeeder
+     # existingSecret: mysecret
+     host: datafeeder
+     port: "5432"
+     ssl: false
+     password: datafeeder
+     username: datafeeder

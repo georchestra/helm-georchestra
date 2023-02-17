@@ -60,3 +60,92 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Insert database georchestra environment variables
+*/}}
+{{- define "georchestra.database-georchestra-envs" -}}
+{{- $database := .Values.database -}}
+{{- $database_secret_georchestra_name := "" -}}
+{{- if $database.builtin }}
+{{- $database_secret_georchestra_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+- name: PGHOST
+  value: "{{ .Release.Name }}-database"
+{{- else }}
+{{- $database_secret_georchestra_name = .Values.database.auth.existingSecret -}}
+- name: PGHOST
+  valueFrom:
+    secretKeyRef:
+        name: {{ $database_secret_georchestra_name }}
+        key: host
+        optional: false
+{{- end }}
+- name: PGPORT
+  valueFrom:
+    secretKeyRef:
+        name: {{ $database_secret_georchestra_name }}
+        key: port
+        optional: false
+- name: PGDATABASE
+  valueFrom:
+    secretKeyRef:
+        name: {{ $database_secret_georchestra_name }}
+        key: dbname
+        optional: false
+- name: PGUSER
+  valueFrom:
+    secretKeyRef:
+        name: {{ $database_secret_georchestra_name }}
+        key: user
+        optional: false
+- name: PGPASSWORD
+  valueFrom:
+    secretKeyRef:
+        name: {{ $database_secret_georchestra_name }}
+        key: password
+        optional: false
+{{- end }}
+
+{{/*
+Insert LDAP environment variables
+*/}}
+{{- define "georchestra.ldap-envs" -}}
+{{- $ldap := .Values.ldap -}}
+{{- if .Values.georchestra.webapps.openldap.enabled }}
+- name: LDAPHOST
+  value: "{{ include "georchestra.fullname" . }}-ldap-svc"
+{{- else }}
+- name: LDAPHOST
+  value: "{{ $ldap.host }}"
+{{- end }}
+- name: LDAPPORT
+  value: "{{ $ldap.port }}"
+- name: LDAPSCHEME
+  value: "{{ $ldap.scheme }}"
+- name: LDAPBASEDN
+  value: "{{ $ldap.baseDn }}"
+- name: LDAPADMINDN
+  value: "{{ $ldap.adminDn }}"
+- name: LDAPADMINPASSWORD
+  value: "{{ $ldap.adminPassword }}"
+- name: LDAPUSERSRDN
+  value: "{{ $ldap.usersRdn }}"
+- name: LDAPROLESRDN
+  value: "{{ $ldap.rolesRdn }}"
+- name: LDAPORGSRDN
+  value: "{{ $ldap.orgsRdn }}"
+{{- end }}
+
+{{/*
+Insert common environment variables
+*/}}
+{{- define "georchestra.common-envs" -}}
+- name: FQDN
+  value: "{{ .Values.fqdn }}"
+{{- if .Values.georchestra.smtp_smarthost.enabled }}
+- name: SMTPHOST
+  value: "{{ include "georchestra.fullname" . }}-smtp-svc"
+- name: SMTPPORT
+  value: "25"
+{{- end }}
+{{- end }}

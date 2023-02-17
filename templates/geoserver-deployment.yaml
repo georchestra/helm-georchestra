@@ -1,5 +1,8 @@
 {{- if .Values.georchestra.webapps.geoserver.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.geoserver -}}
+{{- $database := .Values.database -}}
+{{- $database_secret_geodata_name := printf "%s-database-geodata-secret" (include "georchestra.fullname" .) -}}
+{{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -51,7 +54,7 @@ spec:
             mountPath: /mnt/geoserver_webapp
       - name: fix-permissions-pvc
         image: busybox:latest
-        command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]   
+        command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]
         volumeMounts:
         - mountPath: /mnt/geoserver_datadir
           name: geoserver-datadir
@@ -63,10 +66,88 @@ spec:
       - name: georchestra-geoserver
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{- if $webapp.extra_environment }}
         env:
+          {{ if $database.builtin }}
+          {{- $database_secret_geodata_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+          - name: GEODATA_PGHOST
+            value: "{{ .Release.Name }}-database"
+          - name: GEODATA_PGDATABASE
+            value: "geodata"
+          {{ else }}
+          {{- $database_secret_geodata_name = $database.geodata.auth.existingSecret -}}
+          - name: GEODATA_PGHOST
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_geodata_name }}
+                  key: host
+                  optional: false
+          - name: GEODATA_PGDATABASE
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_geodata_name }}
+                  key: dbname
+                  optional: false
+          {{ end }}
+          - name: GEODATA_PGPORT
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_geodata_name }}
+                  key: port
+                  optional: false
+          - name: GEODATA_PGUSER
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_geodata_name }}
+                  key: user
+                  optional: false
+          - name: GEODATA_PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_geodata_name }}
+                  key: password
+                  optional: false
+          {{ if $database.builtin }}
+          {{- $database_secret_datafeeder_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+          - name: DATAFEEDER_PGHOST
+            value: "{{ .Release.Name }}-database"
+          - name: DATAFEEDER_PGDATABASE
+            value: "datafeeder"
+          {{ else }}
+          {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
+          - name: DATAFEEDER_PGHOST
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: host
+                  optional: false
+          - name: DATAFEEDER_PGDATABASE
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: dbname
+                  optional: false
+          {{ end }}
+          - name: DATAFEEDER_PGPORT
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: port
+                  optional: false
+          - name: DATAFEEDER_PGUSER
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: user
+                  optional: false
+          - name: DATAFEEDER_PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: password
+                  optional: false
+          {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 8 }}
-        {{- end }}
+          {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir

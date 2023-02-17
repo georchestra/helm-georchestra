@@ -28,10 +28,12 @@ spec:
       - name: georchestra-extractorapp
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{- if $webapp.extra_environment }}
         env:
+          {{- include "georchestra.common-envs" . | nindent 8 }}
+          {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
+          {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 8 }}
-        {{- end }}
+          {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
