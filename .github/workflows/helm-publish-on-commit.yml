@@ -35,7 +35,7 @@ jobs:
           helm package georchestra -d gh-pages --version $(helm show chart georchestra |grep ^version: | awk '{print $2}')-"$GITHUB_REF_NAME"-"${GITHUB_SHA::7}"
           cd gh-pages
           find . -type f -mtime +180 -delete
-          helm repo index . --merge index.yam
+          helm repo index . --merge index.yaml
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:

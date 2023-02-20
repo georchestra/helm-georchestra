@@ -33,7 +33,7 @@ jobs:
           cd georchestra && helm dependency update && cd ..
           helm package georchestra -d gh-pages
           cd gh-pages
-          helm repo index . --merge index.yam
+          helm repo index . --merge index.yaml
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
