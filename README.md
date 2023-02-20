@@ -3,18 +3,27 @@
 This repository holds a helm chart for geOrchestra. This README file aims to present
 some of the features and/or implementation choices.
 
+# Maintainers
+
+## How to create a new chart release
+1. Change and push the version in the Chart.yaml
+2. Execute `git tag 0.X.X` (with the same version as the chart)
+2. Execute `git push --tags`
+
 # Usage
 
 ## Install
 
 ```
-% helm install -f path/to/my/values.yaml georchestra .
+% helm repo add georchestra https://charts.georchestra.org
+% helm repo update
+% helm install -f path/to/my/values.yaml georchestra georchestra/georchestra
 ```
 
 ## Upgrade
 
 ```
-% helm upgrade -f path/to/my/values.yaml georchestra .
+% helm upgrade -f path/to/my/values.yaml georchestra georchestra/georchestra
 ```
 
 # geOrchestra Datadir bootstrap
