@@ -183,17 +183,6 @@ database:
     initdb:
       username: georchestra
       password: georchestra
-      # scripts:
-      #   00_init.sql: |
-      #     create database geodata;
-      #     grant all privileges on database geodata to georchestra;
-      #     create database datafeeder;
-      #     grant all privileges on database datafeeder to georchestra;
-      #     \c datafeeder;
-      #     CREATE SCHEMA datafeeder;
-      #     CREATE SEQUENCE datafeeder.hibernate_sequence;
-      #     GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
-      #scriptsConfigMap: georchestra-postgresql-init !!!!!!!!!
   geodata:
    auth:
      database: geodata
