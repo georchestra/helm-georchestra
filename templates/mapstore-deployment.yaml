@@ -36,12 +36,12 @@ spec:
           - mountPath: /mnt/mapstore2
             name: mapstore-datadir
         env:
-        - name: JAVA_OPTS
-          value: -Xms512m -Xmx1G -XX:MaxPermSize=128m -DPRINT_BASE_URL=pdf -Dgeorchestra.datadir=/etc/georchestra -Dgeorchestra.extensions=/mnt/mapstore2
-          {{- include "georchestra.ldap-envs" . | nindent 8 }}
-          {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
+          - name: JAVA_OPTS
+            value: -Xms512m -Xmx1G -XX:MaxPermSize=128m -DPRINT_BASE_URL=pdf -Dgeorchestra.datadir=/etc/georchestra -Dgeorchestra.extensions=/mnt/mapstore2
+          {{- include "georchestra.ldap-envs" . | nindent 10 }}
+          {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
-          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
         ports:
         - containerPort: 8080

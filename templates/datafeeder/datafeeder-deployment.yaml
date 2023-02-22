@@ -33,11 +33,11 @@ spec:
         - mountPath: /etc/georchestra
           name: georchestra-datadir
         env:
-        - name: DEBUG
-          value: "yes"
-        - name: SUBST_FILES
-          value: "/etc/georchestra/datafeeder/frontend-config.json"
-          {{- include "georchestra.common-envs" . | nindent 8 }}
+          - name: DEBUG
+            value: "yes"
+          - name: SUBST_FILES
+            value: "/etc/georchestra/datafeeder/frontend-config.json"
+          {{- include "georchestra.common-envs" . | nindent 10 }}
       {{- end }}
 
       containers:
@@ -45,53 +45,53 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
-        - name: GEONETWORK_HOST
-          value: "{{ include "georchestra.fullname" . }}-geonetwork-svc"
-        - name: GEOSERVER_HOST
-          value: "{{ include "georchestra.fullname" . }}-geoserver-svc"
-        {{- include "georchestra.common-envs" . | nindent 8 }}
-        {{- include "georchestra.database-georchestra-envs" . | nindent 8 }}
-        {{ if $database.builtin }}
-        {{- $database_secret_datafeeder_name = printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
-        - name: DF_PGHOST
-          value: "{{ .Release.Name }}-database"
-        - name: DF_PGDATABASE
-          value: "datafeeder"
-        {{ else }}
-        {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
-        - name: DF_PGHOST
-          valueFrom:
-            secretKeyRef:
-                name: {{ $database_secret_datafeeder_name }}
-                key: host
-                optional: false
-        - name: DF_PGDATABASE
-          valueFrom:
-            secretKeyRef:
-                name: {{ $database_secret_datafeeder_name }}
-                key: dbname
-                optional: false
-        {{ end }}
-        - name: DF_PGPORT
-          valueFrom:
-            secretKeyRef:
-                name: {{ $database_secret_datafeeder_name }}
-                key: port
-                optional: false
-        - name: DF_PGUSER
-          valueFrom:
-            secretKeyRef:
-                name: {{ $database_secret_datafeeder_name }}
-                key: user
-                optional: false
-        - name: DF_PGPASSWORD
-          valueFrom:
-            secretKeyRef:
-                name: {{ $database_secret_datafeeder_name }}
-                key: password
-                optional: false
+          - name: GEONETWORK_HOST
+            value: "{{ include "georchestra.fullname" . }}-geonetwork-svc"
+          - name: GEOSERVER_HOST
+            value: "{{ include "georchestra.fullname" . }}-geoserver-svc"
+          {{- include "georchestra.common-envs" . | nindent 10 }}
+          {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
+          {{ if $database.builtin }}
+          {{- $database_secret_datafeeder_name = printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
+          - name: DF_PGHOST
+            value: "{{ .Release.Name }}-database"
+          - name: DF_PGDATABASE
+            value: "datafeeder"
+          {{ else }}
+          {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
+          - name: DF_PGHOST
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: host
+                  optional: false
+          - name: DF_PGDATABASE
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: dbname
+                  optional: false
+          {{ end }}
+          - name: DF_PGPORT
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: port
+                  optional: false
+          - name: DF_PGUSER
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: user
+                  optional: false
+          - name: DF_PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                  name: {{ $database_secret_datafeeder_name }}
+                  key: password
+                  optional: false
           {{- if $webapp.extra_environment }}
-          {{- $webapp.extra_environment | toYaml | nindent 8 }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
         ports:
         - containerPort: 8080
