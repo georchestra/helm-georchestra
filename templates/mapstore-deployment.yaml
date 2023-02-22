@@ -30,6 +30,10 @@ spec:
       - name: georchestra-mapstore
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
+        {{- if .Values.georchestra.webapps.mapstore.command -}}
+        command: [ "/bin/bash" ]
+        args: [ "-c" , "{{ .Values.georchestra.webapps.mapstore.command }} ; /bin/sh -c #(nop) EXPOSE 8080"]
+        {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
