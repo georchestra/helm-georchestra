@@ -3,7 +3,23 @@ entries:
   georchestra:
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.076277682Z"
+    created: "2023-02-22T09:30:21.971341516Z"
+    dependencies:
+    - alias: database
+      condition: database.builtin
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami/
+      version: ~12.1.14
+    description: A Helm chart to deploy geOrchestra instances into k8s clusters.
+    digest: 6c27e62cfb21eb6b755f69856966ff5943bd8073542af0543fffe5eaaa404880
+    name: georchestra
+    type: application
+    urls:
+    - georchestra-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: "22.0"
+    created: "2023-02-22T09:30:21.95739653Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -19,7 +35,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.070800908Z"
+    created: "2023-02-22T09:30:21.951426008Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -35,7 +51,7 @@ entries:
     version: 0.3.1-main-d97635c
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.06415784Z"
+    created: "2023-02-22T09:30:21.937658926Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -51,7 +67,7 @@ entries:
     version: 0.3.1-main-5fa4e4b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.058628066Z"
+    created: "2023-02-22T09:30:21.931854807Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -67,7 +83,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.051410201Z"
+    created: "2023-02-22T09:30:21.925845384Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -83,7 +99,7 @@ entries:
     version: 0.3.0-main-cc4ed38
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.045918027Z"
+    created: "2023-02-22T09:30:21.916061584Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -99,7 +115,7 @@ entries:
     version: 0.3.0-main-b7ef964
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.039359758Z"
+    created: "2023-02-22T09:30:21.903578528Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -115,7 +131,7 @@ entries:
     version: 0.3.0-main-ab36565
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.033808484Z"
+    created: "2023-02-22T09:30:21.897430502Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -131,7 +147,7 @@ entries:
     version: 0.3.0-main-9891103
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.027009916Z"
+    created: "2023-02-22T09:30:21.891843288Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -147,7 +163,7 @@ entries:
     version: 0.3.0-main-8a21ef7
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.021356043Z"
+    created: "2023-02-22T09:30:21.879439434Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -163,7 +179,7 @@ entries:
     version: 0.3.0-main-5bb4b03
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.014283077Z"
+    created: "2023-02-22T09:30:21.867498089Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: a26f10f96b680eb158386cb717042d65fc0d22cc35a38b41ea2350cd1a40dcd7
     name: georchestra
@@ -173,7 +189,7 @@ entries:
     version: 0.2.11
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.013192182Z"
+    created: "2023-02-22T09:30:21.866381566Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -189,7 +205,7 @@ entries:
     version: 0.2.11-main-db41fbb
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.006420314Z"
+    created: "2023-02-22T09:30:21.85974353Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 7cf4d505c913e6ab286100009bcbea80475eef240e27fa6e2087d2550f778c96
     name: georchestra
@@ -199,7 +215,7 @@ entries:
     version: 0.2.11-main-650c2db
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:22.005324619Z"
+    created: "2023-02-22T09:30:21.858176398Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -215,7 +231,7 @@ entries:
     version: 0.2.11-main-438071e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:21.999124049Z"
+    created: "2023-02-22T09:30:21.852186876Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 4eaca94e7bce85854379363218b07c8d77b33f0db22b362858e4e6dfa606cf6f
     name: georchestra
@@ -225,7 +241,7 @@ entries:
     version: 0.2.11-main-3665bc2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:21.998032954Z"
+    created: "2023-02-22T09:30:21.851137954Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: a36326964c5cc7066000c0c4a1aa24fbff5f2dc0b912480745b0e792dc41fed2
     name: georchestra
@@ -235,7 +251,7 @@ entries:
     version: 0.2.11-main-32bb680
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:21.996971959Z"
+    created: "2023-02-22T09:30:21.850044432Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 5f6bfb0893affe5ce971665295bdd1953b0f5647fc20429c1161ef685b6ef7a0
     name: georchestra
@@ -245,7 +261,7 @@ entries:
     version: 0.2.11-main-13a6aea
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:21.995875464Z"
+    created: "2023-02-22T09:30:21.848955009Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -261,7 +277,7 @@ entries:
     version: 0.2.11-main-067fc20
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-02-22T09:26:21.988155601Z"
+    created: "2023-02-22T09:30:21.842082169Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -275,4 +291,4 @@ entries:
     urls:
     - georchestra-0.2.11-main-064bdfe.tgz
     version: 0.2.11-main-064bdfe
-generated: "2023-02-22T09:26:21.98205783Z"
+generated: "2023-02-22T09:30:21.828543091Z"
