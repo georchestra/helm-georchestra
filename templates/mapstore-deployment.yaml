@@ -32,7 +32,7 @@ spec:
         imagePullPolicy: Always
         {{ if .Values.georchestra.webapps.mapstore.command -}}
         command: [ "/bin/bash" ]
-        args: [ "-c" , "{{ .Values.georchestra.webapps.mapstore.command }} ; /bin/sh -c #(nop) EXPOSE 8080"]
+        args: [ "-c" , "{{ .Values.georchestra.webapps.mapstore.command }} ; catalina.sh run"]
         {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
