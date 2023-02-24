@@ -30,9 +30,9 @@ spec:
       - name: georchestra-mapstore
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{ if .Values.georchestra.webapps.mapstore.command -}}
-        command: [ "/bin/bash" ]
-        args: [ "-c" , "{{ .Values.georchestra.webapps.mapstore.command }} ; catalina.sh run"]
+        {{ if and .Values.georchestra.webapps.mapstore.command .Values.georchestra.webapps.mapstore.args -}}
+        command: [ "{{ .Values.georchestra.webapps.mapstore.command }}" ]
+        args: {{.Values.georchestra.webapps.mapstore.args}}
         {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
