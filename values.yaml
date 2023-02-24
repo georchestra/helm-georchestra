@@ -85,6 +85,7 @@ georchestra:
       #registry_secret: default
       # no need to put the original command already managed
       command: []
+      args: []
     openldap:
       enabled: true
       docker_image: georchestra/ldap:latest
