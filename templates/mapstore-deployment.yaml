@@ -31,8 +31,14 @@ spec:
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         {{ if and .Values.georchestra.webapps.mapstore.command .Values.georchestra.webapps.mapstore.args -}}
-        command: {{ .Values.georchestra.webapps.mapstore.command }}
-        args: {{ .Values.georchestra.webapps.mapstore.args }}
+        command:
+        {{- range .Values.georchestra.webapps.mapstore.command }}
+        - {{ . }}
+        {{- end }}
+        args:
+        {{- range .Values.georchestra.webapps.mapstore.args }}
+        - {{ . }}
+        {{- end }}
         {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
