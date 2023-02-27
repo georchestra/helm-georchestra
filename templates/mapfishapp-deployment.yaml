@@ -30,6 +30,7 @@ spec:
         imagePullPolicy: Always
         {{- if $webapp.extra_environment }}
         env:
+          {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
         {{- end }}
         ports:
