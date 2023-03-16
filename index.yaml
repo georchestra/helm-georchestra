@@ -3,7 +3,7 @@ entries:
   georchestra:
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.052983011Z"
+    created: "2023-03-16T14:44:36.158561741Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -19,7 +19,7 @@ entries:
     version: 0.4.2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.04621162Z"
+    created: "2023-03-16T14:44:36.151891277Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -35,7 +35,23 @@ entries:
     version: 0.4.2-main-f797dfc
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.040210828Z"
+    created: "2023-03-16T14:44:36.146303623Z"
+    dependencies:
+    - alias: database
+      condition: database.builtin
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami/
+      version: ~12.1.14
+    description: A Helm chart to deploy geOrchestra instances into k8s clusters.
+    digest: 22c736501c4838afa93c4be8d2cda2a6eeb26f6975355b74de9eedcfc85c4351
+    name: georchestra
+    type: application
+    urls:
+    - georchestra-0.4.2-main-b877f47.tgz
+    version: 0.4.2-main-b877f47
+  - apiVersion: v2
+    appVersion: "22.0"
+    created: "2023-03-16T14:44:36.13975736Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -51,7 +67,7 @@ entries:
     version: 0.4.2-GEO-5997-geonetwwork-web-xml-115941d
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.033204237Z"
+    created: "2023-03-16T14:44:36.134141706Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -67,7 +83,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.027041246Z"
+    created: "2023-03-16T14:44:36.12726414Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -83,7 +99,7 @@ entries:
     version: 0.4.1-main-61929e3
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.019688955Z"
+    created: "2023-03-16T14:44:36.121632986Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -99,7 +115,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.013715963Z"
+    created: "2023-03-16T14:44:36.115130824Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -115,7 +131,7 @@ entries:
     version: 0.4.0-main-0938620
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.006782973Z"
+    created: "2023-03-16T14:44:36.10956017Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -131,7 +147,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:24.000805981Z"
+    created: "2023-03-16T14:44:36.102868106Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -147,7 +163,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-961cd33
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.99376839Z"
+    created: "2023-03-16T14:44:36.097185751Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -163,7 +179,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-8731500
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.987777498Z"
+    created: "2023-03-16T14:44:36.090563887Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -179,7 +195,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-4d69976
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.980875407Z"
+    created: "2023-03-16T14:44:36.084783632Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -195,7 +211,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-4747e55
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.974868815Z"
+    created: "2023-03-16T14:44:36.078166968Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -211,7 +227,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-2bd3bd4
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.967896325Z"
+    created: "2023-03-16T14:44:36.072541714Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -227,7 +243,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-273b86e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.961880333Z"
+    created: "2023-03-16T14:44:36.065748149Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -243,7 +259,7 @@ entries:
     version: 0.3.3-main-45b5d53
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.954033243Z"
+    created: "2023-03-16T14:44:36.059955393Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -259,7 +275,7 @@ entries:
     version: 0.3.3-main-19943f5
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.947952151Z"
+    created: "2023-03-16T14:44:36.053310529Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -275,7 +291,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.940230061Z"
+    created: "2023-03-16T14:44:36.047737176Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -291,7 +307,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.932955671Z"
+    created: "2023-03-16T14:44:36.040674508Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -307,7 +323,7 @@ entries:
     version: 0.3.1-main-d97635c
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.926847979Z"
+    created: "2023-03-16T14:44:36.035039654Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -323,7 +339,7 @@ entries:
     version: 0.3.1-main-5fa4e4b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.920124288Z"
+    created: "2023-03-16T14:44:36.028058187Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -339,7 +355,7 @@ entries:
     version: 0.3.1-GEO-5997-geonetwwork-web-xml-2c7fac7
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.913861597Z"
+    created: "2023-03-16T14:44:36.022298131Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -355,7 +371,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.906909406Z"
+    created: "2023-03-16T14:44:36.01489626Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -371,7 +387,7 @@ entries:
     version: 0.3.0-main-cc4ed38
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.900792014Z"
+    created: "2023-03-16T14:44:36.009289706Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -387,7 +403,7 @@ entries:
     version: 0.3.0-main-b7ef964
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.893367724Z"
+    created: "2023-03-16T14:44:36.002538541Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -403,7 +419,7 @@ entries:
     version: 0.3.0-main-ab36565
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.887276132Z"
+    created: "2023-03-16T14:44:35.996781586Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -419,7 +435,7 @@ entries:
     version: 0.3.0-main-9891103
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.880914641Z"
+    created: "2023-03-16T14:44:35.989813319Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -435,7 +451,7 @@ entries:
     version: 0.3.0-main-8a21ef7
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.874528649Z"
+    created: "2023-03-16T14:44:35.984150865Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -451,7 +467,7 @@ entries:
     version: 0.3.0-main-5bb4b03
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.867607458Z"
+    created: "2023-03-16T14:44:35.976975896Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: a26f10f96b680eb158386cb717042d65fc0d22cc35a38b41ea2350cd1a40dcd7
     name: georchestra
@@ -461,7 +477,7 @@ entries:
     version: 0.2.11
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.86645926Z"
+    created: "2023-03-16T14:44:35.975816785Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -477,7 +493,7 @@ entries:
     version: 0.2.11-main-db41fbb
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.860507068Z"
+    created: "2023-03-16T14:44:35.968972119Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 7cf4d505c913e6ab286100009bcbea80475eef240e27fa6e2087d2550f778c96
     name: georchestra
@@ -487,7 +503,7 @@ entries:
     version: 0.2.11-main-650c2db
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.859344369Z"
+    created: "2023-03-16T14:44:35.967264802Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -503,7 +519,7 @@ entries:
     version: 0.2.11-main-438071e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.85139658Z"
+    created: "2023-03-16T14:44:35.961024742Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 4eaca94e7bce85854379363218b07c8d77b33f0db22b362858e4e6dfa606cf6f
     name: georchestra
@@ -513,7 +529,7 @@ entries:
     version: 0.2.11-main-3665bc2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.850283382Z"
+    created: "2023-03-16T14:44:35.959891131Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: a36326964c5cc7066000c0c4a1aa24fbff5f2dc0b912480745b0e792dc41fed2
     name: georchestra
@@ -523,7 +539,7 @@ entries:
     version: 0.2.11-main-32bb680
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.849164083Z"
+    created: "2023-03-16T14:44:35.958803421Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 5f6bfb0893affe5ce971665295bdd1953b0f5647fc20429c1161ef685b6ef7a0
     name: georchestra
@@ -533,7 +549,7 @@ entries:
     version: 0.2.11-main-13a6aea
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.847965485Z"
+    created: "2023-03-16T14:44:35.95768501Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -549,7 +565,7 @@ entries:
     version: 0.2.11-main-067fc20
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2023-03-10T15:05:23.840407095Z"
+    created: "2023-03-16T14:44:35.950654043Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -563,4 +579,4 @@ entries:
     urls:
     - georchestra-0.2.11-main-064bdfe.tgz
     version: 0.2.11-main-064bdfe
-generated: "2023-03-10T15:05:23.834101003Z"
+generated: "2023-03-16T14:44:35.943178571Z"
