@@ -160,6 +160,10 @@ spec:
             name: geoserver-webapp
           - mountPath: /mnt/geoserver_tiles
             name: geoserver-tiles
+          {{- range $webapp.extra_volumes }}
+          - name: {{ .name }}
+            mountPath: {{ .mountPath }}
+          {{- end }}
         ports:
         - containerPort: 8080
           name: http-proxy
@@ -208,6 +212,11 @@ spec:
       - name: geoserver-datadir
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-geoserver-datadir
+      {{- range $webapp.extra_volumes }}
+      - name: {{ .name }}
+        persistentVolumeClaim:
+          claimName: {{ .claimName }}
+      {{- end }}
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
         secret:
