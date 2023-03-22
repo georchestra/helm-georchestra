@@ -104,7 +104,7 @@ georchestra:
       emptyDir: {}
     git:
       url: https://github.com/georchestra/datadir.git
-      ref: k8s-envs-master
+      ref: k8s-master
       #ssh_secret: my-private-ssh-key
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
