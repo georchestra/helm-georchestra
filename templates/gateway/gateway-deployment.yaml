@@ -25,7 +25,7 @@ spec:
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       containers:
-      - name: georchestra-sp
+      - name: georchestra-gateway
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
         env:
