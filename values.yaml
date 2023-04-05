@@ -61,8 +61,15 @@ georchestra:
         env_variables: []
         envsubst:
           enabled: true
-      es_image: elasticsearch:7.9.0
-      kibana_image: kibana:7.9.0
+      elasticsearch:
+        resources:
+          limits:
+            memory: 5120mi
+          requests:
+            memory: 5120mi
+        image: elasticsearch:7.9.0
+      kibana:
+        image: kibana:7.9.0
     geoserver:
       enabled: true
       docker_image: georchestra/geoserver:latest
