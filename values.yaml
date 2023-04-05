@@ -64,9 +64,9 @@ georchestra:
       elasticsearch:
         resources:
           limits:
-            memory: 5120mi
+            memory: 5120Mi
           requests:
-            memory: 5120mi
+            memory: 5120Mi
         image: elasticsearch:7.9.0
       kibana:
         image: kibana:7.9.0
