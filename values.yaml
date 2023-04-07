@@ -105,6 +105,9 @@ georchestra:
       #registry_secret: default
       envsubst:
         enabled: true
+    gateway:
+      enabled: false
+      docker_image: georchestra/gateway:latest
   datadir:
     volume:
     - name: georchestra-datadir
