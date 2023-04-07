@@ -1,4 +1,5 @@
 {{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+{{- $webapp := .Values.georchestra.webapps.geonetwork.elasticsearch -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,12 +35,14 @@ spec:
           name: gn4-es-data
       containers:
       - name: elasticsearch
-        image: {{ .Values.georchestra.webapps.geonetwork.es_image }}
+        image: {{ .Values.georchestra.webapps.geonetwork.elasticsearch.image }}
         env:
           - name: ES_JAVA_OPTS
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
           - name: discovery.type
             value: single-node
+        resources:
+            {{- toYaml $webapp.resources | nindent 12 }}
         ports:
         - containerPort: 9200
           name: elastic

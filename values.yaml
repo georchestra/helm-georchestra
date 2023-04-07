@@ -61,8 +61,15 @@ georchestra:
         env_variables: []
         envsubst:
           enabled: true
-      es_image: elasticsearch:7.9.0
-      kibana_image: kibana:7.9.0
+      elasticsearch:
+        resources:
+          limits:
+            memory: 5120Mi
+          requests:
+            memory: 5120Mi
+        image: elasticsearch:7.9.0
+      kibana:
+        image: kibana:7.9.0
     geoserver:
       enabled: true
       docker_image: georchestra/geoserver:latest
@@ -107,7 +114,7 @@ georchestra:
       emptyDir: {}
     git:
       url: https://github.com/georchestra/datadir.git
-      ref: k8s-master-gateway
+      ref: k8s-master
       #ssh_secret: my-private-ssh-key
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
