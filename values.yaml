@@ -106,7 +106,7 @@ georchestra:
       envsubst:
         enabled: true
     gateway:
-      enabled: true
+      enabled: false
       docker_image: georchestra/gateway:latest
   datadir:
     volume:
