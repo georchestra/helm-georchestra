@@ -29,8 +29,6 @@ georchestra:
       # - name: SMTPPORT
       #   value: "25"
       #registry_secret: default
-      envsubst:
-        enabled: true
     datafeeder_frontend:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true # won't deploy if datafeeder is not enable
