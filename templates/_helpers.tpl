@@ -137,6 +137,44 @@ Insert LDAP environment variables
 {{- end }}
 
 {{/*
+Insert service host environment variables
+*/}}
+{{- define "georchestra.service-envs" -}}
+- name: ANALYTICS_HOST
+  value: "{{ include "georchestra.fullname" . }}-analytics-svc"
+- name: ATLAS_HOST
+  value: "{{ include "georchestra.fullname" . }}-atlas-svc"
+- name: CAS_HOST
+  value: "{{ include "georchestra.fullname" . }}-cas-svc"
+- name: CONSOLE_HOST
+  value: "{{ include "georchestra.fullname" . }}-console-svc"
+- name: EXTRACTORAPP_HOST
+  value: "{{ include "georchestra.fullname" . }}-extractorapp-svc"
+- name: GEONETWORK_HOST
+  value: "{{ include "georchestra.fullname" . }}-geonetwork-svc"
+- name: GEOSERVER_HOST
+  value: "{{ include "georchestra.fullname" . }}-geoserver-svc"
+- name: HEADER_HOST
+  value: "{{ include "georchestra.fullname" . }}-header-svc"
+- name: MAPFISHAPP_HOST
+  value: "{{ include "georchestra.fullname" . }}-mapfishapp-svc"
+- name: GEOWEBCACHE_HOST
+  value: "{{ include "georchestra.fullname" . }}-geowebcache-svc"
+- name: MAPSTORE_HOST
+  value: "{{ include "georchestra.fullname" . }}-mapstore-svc"
+- name: DATAFEEDER_HOST
+  value: "{{ include "georchestra.fullname" . }}-datafeeder-svc"
+- name: IMPORT_HOST
+  value: "{{ include "georchestra.fullname" . }}-import-svc"
+- name: OGCAPIRECORDS_HOST
+  value: "{{ include "georchestra.fullname" . }}-gn4-ogc-api-records-svc"
+- name: ES_HOST
+  value: "{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc"
+- name: KB_HOST
+  value: "{{ include "georchestra.fullname" . }}-gn4-kibana-svc"
+{{- end }}
+
+{{/*
 Insert common environment variables
 */}}
 {{- define "georchestra.common-envs" -}}

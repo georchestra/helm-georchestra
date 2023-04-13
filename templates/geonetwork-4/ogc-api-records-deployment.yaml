@@ -38,8 +38,7 @@ spec:
             value: "yes"
           - name: SUBST_FILES
             value: "/etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml"
-          - name: ES_HOST
-            value: "{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc"
+          {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
       {{- end }}
 
