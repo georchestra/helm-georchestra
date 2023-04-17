@@ -108,38 +108,38 @@ spec:
                   optional: false
           {{ if $database.builtin }}
           {{- $database_secret_datafeeder_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
-          - name: DATAFEEDER_PGHOST
+          - name: DF_PGHOST
             value: "{{ .Release.Name }}-database"
-          - name: DATAFEEDER_PGDATABASE
+          - name: DF_PGDATABASE
             value: "datafeeder"
           {{ else }}
           {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
-          - name: DATAFEEDER_PGHOST
+          - name: DF_PGHOST
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
                   key: host
                   optional: false
-          - name: DATAFEEDER_PGDATABASE
+          - name: DF_PGDATABASE
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
                   key: dbname
                   optional: false
           {{ end }}
-          - name: DATAFEEDER_PGPORT
+          - name: DF_PGPORT
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
                   key: port
                   optional: false
-          - name: DATAFEEDER_PGUSER
+          - name: DF_PGUSER
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
                   key: user
                   optional: false
-          - name: DATAFEEDER_PGPASSWORD
+          - name: DF_PGPASSWORD
             valueFrom:
               secretKeyRef:
                   name: {{ $database_secret_datafeeder_name }}
