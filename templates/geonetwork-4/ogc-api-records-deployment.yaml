@@ -37,7 +37,7 @@ spec:
           - name: DEBUG
             value: "yes"
           - name: SUBST_FILES
-            value: "/etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml"
+            value: "/etc/georchestra/geonetwork/microservices/ogc-api-records/config.yml"
           {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
       {{- end }}
@@ -51,7 +51,7 @@ spec:
           - name: SERVER_SERVLET_CONTEXT_PATH
             value: /ogc-api-records
           - name: SPRING_CONFIG_LOCATION
-            value: file:///etc/georchestra/geonetwork/microservices/ogc-api-records/config.yaml
+            value: file:///etc/georchestra/geonetwork/microservices/ogc-api-records/config.yml
           - name: SPRING_PROFILES_ACTIVE
             value: standalone
           - name: SPRING_DATASOURCE_URL
