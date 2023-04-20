@@ -37,7 +37,7 @@ georchestra:
       docker_image: georchestra/datafeeder-frontend:latest
       #registry_secret: default
     extractorapp:
-      enabled: true
+      enabled: false
       docker_image: georchestra/extractorapp:latest
       extra_environment: []
       #registry_secret: default
@@ -82,7 +82,7 @@ georchestra:
       extra_environment: []
       #registry_secret: default
     mapfishapp:
-      enabled: true
+      enabled: false
       docker_image: georchestra/mapfishapp:latest
       extra_environment: []
       #registry_secret: default
