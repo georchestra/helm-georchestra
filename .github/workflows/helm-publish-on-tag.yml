@@ -22,8 +22,6 @@ jobs:
           path: gh-pages
       - name: Helm Installation
         uses: azure/setup-helm@v3
-        with:
-          version: v3.10.2
       - name: Run script file
         run: |
           rm -rf georchestra/.git
