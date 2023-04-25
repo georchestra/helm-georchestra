@@ -10,42 +10,42 @@ georchestra:
       enabled: true
       docker_image: georchestra/analytics:latest
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
     cas:
       enabled: true
       docker_image: georchestra/cas:latest
-      #registry_secret: default
+      # registry_secret: default
     console:
       enabled: true
       docker_image: georchestra/console:latest
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
     datafeeder:
-      enabled: true # won't deploy if datafeeder_frontend is not enable
+      enabled: true  # won't deploy if datafeeder_frontend is not enable
       docker_image: georchestra/datafeeder:latest
       extra_environment:
       # - name: SMTPHOST
       #   value: "my_smtp_host"
       # - name: SMTPPORT
       #   value: "25"
-      #registry_secret: default
+      # registry_secret: default
       envsubst:
         enabled: true
     datafeeder_frontend:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
-      enabled: true # won't deploy if datafeeder is not enable
+      enabled: true  # won't deploy if datafeeder is not enable
       docker_image: georchestra/datafeeder-frontend:latest
-      #registry_secret: default
+      # registry_secret: default
     extractorapp:
       enabled: true
       docker_image: georchestra/extractorapp:latest
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
     geonetwork:
       enabled: true
       docker_image: georchestra/geonetwork:latest
       # the registry secret is only used for the GeoNetwork image
-      #registry_secret: default
+      # registry_secret: default
       jetty_monitoring: false
       extra_environment: []
       # volumes is the deployment-compliant specification of the pod's extra volume
@@ -75,34 +75,34 @@ georchestra:
       docker_image: georchestra/geoserver:latest
       jetty_monitoring: false
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
     header:
       enabled: true
       docker_image: georchestra/header:latest
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
     mapfishapp:
       enabled: true
       docker_image: georchestra/mapfishapp:latest
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
     mapstore:
       enabled: true
       docker_image: georchestra/mapstore:latest
-      #registry_secret: default
+      # registry_secret: default
       # no need to put the original command already managed
       command: []
       args: []
     openldap:
       enabled: true
       docker_image: georchestra/ldap:latest
-      #registry_secret: default
+      # registry_secret: default
     proxy:
       enabled: true
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: false
       extra_environment: []
-      #registry_secret: default
+      # registry_secret: default
       envsubst:
         enabled: true
     gateway:
@@ -115,7 +115,7 @@ georchestra:
     git:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
-      #ssh_secret: my-private-ssh-key
+      # ssh_secret: my-private-ssh-key
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
   # uncomment the `pv_name` entries below.
@@ -160,7 +160,7 @@ georchestra:
 fqdn: "ed-dev.pigeosolutions.fr"
 
 ldap:
-  #host: "myldaphost" # uncomment for external host
+  # host: "myldaphost" # uncomment for external host
   port: "389"
   adminPassword: "secret"
   scheme: "ldap"
@@ -172,7 +172,7 @@ ldap:
 
 database:
   builtin: true
-  image: # section of parameters for builtin database
+  image:  # section of parameters for builtin database
     repository: georchestra/database
     tag: latest
   auth:
@@ -184,7 +184,7 @@ database:
     port: "5432"
     ssl: false
     username: georchestra
-  primary: # section of parameters for builtin database
+  primary:  # section of parameters for builtin database
     extraVolumeMounts:
       - name: "00-initsql"
         mountPath: "/docker-entrypoint-initdb.d/00_init.sql"
