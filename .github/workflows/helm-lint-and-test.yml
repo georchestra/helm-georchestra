@@ -14,10 +14,6 @@ jobs:
       - name: Helm Installation
         uses: azure/setup-helm@v3
 
-      - name: Run script file
-        run: |
-          helm dependency update
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
@@ -27,7 +23,7 @@ jobs:
         uses: helm/chart-testing-action@v2.4.0
 
       - name: Run chart-testing (lint)
-        run: ct lint --chart-dirs . --charts . --target-branch ${{ github.event.repository.default_branch }}
+        run: ct lint --chart-repos bitnami=https://charts.bitnami.com/bitnami/ --chart-dirs . --charts . --target-branch ${{ github.event.repository.default_branch }}
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.4.0
