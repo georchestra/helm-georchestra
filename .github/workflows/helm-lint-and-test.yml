@@ -14,6 +14,10 @@ jobs:
       - name: Helm Installation
         uses: azure/setup-helm@v3
 
+      - name: Run script file
+        run: |
+          helm dependency update
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
