@@ -157,7 +157,24 @@ georchestra:
     # relay_password:  aaaa
     extra_environment: []
 
-fqdn: "ed-dev.pigeosolutions.fr"
+fqdn: "georchestra-127-0-1-1.traefik.me"
+
+ingress:
+  enabled: true
+  annotations: {}
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  hosts: []
+  #  - host: georchestra-127-0-1-1.traefik.me
+  tls: []
+  # You can import TLS secrets using
+  # kubectl create secret tls testsecret --key key.pem --cert cert.pem
+  # Then specify the TLS secret name below.
+  #  - secretName: testsecret
+  #    hosts:
+  #      - georchestra-127-0-1-1.traefik.me
+  # define a custom incressClassName, like "traefik" or "nginx"
+  className: ""
 
 ldap:
   # host: "myldaphost" # uncomment for external host
