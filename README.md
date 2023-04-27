@@ -14,16 +14,50 @@ some of the features and/or implementation choices.
 
 ## Install
 
-```
-% helm repo add georchestra https://charts.georchestra.org
-% helm repo update
-% helm install -f path/to/my/values.yaml georchestra georchestra/georchestra
-```
+### Quick start
+
+1. Install a Ingress Controller if you don't already have one.   
+   NGINX Ingress controller is a good example:
+   ````
+   helm upgrade --install ingress-nginx ingress-nginx \
+      --repo https://kubernetes.github.io/ingress-nginx \
+      --namespace ingress-nginx --create-namespace
+   ````
+3. Execute these commands for installing the georchestra chart:  
+   ```
+   helm repo add georchestra https://charts.georchestra.org
+   helm repo update
+   helm install georchestra georchestra/georchestra --set fqdn=YOURDOMAIN
+   ```
+   Note: For the domain you can use `georchestra-127-0-1-1.traefik.me`, just replace `127-0-1-1` with the IP address of your server.
+
+4. Go to [https://YOURDOMAIN](https://YOURDOMAIN)
+
+### Customized installation
+1. Create a new separate 'values' file (or edit the existing one, not recommended).  
+   Edit the parameters like `fqdn`, `database` or `ldap` if needed.
+2. Install a Ingress Controller if you don't already have one.   
+   NGINX Ingress controller is a good example:
+   ````
+   helm upgrade --install ingress-nginx ingress-nginx \
+      --repo https://kubernetes.github.io/ingress-nginx \
+      --namespace ingress-nginx --create-namespace
+   ````
+3. Execute these commands for installing the georchestra chart:  
+   ```
+   helm repo add georchestra https://charts.georchestra.org
+   helm repo update
+   helm install -f your-values.yaml georchestra georchestra/georchestra
+   ```
+
+4. Go to [https://YOURDOMAIN](https://YOURDOMAIN)
 
 ## Upgrade
 
+Apply only for a customized installation.
+
 ```
-% helm upgrade -f path/to/my/values.yaml georchestra georchestra/georchestra
+helm upgrade -f your-values.yaml georchestra georchestra/georchestra
 ```
 
 # geOrchestra Datadir bootstrap
