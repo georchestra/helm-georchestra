@@ -10,7 +10,7 @@
     chmod 0600 /root/.ssh/id_rsa ;
     {{- end }}
     if [ ! -f /etc/georchestra/default.properties ] ; then
-      git clone {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra ;
+      git clone --depth 1 --single-branch {{ .Values.georchestra.datadir.git.url }} -b {{ .Values.georchestra.datadir.git.ref }} /etc/georchestra ;
     fi ;
   {{- if .Values.georchestra.datadir.git.ssh_secret }}
   env:
