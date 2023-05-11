@@ -41,6 +41,9 @@ spec:
           fi ;
           if [ -d /etc/georchestra/cas/templates ] ; then
             cp -rvf /etc/georchestra/cas/templates /cas-webapp/WEB-INF/classes/ ;
+          fi ;
+          if [ -d /etc/georchestra/cas/classes_override ] ; then
+            cp -rvf /etc/georchestra/cas/classes_override/* /cas-webapp/WEB-INF/classes/ ;
           fi
       containers:
       - name: georchestra-cas
