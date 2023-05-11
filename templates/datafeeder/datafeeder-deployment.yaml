@@ -38,6 +38,9 @@ spec:
           - name: SUBST_FILES
             value: "/etc/georchestra/datafeeder/frontend-config.json"
           {{- include "georchestra.common-envs" . | nindent 10 }}
+          {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
+          {{- end }}
       {{- end }}
 
       containers:

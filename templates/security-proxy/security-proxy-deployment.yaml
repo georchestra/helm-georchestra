@@ -43,6 +43,9 @@ spec:
           - name: SUBST_FILES
             value: "/etc/georchestra/security-proxy/targets-mapping.properties"
           {{- include "georchestra.service-envs" . | nindent 10 }}
+          {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
+          {{- end }}
       {{- end }}
       containers:
       - name: georchestra-sp

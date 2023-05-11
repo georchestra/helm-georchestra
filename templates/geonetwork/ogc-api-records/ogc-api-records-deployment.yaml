@@ -40,6 +40,9 @@ spec:
             value: "/etc/georchestra/geonetwork/microservices/ogc-api-records/config.yml"
           {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
+          {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
+          {{- end }}
       {{- end }}
 
       containers:
@@ -59,8 +62,8 @@ spec:
           - name: SPRING_DATASOURCE_PASSWORD
             value: ${PGPASSWORD}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
-          {{- with $webapp.env_variables }}
-            {{- toYaml . | nindent 10 }}
+          {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
         ports:
         - containerPort: 8080

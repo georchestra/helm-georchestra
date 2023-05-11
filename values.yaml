@@ -58,7 +58,7 @@ georchestra:
       ogc_api_records:
         enabled: true
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
-        env_variables: []
+        extra_environment: []
         envsubst:
           enabled: true
       elasticsearch:
