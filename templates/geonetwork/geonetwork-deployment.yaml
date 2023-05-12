@@ -44,22 +44,6 @@ spec:
       containers:
       - name: georchestra-geonetwork
         image: {{ $webapp.docker_image }}
-        command: ["/bin/sh"]
-        args: ["-c", "rm /docker-entrypoint.d/01-wait-for-db; rm /docker-entrypoint.d/02-wait-for-console; /docker-entrypoint.sh \
-                java \
-                -Djava.io.tmpdir=/tmp/jetty \
-                -Djava.util.prefs.userRoot=/tmp/userPrefs \
-                -Djava.util.prefs.systemRoot=/tmp/systemPrefs \
-                -Dgeorchestra.datadir=/etc/georchestra \
-                -Dgeonetwork.jeeves.configuration.overrides.file=/etc/georchestra/geonetwork/config/config-overrides-georchestra.xml \
-                -Dgeonetwork.dir=/mnt/geonetwork_datadir \
-                -Xms$XMS -Xmx$XMX \
-                -XX:-UsePerfData \
-                ${JAVA_OPTIONS} \
-                -Djetty.httpConfig.sendServerVersion=false \
-                -Djetty.jmxremote.rmiregistryhost=0.0.0.0 \
-                -Djetty.jmxremote.rmiserverhost=0.0.0.0 \
-                -jar /usr/local/jetty/start.jar"]
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /etc/georchestra
