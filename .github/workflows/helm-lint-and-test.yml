@@ -25,11 +25,15 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --validate-maintainers=false --chart-repos bitnami=https://charts.bitnami.com/bitnami/ --chart-dirs . --charts . --target-branch ${{ github.event.repository.default_branch }}
 
-      - uses: AbsaOSS/k3d-action@v2
-        name: "Create Single Cluster"
-        with:
-          cluster-name: "test-cluster-1"
-          args: --agents 1
+      - name: k3s install + add more swap
+        run: |
+          curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
+          sudo dd if=/dev/zero of=/swapfile bs=1M count=6k status=progress
+          sudo chmod 0600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          until KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl get --raw='/readyz?verbose'; do echo "wait for k3s to finish"; done
 
       - name: Run chart-testing (install)
-        run: ct install --chart-dirs . --charts . --helm-extra-args '--timeout 1500s' --target-branch ${{ github.event.repository.default_branch }}
+        run: |
+          KUBECONFIG=/etc/rancher/k3s/k3s.yaml ct install --chart-dirs . --charts . --helm-extra-args '--timeout 7200s' --target-branch ${{ github.event.repository.default_branch }}
