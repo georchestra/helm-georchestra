@@ -35,6 +35,20 @@ spec:
         fsGroup: 999
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" $ | nindent 6 }}
+      - name: prepare-geonetwork-webapp
+        image: {{ $webapp.docker_image }}
+        command:
+        - /bin/sh
+        - -c
+        - cp -r /var/lib/jetty/webapps/geonetwork/* /mnt/geonetwork_webapp ;
+          if [ -f /mnt/georchestra_datadir/geonetwork/web.xml ] ; then
+            cp /mnt/georchestra_datadir/geonetwork/web.xml /mnt/geonetwork_webapp/WEB-INF/web.xml ;
+          fi ;
+        volumeMounts:
+          - name: georchestra-datadir
+            mountPath: /mnt/georchestra_datadir
+          - name: geonetwork-webapp
+            mountPath: /mnt/geonetwork_webapp
       - name: fix-permissions-pvc
         image: busybox:latest
         command: ["sh", "-c", "chown -R 999:999 /mnt/geonetwork_datadir"]
@@ -66,6 +80,8 @@ spec:
             name: georchestra-datadir
           - mountPath: /mnt/geonetwork_datadir
             name: geonetwork-datadir
+          - mountPath: /var/lib/jetty/webapps/geonetwork
+            name: geonetwork-webapp
         {{- if $webapp.extra_volumeMounts }}
           {{ $webapp.extra_volumeMounts | toYaml | nindent 10 }}
         {{- end }}
@@ -107,6 +123,8 @@ spec:
       {{- end }}
       volumes:
       - name: georchestra-datadir
+        emptyDir: {}
+      - name: geonetwork-webapp
         emptyDir: {}
       - name: geonetwork-datadir
         persistentVolumeClaim:
