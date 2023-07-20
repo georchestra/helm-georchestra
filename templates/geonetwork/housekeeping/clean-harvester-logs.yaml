@@ -1,0 +1,36 @@
+{{- if and .Values.georchestra.webapps.geonetwork.enabled .Values.georchestra.webapps.geonetwork.housekeeping.harvester_logs.enabled -}}
+{{- $webapp := .Values.georchestra.webapps.geonetwork -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "georchestra.fullname" . }}-housekeeping-clean-harvester-logs
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-housekeeping-clean-harvester-logs
+spec:
+  schedule: "{{ $webapp.housekeeping.harvester_logs.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: clean-harvester-logs
+            image: busybox:latest
+            imagePullPolicy: IfNotPresent
+            command:
+            - find
+            - /mnt/geonetwork_datadir/harvester_logs/
+            - -name
+            - harvester_*.log
+            - -mtime
+            - '+1'
+            - -delete
+            volumeMounts:
+            - mountPath: /mnt/geonetwork_datadir
+              name: geonetwork-datadir
+          volumes:
+          - name: geonetwork-datadir
+            persistentVolumeClaim:
+              claimName: {{ include "georchestra.fullname" . }}-geonetwork-datadir
+          restartPolicy: OnFailure
+{{- end -}}
