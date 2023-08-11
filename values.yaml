@@ -199,6 +199,13 @@ database:
     tag: latest
   auth:
     database: georchestra
+    # you can use existing secret for you own postgreesql DB
+    # to use it, you must define this keys :
+    # - host
+    # - port
+    # - dbname
+    # - user
+    # - password
 #   existingSecret: mysecret
 #   host: georchestra
     password: georchestra
