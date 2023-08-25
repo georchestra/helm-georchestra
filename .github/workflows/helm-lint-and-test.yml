@@ -11,6 +11,21 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+
       - name: Helm Installation
         uses: azure/setup-helm@v3
 
@@ -28,10 +43,11 @@ jobs:
       - name: k3s install + add more swap
         run: |
           curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
-          sudo dd if=/dev/zero of=/swapfile bs=1M count=6k status=progress
+          sudo dd if=/dev/zero of=/swapfile bs=1M count=8k status=progress
           sudo chmod 0600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
+          free -h
           until KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl get --raw='/readyz?verbose'; do echo "wait for k3s to finish"; done
 
       - name: Run chart-testing (install)
