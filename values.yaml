@@ -1,6 +1,6 @@
 georchestra:
   # Set additional nodeSelector items
-  # nodeSelector:
+  nodeSelector: {}
   #   "georchestra": "true"
   webapps:
     # Note: if a secret is needed to fetch the images from a private registry,
