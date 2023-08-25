@@ -29,6 +29,9 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
+        {{- with .Values.georchestra.nodeSelector }}
+        {{ toYaml . }}
+        {{- end }}
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       {{- if .Values.georchestra.webapps.proxy.envsubst.enabled }}
