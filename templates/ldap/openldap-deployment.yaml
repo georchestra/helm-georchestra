@@ -24,6 +24,9 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
+        {{ with .Values.georchestra.nodeSelector }}
+        {{- toYaml . |indent 8 }}
+        {{- end }}
       containers:
       - name: georchestra-ldap
         image: {{ $webapp.docker_image }}
