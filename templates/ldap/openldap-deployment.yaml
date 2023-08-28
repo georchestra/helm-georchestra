@@ -45,6 +45,12 @@ spec:
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
+        {{- with .Values.ldap.existingSecret }}
+        # Override some env vars with env vars defined in this secret, like for instance the ldapadmin password
+        envFrom:
+          - secretRef:
+              name: {{ . }}
+        {{- end }}
         ports:
         - containerPort: {{ .Values.ldap.port }}
           name: ldap

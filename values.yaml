@@ -194,6 +194,12 @@ ldap:
   adminDn: "cn=admin,dc=georchestra,dc=org"
   rolesRdn: "ou=roles"
   orgsRdn: "ou=orgs"
+  # You can override in this secret some sensitive env. vars, like the adminPassword
+  # Example of valid secret content (limited to the data part) would be 
+  # "data": {
+  #     "SLAPD_PASSWORD": "mysecretldapadminpassword"
+  # },
+  # existingSecret: mysecretldapenvvars
 
 database:
   builtin: true
