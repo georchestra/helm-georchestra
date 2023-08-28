@@ -111,6 +111,10 @@ Insert LDAP environment variables
 */}}
 {{- define "georchestra.ldap-envs" -}}
 {{- $ldap := .Values.ldap -}}
+{{- $ldap_secret_georchestra_name := printf "%s-ldap-passwords-secret" (include "georchestra.fullname" .) -}}
+{{- if $ldap.existingSecret }}
+{{- $ldap_secret_georchestra_name = $ldap.existingSecret -}}
+{{- end }}
 {{- if .Values.georchestra.webapps.openldap.enabled }}
 - name: LDAPHOST
   value: "{{ include "georchestra.fullname" . }}-ldap-svc"
@@ -127,7 +131,11 @@ Insert LDAP environment variables
 - name: LDAPADMINDN
   value: "{{ $ldap.adminDn }}"
 - name: LDAPADMINPASSWORD
-  value: "{{ $ldap.adminPassword }}"
+  valueFrom:
+    secretKeyRef:
+      name: {{ $ldap_secret_georchestra_name }}
+      key: SLAPD_PASSWORD
+      optional: false
 - name: LDAPUSERSRDN
   value: "{{ $ldap.usersRdn }}"
 - name: LDAPROLESRDN
