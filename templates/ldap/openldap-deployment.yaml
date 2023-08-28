@@ -37,7 +37,7 @@ spec:
           - name: SLAPD_DOMAIN
             value: georchestra.org
           - name: SLAPD_PASSWORD
-            value: secret
+            value: {{ .Values.ldap.adminPassword }}
           - name: RUN_AS_UID
             value: "0"
           - name: RUN_AS_GID
@@ -46,7 +46,7 @@ spec:
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
         ports:
-        - containerPort: 389
+        - containerPort: {{ .Values.ldap.port }}
           name: ldap
         volumeMounts:
           - mountPath: /etc/ldap
@@ -58,9 +58,9 @@ spec:
             command:
             - ldapsearch
             - -x
-            - -Hldap://localhost:389/
-            - -bdc=georchestra,dc=org
-            - cn=admin,dc=georchestra,dc=org
+            - -Hldap://localhost:{{ .Values.ldap.port }}/
+            - -b{{ .Values.ldap.baseDn }}
+            - {{ .Values.ldap.adminDn }}
           initialDelaySeconds: 30
       volumes:
       - name: openldap-data
