@@ -194,11 +194,13 @@ ldap:
   adminDn: "cn=admin,dc=georchestra,dc=org"
   rolesRdn: "ou=roles"
   orgsRdn: "ou=orgs"
-  # You can override in this secret some sensitive env. vars, like the adminPassword
-  # Example of valid secret content (limited to the data part) would be 
+  # You can override in this secret some sensitive env. vars, like the ldap admin password
+  # Example of valid secret content (limited to the data part) would be
   # "data": {
-  #     "SLAPD_PASSWORD": "mysecretldapadminpassword"
+  #     "SLAPD_PASSWORD": "mysecretldapadminpasswor_base64encoded"
   # },
+  # Optionally, you can also provide the GEORCHESTRA_PRIVILEGED_USER_PASSWORD env var, that will
+  # be used to replace the default one on first run, see https://github.com/georchestra/georchestra/blob/master/ldap/docker-root/docker-entrypoint.d/01-populate#L47-L54
   # existingSecret: mysecretldapenvvars
 
 database:
