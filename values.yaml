@@ -194,7 +194,9 @@ ldap:
   adminDn: "cn=admin,dc=georchestra,dc=org"
   rolesRdn: "ou=roles"
   orgsRdn: "ou=orgs"
-  # You can override in this secret some sensitive env. vars, like the ldap admin password
+  # By default, a secret is automatically created with the password declared above.
+  # You can override this by using an existingSecret declaring some environment variables
+  # and that should at least declare the ldap admin password
   # Example of valid secret content (limited to the data part) would be
   # "data": {
   #     "SLAPD_PASSWORD": "mysecretldapadminpasswor_base64encoded"
