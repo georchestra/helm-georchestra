@@ -33,7 +33,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: JAVA_TOOL_OPTIONS
-            value: {{ $webapp.java_tool_options }}
+            value: {{ $webapp.environment.JAVA_TOOL_OPTIONS }}
           {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- include "georchestra.ldap-envs" . | nindent 10 }}
