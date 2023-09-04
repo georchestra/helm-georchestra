@@ -34,8 +34,8 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
-        {{ with .Values.georchestra.nodeSelector }}
-        {{- toYaml . |indent 8 }}
+        {{- with .Values.georchestra.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       securityContext:
         fsGroup: 999
