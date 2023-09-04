@@ -116,7 +116,7 @@ georchestra:
     gateway:
       enabled: false
       docker_image: georchestra/gateway:latest
-      java_tool_options: "-Dspring.config.location=${georchestra.datadir}/gateway/application.yaml -Dspring.profiles.active=docker"
+      java_tool_options: "-Dgeorchestra.datadir=/etc/georchestra -Dspring.config.location=${georchestra.datadir}/gateway/application.yaml -Dspring.profiles.active=docker"
   datadir:
     volume:
     - name: georchestra-datadir
