@@ -34,6 +34,8 @@ spec:
         env:
           - name: JAVA_TOOL_OPTIONS
             value: {{ $webapp.java_tool_options }}
+          - name: JAVA_OPTS
+            value: {{ $webapp.java_opts }}
           {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- include "georchestra.ldap-envs" . | nindent 10 }}
