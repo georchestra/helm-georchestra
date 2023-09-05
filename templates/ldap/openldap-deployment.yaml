@@ -1,6 +1,5 @@
 {{- if .Values.georchestra.webapps.openldap.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.openldap -}}
-{{- $ldap_secret_georchestra_name := printf "%s-ldap-passwords-secret" (include "georchestra.fullname" .) -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -47,7 +46,7 @@ spec:
         # Load the ldap admin password from a secret. Can also allow to override some other env vars with env vars defined in this secret, like for instance the GEORCHESTRA_PRIVILEGED_USER_PASSWORD
         envFrom:
           - secretRef:
-              name: {{ .Values.ldap.existingSecret | default $ldap_secret_georchestra_name | quote }}
+              name: {{ .Values.ldap.existingSecret | default (printf "%s-ldap-passwords-secret" (include "georchestra.fullname" .)) | quote }}
         ports:
         - containerPort: {{ .Values.ldap.port }}
           name: ldap
