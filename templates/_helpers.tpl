@@ -127,7 +127,11 @@ Insert LDAP environment variables
 - name: LDAPADMINDN
   value: "{{ $ldap.adminDn }}"
 - name: LDAPADMINPASSWORD
-  value: "{{ $ldap.adminPassword }}"
+  valueFrom:
+    secretKeyRef:
+      name: {{ $ldap.existingSecret | default (printf "%s-ldap-passwords-secret" (include "georchestra.fullname" .)) }}
+      key: SLAPD_PASSWORD
+      optional: false
 - name: LDAPUSERSRDN
   value: "{{ $ldap.usersRdn }}"
 - name: LDAPROLESRDN

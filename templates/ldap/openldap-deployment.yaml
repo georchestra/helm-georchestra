@@ -36,8 +36,6 @@ spec:
             value: georchestra
           - name: SLAPD_DOMAIN
             value: georchestra.org
-          - name: SLAPD_PASSWORD
-            value: secret
           - name: RUN_AS_UID
             value: "0"
           - name: RUN_AS_GID
@@ -45,8 +43,12 @@ spec:
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
+        # Load the ldap admin password from a secret. Can also allow to override some other env vars with env vars defined in this secret, like for instance the GEORCHESTRA_PRIVILEGED_USER_PASSWORD
+        envFrom:
+          - secretRef:
+              name: {{ .Values.ldap.existingSecret | default (printf "%s-ldap-passwords-secret" (include "georchestra.fullname" .)) | quote }}
         ports:
-        - containerPort: 389
+        - containerPort: {{ .Values.ldap.port }}
           name: ldap
         volumeMounts:
           - mountPath: /etc/ldap
@@ -58,9 +60,9 @@ spec:
             command:
             - ldapsearch
             - -x
-            - -Hldap://localhost:389/
-            - -bdc=georchestra,dc=org
-            - cn=admin,dc=georchestra,dc=org
+            - -Hldap://localhost:{{ .Values.ldap.port }}/
+            - -b{{ .Values.ldap.baseDn }}
+            - {{ .Values.ldap.adminDn }}
           initialDelaySeconds: 30
       volumes:
       - name: openldap-data
