@@ -64,6 +64,13 @@ spec:
             mountPath: /mnt/georchestra_datadir
           - name: security-proxy-webapp
             mountPath: /mnt/security_proxy_webapp
+      - name: fix-permissions-pvc
+        image: busybox:latest
+        command: [ "sh", "-c", "chown -R 999:999 /mnt/security_proxy_webapp" ]
+        volumeMounts:
+          - mountPath: /mnt/security_proxy_webapp
+            name: security-proxy-webapp
+
       containers:
       - name: georchestra-sp
         image: {{ $webapp.docker_image }}
