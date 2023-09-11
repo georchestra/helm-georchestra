@@ -56,7 +56,7 @@ spec:
           - /bin/sh
           - -c
           - cp -r /var/lib/jetty/webapps/ROOT/* /mnt/security_proxy_webapp ;
-            if [ -f /mnt/georchestra_datadir/security-proxy/ressources/ ] ; then
+            if [ -d /mnt/georchestra_datadir/security-proxy/ressources/ ] ; then
               cp /mnt/georchestra_datadir/security-proxy/ressources/* /mnt/security_proxy_webapp/ ;
             fi ;
         volumeMounts:
