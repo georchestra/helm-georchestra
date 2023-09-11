@@ -50,6 +50,27 @@ spec:
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
       {{- end }}
+      - name: prepare-proxy-webapp
+        image: {{ $webapp.docker_image }}
+        command:
+          - /bin/sh
+          - -c
+          - cp -r /var/lib/jetty/webapps/ROOT/* /mnt/security_proxy_webapp ;
+            if [ -d /mnt/georchestra_datadir/security-proxy/ressources/ ] ; then
+              cp /mnt/georchestra_datadir/security-proxy/ressources/* /mnt/security_proxy_webapp/ ;
+            fi ;
+        volumeMounts:
+          - name: georchestra-datadir
+            mountPath: /mnt/georchestra_datadir
+          - name: security-proxy-webapp
+            mountPath: /mnt/security_proxy_webapp
+      - name: fix-permissions-pvc
+        image: busybox:latest
+        command: [ "sh", "-c", "chown -R 999:999 /mnt/security_proxy_webapp" ]
+        volumeMounts:
+          - mountPath: /mnt/security_proxy_webapp
+            name: security-proxy-webapp
+
       containers:
       - name: georchestra-sp
         image: {{ $webapp.docker_image }}
@@ -68,6 +89,8 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
+          - mountPath: /var/lib/jetty/webapps/ROOT/
+            name: security-proxy-webapp
         livenessProbe:
           httpGet:
             path: /_static/bootstrap_3.0.0/css/bootstrap-theme.min.css
@@ -97,6 +120,8 @@ spec:
       {{- end }}
       volumes:
       - name: georchestra-datadir
+        emptyDir: {}
+      - name: security-proxy-webapp
         emptyDir: {}
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
