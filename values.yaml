@@ -126,6 +126,12 @@ georchestra:
     git:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
+      # use your own ssh key. Generate it with :
+      # `ssh-keygen -t rsa -b 4096 -C "user@domaine.com" -f id_rsa`
+      #  push the public key on your github : https://docs.github.com/fr/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account
+      #  and create secret like this :
+      # `kubectl create secret generic my-private-ssh-key --from-file=ssh-privatekey=id_rsa --from-file=ssh-publickey=id_rsa.pub`
+      # ennaled it with the newt line
       # ssh_secret: my-private-ssh-key
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
@@ -215,6 +221,13 @@ database:
     tag: latest
   auth:
     database: georchestra
+    # you can use existing secret for you own postgreesql DB
+    # to use it, you must define this keys :
+    # - host
+    # - port
+    # - dbname
+    # - user
+    # - password
 #   existingSecret: mysecret
 #   host: georchestra
     password: georchestra
