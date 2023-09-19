@@ -291,3 +291,8 @@ rabbitmq:
 #   host: rabbitmq
     port: "5672"
 #   existingSecret: mysecret
+  # if you want to attach any existing PV - don't use this parameter
+  # if you just automatically want storage, consult the bitnam helm chart doc
+#  storage:
+#    pv_name: rabbitmq-data
+#    storage_class_name: default
