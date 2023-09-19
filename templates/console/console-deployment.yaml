@@ -35,6 +35,7 @@ spec:
           {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- include "georchestra.ldap-envs" . | nindent 10 }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
+          {{- include "georchestra.rabbitmq-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}

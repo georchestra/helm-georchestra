@@ -282,3 +282,12 @@ database:
       ssl: false
       password: datafeeder
       username: datafeeder
+
+rabbitmq:
+  builtin: true
+  auth:
+    username: georchestra
+    password: georchestra
+#   host: rabbitmq
+    port: "5672"
+#   existingSecret: mysecret
