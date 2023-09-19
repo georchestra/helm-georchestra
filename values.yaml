@@ -296,3 +296,4 @@ rabbitmq:
 #  storage:
 #    pv_name: rabbitmq-data
 #    storage_class_name: default
+#    size: 1Gi

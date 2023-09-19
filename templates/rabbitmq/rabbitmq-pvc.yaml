@@ -1,4 +1,4 @@
-{{- if .Values.rabbitmq.storage.pv_name -}}
+{{- if .Values.rabbitmq.storage -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -15,4 +15,7 @@ spec:
   {{- if .Values.rabbitmq.storage.pv_name }}
   volumeName: {{ .Values.rabbitmq.storage.pv_name }}
   {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.rabbitmq.storage.size }}
 {{- end }}
