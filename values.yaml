@@ -215,7 +215,18 @@ database:
     tag: latest
   auth:
     database: georchestra
-#   existingSecret: mysecret
+    # If using an existing secret: this one will both be used by the bitnami chart managing the DB
+    # and by the georchestra db secret
+    # (https://github.com/georchestra/helm-georchestra/blob/main/templates/database/database-georchestra-secret.yaml)
+    # that is used by the apps
+    # So you must be quite careful. It should follow the pattern from the previsouly mentioned secret
+    # and tell the bitnami chart which variable provide the user and password
+    # And the `database`, `username` and `ssl` params still have to be defined here and match the ones
+    # provided by the secret
+    # existingSecret: mysecret
+    # secretKeys:
+    #   adminPasswordKey: postgresPassword
+    #   userPasswordKey: password # This one should stay as it is
 #   host: georchestra
     password: georchestra
     postgresPassword: georchestra
@@ -237,6 +248,11 @@ database:
   geodata:
     auth:
       database: geodata
+      # If using the builtin database, you cannot use an existingSecret configuration: the init script (see above)
+      # is only able to use the basic yaml params.
+      # If using an existing secret: this one will need to match the pattern followed by
+      # https://github.com/georchestra/helm-georchestra/blob/main/templates/database/database-geodata-secret.yaml
+      # The other configuration params will not be used.
       # existingSecret: mysecret
       host: geodata
       password: geodata
@@ -246,6 +262,11 @@ database:
   datafeeder:
     auth:
       database: datafeeder
+      # If using the builtin database, you cannot use an existingSecret configuration: the init script (see above)
+      # is only able to use the basic yaml params.
+      # If using an existing secret: this one will need to match the pattern followed by
+      # https://github.com/georchestra/helm-georchestra/blob/main/templates/database/database-datafeeder-secret.yaml
+      # The other configuration params will not be used.
       # existingSecret: mysecret
       host: datafeeder
       port: "5432"

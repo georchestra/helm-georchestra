@@ -1,18 +1,24 @@
 {{- if .Values.database.builtin -}}
+{{- $geodata := .Values.database.geodata -}}
+{{- $df := .Values.database.datafeeder -}}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "georchestra.fullname" . }}-database-init
+  name: {{ .Release.Name }}-database-init
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
 data:
   00_init.sql: |-
-    create database geodata;
-    grant all privileges on database geodata to georchestra;
-    create database datafeeder;
-    grant all privileges on database datafeeder to georchestra;
-    \c datafeeder;
+    create database {{ $geodata.auth.database | quote }};
+    create user {{ $geodata.auth.username | quote }} with ENCRYPTED PASSWORD '{{ $geodata.auth.password }}';
+    grant all privileges on database {{ $geodata.auth.database | quote }} to {{ $geodata.auth.username | quote }};
+    create database {{ $df.auth.database | quote }};
+    create user {{ $df.auth.username | quote }} with ENCRYPTED PASSWORD '{{ $df.auth.password }}';
+    grant all privileges on database {{ $df.auth.database | quote }} to {{ $df.auth.username | quote }};
+    grant all privileges on database {{ $df.auth.database | quote }} to georchestra;
+    \c {{ $df.auth.database | quote }};
     CREATE SCHEMA datafeeder;
     CREATE SEQUENCE datafeeder.hibernate_sequence;
-    GRANT ALL ON datafeeder.hibernate_sequence TO georchestra;
+    GRANT ALL ON datafeeder.hibernate_sequence TO {{ $df.auth.username | quote }};
 {{- end }}
