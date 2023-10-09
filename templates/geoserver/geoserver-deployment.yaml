@@ -3,7 +3,7 @@
 {{- $database := .Values.database -}}
 {{- $database_secret_geodata_name := printf "%s-database-geodata-secret" (include "georchestra.fullname" .) -}}
 {{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
-{{- $database_secret_gwc_name := printf "%s-database-georchestra" (include "georchestra.fullname" .) -}}
+{{- $database_secret_gwc_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .)  -}}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -157,28 +157,26 @@ spec:
           {{- $database_secret_gwc_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: JNDI_GEORCHESTRA_JDBC_HOST
             value: "{{ .Release.Name }}-database"
-          - name: JNDI_GEORCHESTRA_JDBC_DATABASE
-            value: "datafeeder"
-          {{ else }}
-          {{- $database_secret_gwc_name = $database.datafeeder.auth.existingSecret -}}
+          {{- else }}
+          {{- $database_secret_gwc_name = .Values.database.auth.existingSecret -}}
           - name: JNDI_GEORCHESTRA_JDBC_HOST
             valueFrom:
               secretKeyRef:
                 name: {{ $database_secret_gwc_name }}
                 key: host
                 optional: false
-          - name: JNDI_GEORCHESTRA_JDBC_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: {{ $database_secret_gwc_name }}
-                key: dbname
-                optional: false
-          {{ end }}
+          {{- end }}
           - name: JNDI_GEORCHESTRA_JDBC_PORT
             valueFrom:
               secretKeyRef:
                 name: {{ $database_secret_gwc_name }}
                 key: port
+                optional: false
+          - name: JNDI_GEORCHESTRA_JDBC_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: dbname
                 optional: false
           - name: JNDI_GEORCHESTRA_JDBC_USERNAME
             valueFrom:
