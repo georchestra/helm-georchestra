@@ -52,6 +52,7 @@ spec:
       {{- end }}
       - name: prepare-proxy-webapp
         image: {{ $webapp.docker_image }}
+        imagePullPolicy: Always
         command:
           - /bin/sh
           - -c
