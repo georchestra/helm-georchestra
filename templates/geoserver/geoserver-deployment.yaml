@@ -3,6 +3,8 @@
 {{- $database := .Values.database -}}
 {{- $database_secret_geodata_name := printf "%s-database-geodata-secret" (include "georchestra.fullname" .) -}}
 {{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
+{{- $database_secret_gwc_name := printf "%s-database-georchestra" (include "georchestra.fullname" .) -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
