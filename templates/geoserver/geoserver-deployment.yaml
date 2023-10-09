@@ -151,6 +151,45 @@ spec:
                   name: {{ $database_secret_datafeeder_name }}
                   key: password
                   optional: false
+          {{ if $database.builtin }}
+          {{- $database_secret_gwc_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+          - name: JNDI_GEORCHESTRA_JDBC_HOST
+            value: "{{ .Release.Name }}-database"
+          - name: JNDI_GEORCHESTRA_JDBC_DATABASE
+            value: "datafeeder"
+          {{ else }}
+          {{- $database_secret_gwc_name = $database.datafeeder.auth.existingSecret -}}
+          - name: JNDI_GEORCHESTRA_JDBC_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: host
+                optional: false
+          - name: JNDI_GEORCHESTRA_JDBC_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: dbname
+                optional: false
+          {{ end }}
+          - name: JNDI_GEORCHESTRA_JDBC_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: port
+                optional: false
+          - name: JNDI_GEORCHESTRA_JDBC_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: user
+                optional: false
+          - name: JNDI_GEORCHESTRA_JDBC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: password
+                optional: false
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
