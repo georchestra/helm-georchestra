@@ -24,9 +24,6 @@ spec:
         {{- with .Values.georchestra.nodeSelector }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-      initContainers:
-      - name: bootstrap-kibana-configuration
-        image: debian
       containers:
       - name: kibana
         image: {{ .Values.georchestra.webapps.geonetwork.kibana.image }}
