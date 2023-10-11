@@ -3,6 +3,8 @@
 {{- $database := .Values.database -}}
 {{- $database_secret_geodata_name := printf "%s-database-geodata-secret" (include "georchestra.fullname" .) -}}
 {{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
+{{- $database_secret_gwc_name := printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -151,6 +153,43 @@ spec:
                   name: {{ $database_secret_datafeeder_name }}
                   key: password
                   optional: false
+          {{ if $database.builtin }}
+          {{- $database_secret_gwc_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
+          - name: GWC_PGHOST
+            value: "{{ .Release.Name }}-database"
+          {{- else }}
+          {{- $database_secret_gwc_name = .Values.database.auth.existingSecret -}}
+          - name: GWC_PGHOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: host
+                optional: false
+          {{- end }}
+          - name: GWC_PGPORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: port
+                optional: false
+          - name: GWC_PGDATABASE
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: dbname
+                optional: false
+          - name: GWC_PGUSERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: user
+                optional: false
+          - name: GWC_PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $database_secret_gwc_name }}
+                key: password
+                optional: false
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
