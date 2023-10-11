@@ -40,6 +40,7 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" $ | nindent 6 }}
       - name: prepare-geonetwork-webapp
         image: {{ $webapp.docker_image }}
+        imagePullPolicy: Always
         command:
         - /bin/sh
         - -c
