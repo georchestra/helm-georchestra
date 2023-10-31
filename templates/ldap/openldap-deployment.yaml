@@ -58,8 +58,8 @@ spec:
             name: openldap-config
           - mountPath: /var/lib/ldap
             name: openldap-data
-          {{- if $webapp.extraVolumes }}
-            {{- toYaml $webapp.extraVolumes | nindent 10 }}
+          {{- if $webapp.extraVolumeMounts }}
+            {{- toYaml $webapp.extraVolumeMounts | nindent 10 }}
           {{- end }}
         livenessProbe:
           exec:
@@ -77,8 +77,8 @@ spec:
       - name: openldap-config
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-openldap-config
-      {{- if $webapp.extraVolumeMounts }}
-          {{- toYaml $webapp.extraVolumeMounts | nindent 6 }}
+      {{- if $webapp.extraVolumes }}
+          {{- toYaml $webapp.extraVolumes | nindent 6 }}
       {{- end }}
       {{- if $webapp.registry_secret }}
       imagePullSecrets:
