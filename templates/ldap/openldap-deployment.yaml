@@ -28,6 +28,9 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       containers:
+      {{- if $webapp.extraContainers }}
+        {{ toYaml $webapp.extraContainers | nindent 6 }}
+      {{- end }}
       - name: georchestra-ldap
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
@@ -81,8 +84,5 @@ spec:
       imagePullSecrets:
       - name: {{ $webapp.registry_secret }}
       {{- end }}
-    {{- if $webapp.extraContainers }}
-      {{ toYaml $webapp.extraContainers | nindent 6 }}
-    {{- end }}
 
 {{- end }}
