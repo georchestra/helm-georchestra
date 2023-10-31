@@ -104,6 +104,15 @@ georchestra:
     openldap:
       enabled: true
       docker_image: georchestra/ldap:latest
+      extraVolumeMounts: []
+      #  - name: copy-portal-skins
+      #   mountPath: /var/lib/lemonldap-ng/portal/skins
+      extraVolumes: []
+      #  - name: copy-portal-skins
+      #    emptyDir: {}
+      extraContainers:
+      #  - name: my-sidecar
+      #    image: nginx:latest
       # registry_secret: default
     proxy:
       enabled: true
