@@ -77,13 +77,14 @@ spec:
         imagePullPolicy: Always
         env:
           {{ if $database.builtin }}
-          {{- $database_secret_geodata_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: GEODATA_PGHOST
             value: "{{ .Release.Name }}-database"
           - name: GEODATA_PGDATABASE
             value: "geodata"
           {{ else }}
+          {{ if $database.geodata.auth.existingSecret }}
           {{- $database_secret_geodata_name = $database.geodata.auth.existingSecret -}}
+          {{ end }}
           - name: GEODATA_PGHOST
             valueFrom:
               secretKeyRef:
@@ -116,13 +117,14 @@ spec:
                   key: password
                   optional: false
           {{ if $database.builtin }}
-          {{- $database_secret_datafeeder_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: DF_PGHOST
             value: "{{ .Release.Name }}-database"
           - name: DF_PGDATABASE
             value: "datafeeder"
           {{ else }}
+          {{ if $database.datafeeder.auth.existingSecret }}
           {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
+          {{ end }}
           - name: DF_PGHOST
             valueFrom:
               secretKeyRef:
@@ -155,11 +157,12 @@ spec:
                   key: password
                   optional: false
           {{ if $database.builtin }}
-          {{- $database_secret_gwc_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
           - name: GWC_PGHOST
             value: "{{ .Release.Name }}-database"
           {{- else }}
-          {{- $database_secret_gwc_name = .Values.database.auth.existingSecret -}}
+          {{ if $database.auth.existingSecret }}
+          {{- $database_secret_gwc_name = $database.auth.existingSecret -}}
+          {{ end }}
           - name: GWC_PGHOST
             valueFrom:
               secretKeyRef:
