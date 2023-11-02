@@ -29,13 +29,12 @@ jobs:
       - name: Helm Installation
         uses: azure/setup-helm@v3
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@main
         with:
-          python-version: '3.9'
           check-latest: true
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
+        uses: helm/chart-testing-action@main
 
       - name: Run chart-testing (lint)
         run: ct lint --validate-maintainers=false --chart-repos bitnami=https://charts.bitnami.com/bitnami/ --chart-dirs . --charts . --target-branch ${{ github.event.repository.default_branch }}
