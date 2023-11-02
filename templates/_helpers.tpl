@@ -66,13 +66,14 @@ Insert database georchestra environment variables
 */}}
 {{- define "georchestra.database-georchestra-envs" -}}
 {{- $database := .Values.database -}}
-{{- $database_secret_georchestra_name := "" -}}
+{{- $database_secret_georchestra_name := printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
 {{- if $database.builtin }}
-{{- $database_secret_georchestra_name = printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
 - name: PGHOST
   value: "{{ .Release.Name }}-database"
 {{- else }}
-{{- $database_secret_georchestra_name = .Values.database.auth.existingSecret -}}
+{{- if $database.auth.existingSecret }}
+{{- $database_secret_georchestra_name = $database.auth.existingSecret -}}
+{{- end }}
 - name: PGHOST
   valueFrom:
     secretKeyRef:

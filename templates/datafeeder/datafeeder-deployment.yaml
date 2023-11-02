@@ -58,13 +58,14 @@ spec:
           {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{ if $database.builtin }}
-          {{- $database_secret_datafeeder_name = printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
           - name: DF_PGHOST
             value: "{{ .Release.Name }}-database"
           - name: DF_PGDATABASE
             value: "datafeeder"
           {{ else }}
+          {{ if $database.datafeeder.auth.existingSecret }}
           {{- $database_secret_datafeeder_name = $database.datafeeder.auth.existingSecret -}}
+          {{ end }}
           - name: DF_PGHOST
             valueFrom:
               secretKeyRef:
