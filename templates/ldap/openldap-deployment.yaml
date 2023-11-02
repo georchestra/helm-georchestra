@@ -28,6 +28,9 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       containers:
+      {{- if $webapp.extraContainers }}
+        {{ toYaml $webapp.extraContainers | nindent 6 }}
+      {{- end }}
       - name: georchestra-ldap
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
@@ -55,6 +58,9 @@ spec:
             name: openldap-config
           - mountPath: /var/lib/ldap
             name: openldap-data
+          {{- if $webapp.extraVolumeMounts }}
+            {{- toYaml $webapp.extraVolumeMounts | nindent 10 }}
+          {{- end }}
         livenessProbe:
           exec:
             command:
@@ -71,6 +77,9 @@ spec:
       - name: openldap-config
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-openldap-config
+      {{- if $webapp.extraVolumes }}
+          {{- toYaml $webapp.extraVolumes | nindent 6 }}
+      {{- end }}
       {{- if $webapp.registry_secret }}
       imagePullSecrets:
       - name: {{ $webapp.registry_secret }}
