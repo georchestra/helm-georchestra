@@ -284,6 +284,7 @@ database:
       username: datafeeder
 
 rabbitmq:
+  enabled: false
   builtin: true
   auth:
     username: georchestra

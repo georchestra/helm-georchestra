@@ -1,4 +1,4 @@
-{{- if .Values.rabbitmq.storage -}}
+{{- if .Values.rabbitmq.enabled and .Values.rabbitmq.storage -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
