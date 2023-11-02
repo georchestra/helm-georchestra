@@ -191,6 +191,8 @@ spec:
                 name: {{ $database_secret_gwc_name }}
                 key: password
                 optional: false
+          - name: GEOSERVER_CSRF_WHITELIST
+            value: {{ .Values.fqdn }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
