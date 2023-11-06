@@ -243,6 +243,8 @@ database:
     ssl: false
     username: georchestra
   primary:  # section of parameters for builtin database
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
     extraVolumeMounts:
       - name: "00-initsql"
         mountPath: "/docker-entrypoint-initdb.d/00_init.sql"
