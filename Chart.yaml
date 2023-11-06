@@ -32,5 +32,5 @@ dependencies:
 - name: rabbitmq
   version: ~12.1.4
   repository: "https://charts.bitnami.com/bitnami/"
-  condition: rabbitmq.builtin, rabbitmq.enabled
+  condition: rabbitmq.enabled, rabbitmq.builtin
   alias: rabbitmq
