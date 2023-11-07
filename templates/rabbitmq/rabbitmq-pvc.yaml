@@ -1,0 +1,22 @@
+{{- $rabbitmq := .Values.rabbitmq -}}
+{{- if and $rabbitmq.enabled $rabbitmq.storage -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "georchestra.fullname" . }}-rabbitmq
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-rabbitmq
+spec:
+  accessModes:
+  - ReadWriteOnce
+  {{- if $rabbitmq.storage.storage_class_name }}
+  storageClassName: {{ $rabbitmq.storage.storage_class_name }}
+  {{- end }}
+  {{- if $rabbitmq.storage.pv_name }}
+  volumeName: {{ $rabbitmq.storage.pv_name }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $rabbitmq.storage.size }}
+{{- end }}
