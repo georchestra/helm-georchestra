@@ -59,6 +59,10 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
+        {{- with $webapp.lifecycle }}
+        lifecycle:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /mapstore/configs/config.json

@@ -57,6 +57,10 @@ spec:
             port: 8080
           failureThreshold: 5
           periodSeconds: 20
+        {{- with $webapp.lifecycle }}
+        lifecycle:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}

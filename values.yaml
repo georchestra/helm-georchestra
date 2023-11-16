@@ -22,6 +22,7 @@ georchestra:
       enabled: true
       docker_image: georchestra/console:latest
       extra_environment: []
+      lifecycle: {}
       # registry_secret: default
     datafeeder:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
@@ -38,6 +39,7 @@ georchestra:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true  # won't deploy if datafeeder is not enable
       docker_image: georchestra/datafeeder-frontend:latest
+      lifecycle: {}
       # registry_secret: default
     extractorapp:
       enabled: false
@@ -101,6 +103,7 @@ georchestra:
       # no need to put the original command already managed
       command: []
       args: []
+      lifecycle: {}
     openldap:
       enabled: true
       docker_image: georchestra/ldap:latest
