@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-ldap
+    helm.sh/resource-policy: "keep"
 spec:
   accessModes:
   - ReadWriteOnce
@@ -26,6 +27,7 @@ metadata:
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-ldap
+    helm.sh/resource-policy: "keep"
 spec:
   accessModes:
   - ReadWriteOnce
