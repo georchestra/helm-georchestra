@@ -15,25 +15,25 @@ georchestra:
     # (cardinality 0..1)
     analytics:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/analytics:latest
       extra_environment: []
       # registry_secret: default
     cas:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/cas:latest
       # registry_secret: default
     console:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/console:latest
       extra_environment: []
       lifecycle: {}
       # registry_secret: default
     datafeeder:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/datafeeder:latest
       extra_environment:
       # - name: SMTPHOST
@@ -46,19 +46,19 @@ georchestra:
     datafeeder_frontend:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true  # won't deploy if datafeeder is not enable
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/datafeeder-frontend:latest
       lifecycle: {}
       # registry_secret: default
     extractorapp:
       enabled: false
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/extractorapp:latest
       extra_environment: []
       # registry_secret: default
     geonetwork:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/geonetwork:latest
       # the registry secret is only used for the GeoNetwork image
       # registry_secret: default
@@ -73,13 +73,13 @@ georchestra:
       extra_volumeMounts: []
       ogc_api_records:
         enabled: true
-        # replicas: "1"
+        replicaCount: "1"
         image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
         extra_environment: []
         envsubst:
           enabled: true
       elasticsearch:
-        # replicas: "1"
+        replicaCount: "1"
         resources:
           limits:
             memory: 5120Mi
@@ -87,7 +87,7 @@ georchestra:
             memory: 5120Mi
         image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
       kibana:
-        # replicas: "1"
+        replicaCount: "1"
         image: docker.elastic.co/kibana/kibana:7.15.1
       # automatically clean some logs of geonetwork
       housekeeping:
@@ -96,26 +96,26 @@ georchestra:
           schedule: "0 1 * * *"
     geoserver:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/geoserver:latest
       jetty_monitoring: false
       extra_environment: []
       # registry_secret: default
     header:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/header:latest
       extra_environment: []
       # registry_secret: default
     mapfishapp:
       enabled: false
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/mapfishapp:latest
       extra_environment: []
       # registry_secret: default
     mapstore:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/mapstore:latest
       # registry_secret: default
       # no need to put the original command already managed
@@ -124,7 +124,7 @@ georchestra:
       lifecycle: {}
     openldap:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/ldap:latest
       extraVolumeMounts: []
       #  - name: copy-portal-skins
@@ -138,7 +138,7 @@ georchestra:
       # registry_secret: default
     proxy:
       enabled: true
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: false
       extra_environment: []
@@ -147,7 +147,7 @@ georchestra:
         enabled: true
     gateway:
       enabled: false
-      # replicas: "1"
+      replicaCount: "1"
       docker_image: georchestra/gateway:latest
       environment:
         JAVA_TOOL_OPTIONS: "-Dgeorchestra.datadir=/etc/georchestra"
