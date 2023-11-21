@@ -8,7 +8,7 @@ metadata:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
 spec:
-  replicas: 1
+  replicas: {{ $webapp.replicas | default 1 }}
   strategy:
     type: Recreate
   selector:
@@ -32,7 +32,7 @@ spec:
       initContainers:
       - name: fix-permissions-pvc
         image: busybox:latest
-        command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]   
+        command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
         volumeMounts:
         - mountPath: /usr/share/elasticsearch/data
           name: gn4-es-data

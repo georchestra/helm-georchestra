@@ -10,7 +10,7 @@ metadata:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder
 spec:
-  replicas: 1
+  replicas: {{ $webapp.replicas | default 1 }}
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
