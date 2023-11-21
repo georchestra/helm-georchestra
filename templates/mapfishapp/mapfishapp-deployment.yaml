@@ -66,3 +66,4 @@ spec:
       - name: {{ $webapp.registry_secret }}
       {{- end }}
 {{- end }}
+

@@ -57,3 +57,4 @@ spec:
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-gn4-es-data
 {{- end }}
+
