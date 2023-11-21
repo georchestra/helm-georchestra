@@ -9,10 +9,10 @@ georchestra:
     # If images are publicly available, the parameter should be left commented
     # out.
     #
-    # Set replicas to "0" to turn off an app for maintenance as discussed
+    # Set replicaCount to "0" to turn off an app for maintenance as discussed
     # in https://github.com/georchestra/helm-georchestra/issues/42.
-    # For most of the apps, replicas are not expected to be above 1
-    # (cardinality 0..1)
+    # For all the apps, setting a replica count of more than 1 is not supported
+    # by the helm chart (cardinality 0..1).
     analytics:
       enabled: true
       replicaCount: "1"
