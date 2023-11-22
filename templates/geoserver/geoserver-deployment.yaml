@@ -13,7 +13,7 @@ metadata:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
 spec:
-  replicas: 1
+  replicas: {{ $webapp.replicaCount }}
   strategy:
     type: Recreate
   selector:

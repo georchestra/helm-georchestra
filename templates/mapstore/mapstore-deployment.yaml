@@ -8,7 +8,7 @@ metadata:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-mapstore
 spec:
-  replicas: 1
+  replicas: {{ $webapp.replicaCount }}
   strategy:
     type: Recreate
   selector:
@@ -91,3 +91,4 @@ spec:
       - name: {{ $webapp.registry_secret }}
       {{- end }}
 {{- end }}
+
