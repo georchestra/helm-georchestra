@@ -1,4 +1,5 @@
-{{- if .Values.georchestra.webapps.mapstore.enabled -}}
+{{- if $webapp.mapstore.enabled -}}
+{{- $webapp := $webapp.mapstore -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

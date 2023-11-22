@@ -1,4 +1,4 @@
-{{- if and .Values.georchestra.webapps.geonetwork.enabled .Values.georchestra.webapps.geonetwork.ogc_api_records.enabled -}}
+{{- if and .Values.georchestra.webapps.geonetwork.enabled $webapp.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.geonetwork.ogc_api_records -}}
 {{- $database := .Values.database -}}
 apiVersion: apps/v1
@@ -30,7 +30,7 @@ spec:
         fsGroup: 999
       initContainers:
       {{- include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
-      {{- if .Values.georchestra.webapps.geonetwork.ogc_api_records.envsubst.enabled }}
+      {{- if $webapp.envsubst.enabled }}
       - name: envsubst
         image: georchestra/k8s-initcontainer-envsubst
         volumeMounts:

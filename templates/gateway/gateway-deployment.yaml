@@ -1,5 +1,5 @@
-{{- if .Values.georchestra.webapps.gateway.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.gateway -}}
+{{- if $webapp.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -1,5 +1,5 @@
-{{- if and .Values.georchestra.webapps.geonetwork.enabled .Values.georchestra.webapps.geonetwork.housekeeping.harvester_logs.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.geonetwork -}}
+{{- if and $webapp.enabled $webapp.housekeeping.harvester_logs.enabled -}}
 apiVersion: batch/v1
 kind: CronJob
 metadata:

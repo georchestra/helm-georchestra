@@ -1,4 +1,5 @@
-{{- if .Values.georchestra.webapps.geoserver.enabled -}}
+{{- $webapp := .Values.georchestra.webapps.geoserver -}}
+{{- if $webapp.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
