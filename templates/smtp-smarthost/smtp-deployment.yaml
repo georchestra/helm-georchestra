@@ -1,4 +1,5 @@
 {{- if .Values.georchestra.smtp_smarthost.enabled -}}
+{{- $webapp := .Values.georchestra.smtp_smarthost -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,7 +8,7 @@ metadata:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-smtp
 spec:
-  replicas: {{ .Values.georchestra.smtp_smarthost.replicaCount }}
+  replicas: {{ $webapp.replicaCount }}
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
@@ -28,32 +29,32 @@ spec:
       - name: georchestra-smtp
         image: camptocamp/exim:latest
         env:
-          {{- if .Values.georchestra.smtp_smarthost.relay_host }}
+          {{- if $webapp.relay_host }}
           - name: RELAY_HOST
-            value: {{ .Values.georchestra.smtp_smarthost.relay_host }}
+            value: {{ $webapp.relay_host }}
           {{- end -}}
-          {{- if .Values.georchestra.smtp_smarthost.relay_port }}
+          {{- if $webapp.relay_port }}
           - name: RELAY_PORT
-            value: {{ .Values.georchestra.smtp_smarthost.relay_port | quote }}
+            value: {{ $webapp.relay_port | quote }}
           {{- end -}}
-          {{- if .Values.georchestra.smtp_smarthost.mailname }}
+          {{- if $webapp.mailname }}
           - name: MAILNAME
-            value: {{ .Values.georchestra.smtp_smarthost.mailname }}
+            value: {{ $webapp.mailname }}
           {{- end -}}
-          {{- if .Values.georchestra.smtp_smarthost.postmaster }}
+          {{- if $webapp.postmaster }}
           - name: POSTMASTER
-            value: {{ .Values.georchestra.smtp_smarthost.postmaster }}
+            value: {{ $webapp.postmaster }}
           {{- end -}}
-          {{- if .Values.georchestra.smtp_smarthost.relay_username }}
+          {{- if $webapp.relay_username }}
           - name: RELAY_USERNAME
-            value: {{ .Values.georchestra.smtp_smarthost.relay_username }}
+            value: {{ $webapp.relay_username }}
           {{- end -}}
-          {{- if .Values.georchestra.smtp_smarthost.relay_password }}
+          {{- if $webapp.relay_password }}
           - name: RELAY_PASSWORD
-            value: {{ .Values.georchestra.smtp_smarthost.relay_password }}
+            value: {{ $webapp.relay_password }}
           {{ end -}}
-          {{- if .Values.georchestra.smtp_smarthost.extra_environment }}
-          {{- .Values.georchestra.smtp_smarthost.extra_environment | toYaml | nindent 10 }}
+          {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
         imagePullPolicy: Always
         ports:
