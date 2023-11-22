@@ -39,7 +39,7 @@ spec:
           - name: DEBUG
             value: "yes"
           - name: SUBST_FILES
-            value: "/etc/georchestra/datafeeder/frontend-config.json"
+            value: "/etc/georchestra/datafeeder/frontend-config.json /etc/georchestra/datafeeder/metadata_*"
           {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
