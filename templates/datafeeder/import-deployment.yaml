@@ -29,6 +29,10 @@ spec:
       - name: georchestra-import
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
+        {{- if $webapp.extra_environment }}
+        env:
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
+        {{- end }}
         ports:
         - containerPort: 80
           name: http
