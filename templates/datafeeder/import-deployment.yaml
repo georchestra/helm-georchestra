@@ -53,6 +53,9 @@ spec:
             port: 80
           failureThreshold: 5
           periodSeconds: 5
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
