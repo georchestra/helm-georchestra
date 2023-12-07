@@ -53,6 +53,15 @@ spec:
             port: 80
           failureThreshold: 5
           periodSeconds: 5
+      volumes:
+      - name: georchestra-datadir
+        emptyDir: {}
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      - name: ssh-secret
+        secret:
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+          defaultMode: 0400
+      {{- end }}
       {{- if $webapp.registry_secret }}
       imagePullSecrets:
       - name: {{ $webapp.registry_secret }}
