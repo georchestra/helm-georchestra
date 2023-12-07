@@ -23,6 +23,7 @@ georchestra:
       enabled: true
       replicaCount: "1"
       docker_image: georchestra/cas:latest
+      extra_environment: []
       # registry_secret: default
     console:
       enabled: true
@@ -35,7 +36,7 @@ georchestra:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
       replicaCount: "1"
       docker_image: georchestra/datafeeder:latest
-      extra_environment:
+      extra_environment: []
       # - name: SMTPHOST
       #   value: "my_smtp_host"
       # - name: SMTPPORT
@@ -49,6 +50,7 @@ georchestra:
       replicaCount: "1"
       docker_image: georchestra/datafeeder-frontend:latest
       lifecycle: {}
+      extra_environment: []
       # registry_secret: default
     extractorapp:
       enabled: false
@@ -119,6 +121,7 @@ georchestra:
       docker_image: georchestra/mapstore:latest
       # registry_secret: default
       # no need to put the original command already managed
+      extra_environment: []
       command: []
       args: []
       lifecycle: {}
