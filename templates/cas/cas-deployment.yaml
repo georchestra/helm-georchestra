@@ -27,27 +27,6 @@ spec:
         {{- end }}
       initContainers:
       {{- include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
-      - name: prepare-cas-webapp
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
-        volumeMounts:
-        - mountPath: /etc/georchestra
-          name: georchestra-datadir
-        - mountPath: /cas-webapp
-          name: cas-webapp
-        command:
-        - /bin/sh
-        - -c
-        - cp -r /var/lib/jetty/webapps/cas/* /cas-webapp ;
-          if [ -d /etc/georchestra/cas/themes ] ; then
-            cp -rvf /etc/georchestra/cas/themes /cas-webapp/WEB-INF/classes/static/ ;
-          fi ;
-          if [ -d /etc/georchestra/cas/templates ] ; then
-            cp -rvf /etc/georchestra/cas/templates /cas-webapp/WEB-INF/classes/ ;
-          fi ;
-          if [ -d /etc/georchestra/cas/classes_override ] ; then
-            cp -rvf /etc/georchestra/cas/classes_override/* /cas-webapp/WEB-INF/classes/ ;
-          fi
       containers:
       - name: georchestra-cas
         image: {{ $webapp.docker_image }}
@@ -62,8 +41,6 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
-          - mountPath: /var/lib/jetty/webapps/cas
-            name: cas-webapp
         ports:
         - containerPort: 8080
           name: http-proxy
@@ -79,8 +56,6 @@ spec:
           periodSeconds: 60
       volumes:
       - name: georchestra-datadir
-        emptyDir: {}
-      - name: cas-webapp
         emptyDir: {}
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret

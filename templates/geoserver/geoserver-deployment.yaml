@@ -43,24 +43,6 @@ spec:
         fsGroup: 999
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
-      - name: prepare-geoserver-webapp
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
-        command:
-        - /bin/sh
-        - -c
-        - cp -r /var/lib/jetty/webapps/geoserver/* /mnt/geoserver_webapp ;
-          if [ -f /mnt/georchestra_datadir/geoserver/jetty-env.xml ] ; then
-            cp /mnt/georchestra_datadir/geoserver/jetty-env.xml /mnt/geoserver_webapp/WEB-INF/jetty-env.xml ;
-          fi ;
-          if [ -f /mnt/georchestra_datadir/geoserver/web.xml ] ; then
-            cp /mnt/georchestra_datadir/geoserver/web.xml /mnt/geoserver_webapp/WEB-INF/web.xml ;
-          fi ;
-        volumeMounts:
-          - name: georchestra-datadir
-            mountPath: /mnt/georchestra_datadir
-          - name: geoserver-webapp
-            mountPath: /mnt/geoserver_webapp
       - name: fix-permissions-pvc
         image: busybox:latest
         command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]
@@ -207,8 +189,6 @@ spec:
             name: geoserver-geodata
           - mountPath: /mnt/geoserver_datadir
             name: geoserver-datadir
-          - mountPath: /var/lib/jetty/webapps/geoserver
-            name: geoserver-webapp
           - mountPath: /mnt/geoserver_tiles
             name: geoserver-tiles
           {{- range $webapp.extra_volumes }}
@@ -251,8 +231,6 @@ spec:
       {{- end }}
       volumes:
       - name: georchestra-datadir
-        emptyDir: {}
-      - name: geoserver-webapp
         emptyDir: {}
       - name: geoserver-tiles
         persistentVolumeClaim:
