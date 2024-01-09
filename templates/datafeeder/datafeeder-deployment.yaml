@@ -106,8 +106,6 @@ spec:
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
-          - mountPath: /tmp/datafeeder
-            name: datafeeder-uploads
         livenessProbe:
           tcpSocket:
             port: http-proxy
@@ -115,8 +113,6 @@ spec:
           initialDelaySeconds: 20
       volumes:
       - name: georchestra-datadir
-        emptyDir: {}
-      - name: datafeeder-uploads
         emptyDir: {}
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
