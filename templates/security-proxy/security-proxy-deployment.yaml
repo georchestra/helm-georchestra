@@ -50,9 +50,6 @@ spec:
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
       {{- end }}
-        volumeMounts:
-          - name: georchestra-datadir
-            mountPath: /mnt/georchestra_datadir
 
       containers:
       - name: georchestra-sp
