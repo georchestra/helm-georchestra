@@ -1,5 +1,5 @@
-{{- if .Values.georchestra.webapps.extractorapp.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.extractorapp -}}
+{{- if $webapp.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -1,4 +1,5 @@
-{{- if .Values.georchestra.smtp_smarthost.enabled -}}
+{{- $webapp := .Values.georchestra.smtp_smarthost -}}
+{{- if $webapp.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:

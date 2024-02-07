@@ -1,3 +1,4 @@
+{{- $webapp := .Values.georchestra.webapps.geonetwork.kibana -}}
 {{- if .Values.georchestra.webapps.geonetwork.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
@@ -7,7 +8,7 @@ metadata:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-kibana
 spec:
-  replicas: {{ .Values.georchestra.webapps.geonetwork.kibana.replicaCount }}
+  replicas: {{ $webapp.replicaCount }}
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
@@ -26,7 +27,7 @@ spec:
         {{- end }}
       containers:
       - name: kibana
-        image: {{ .Values.georchestra.webapps.geonetwork.kibana.image }}
+        image: {{ $webapp.image }}
         env:
           - name: ELASTICSEARCH_HOSTS
             value: http://{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc:9200

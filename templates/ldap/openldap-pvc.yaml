@@ -1,4 +1,5 @@
-{{- if .Values.georchestra.webapps.openldap.enabled -}}
+{{- $webapp := .Values.georchestra.webapps.openldap -}}
+{{- if $webapp.enabled -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

@@ -1,5 +1,5 @@
-{{- if .Values.georchestra.webapps.mapstore.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.mapstore -}}
+{{- if $webapp.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,13 +33,13 @@ spec:
       - name: georchestra-mapstore
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{ if and .Values.georchestra.webapps.mapstore.command .Values.georchestra.webapps.mapstore.args -}}
+        {{ if and $webapp.command $webapp.args -}}
         command:
-        {{- range .Values.georchestra.webapps.mapstore.command }}
+        {{- range $webapp.command }}
         - {{ . }}
         {{- end }}
         args:
-        {{- range .Values.georchestra.webapps.mapstore.args }}
+        {{- range $webapp.args }}
         - {{ . }}
         {{- end }}
         {{- end }}
