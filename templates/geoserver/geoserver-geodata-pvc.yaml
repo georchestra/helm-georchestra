@@ -1,4 +1,5 @@
 {{- $webapp := .Values.georchestra.webapps.geoserver -}}
+{{- $webapp_storage := .Values.georchestra.storage.geoserver_geodata -}}
 {{- if $webapp.enabled -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -11,13 +12,15 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  {{- if .Values.georchestra.storage.storage_class_name }}
+  {{- if $webapp_storage.storage_class_name }}
+  storageClassName: {{ $webapp_storage.storage_class_name }}
+  {{- else if .Values.georchestra.storage.storage_class_name }}
   storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
   {{- end }}
-  {{- if .Values.georchestra.storage.geoserver_geodata.pv_name }}
-  volumeName: {{ .Values.georchestra.storage.geoserver_geodata.pv_name }}
+  {{- if $webapp_storage.pv_name }}
+  volumeName: {{ $webapp_storage.pv_name }}
   {{- end }}
   resources:
     requests:
-      storage: {{ .Values.georchestra.storage.geoserver_geodata.size }}
+      storage: {{ $webapp_storage.size }}
 {{- end }}

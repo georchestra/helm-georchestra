@@ -178,6 +178,8 @@ georchestra:
       size: 256Mi
     geoserver_geodata:
       # pv_name: geoserver_geodata
+      # works for other storage items
+      # storage_class_name: default
       size: 2Gi
     mapstore_datadir:
       # pv_name: mapstore_datadir
