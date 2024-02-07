@@ -1,0 +1,26 @@
+{{- $webapp := .Values.georchestra.webapps.openldap -}}
+{{- $webapp_storage := .Values.georchestra.storage.openldap_data -}}
+{{- if $webapp.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "georchestra.fullname" . }}-openldap-data
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-ldap
+    helm.sh/resource-policy: "keep"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  {{- if .Values.georchestra.storage.openldap_data.storage_class_name }}
+  storageClassName: {{ .Values.georchestra.storage.openldap_data.storage_class_name }}
+  {{- else if .Values.georchestra.storage.storage_class_name }}
+  storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
+  {{- end }}
+  {{- if .Values.georchestra.storage.openldap_data.pv_name }}
+  volumeName: {{ .Values.georchestra.storage.openldap_data.pv_name }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.georchestra.storage.openldap_data.size }}
+{{- end }}
