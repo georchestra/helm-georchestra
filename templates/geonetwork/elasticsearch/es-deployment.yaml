@@ -1,5 +1,5 @@
 {{- $webapp := .Values.georchestra.webapps.geonetwork.elasticsearch -}}
-{{- if $webapp.enabled -}}
+{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
