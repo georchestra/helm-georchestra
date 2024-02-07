@@ -43,9 +43,6 @@ spec:
             value: "/etc/georchestra/geonetwork/microservices/ogc-api-records/config.yml"
           {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
-          {{- if $webapp.extra_environment }}
-          {{- $webapp.extra_environment | toYaml | nindent 10 }}
-          {{- end }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
@@ -70,9 +67,6 @@ spec:
             value: ${PGPASSWORD}
           {{- include "georchestra.service-envs" . | nindent 10 }}
           {{- include "georchestra.common-envs" . | nindent 10 }}
-          {{- if $webapp.extra_environment }}
-          {{- $webapp.extra_environment | toYaml | nindent 10 }}
-          {{- end }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
