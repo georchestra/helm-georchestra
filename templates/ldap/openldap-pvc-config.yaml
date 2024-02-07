@@ -12,15 +12,15 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  {{- if .Values.georchestra.storage.openldap_config.storage_class_name }}
-  storageClassName: {{ .Values.georchestra.storage.openldap_config.storage_class_name }}
+  {{- if $webapp_storage.storage_class_name }}
+  storageClassName: {{ $webapp_storage.storage_class_name }}
   {{- else if .Values.georchestra.storage.storage_class_name }}
   storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
   {{- end }}
-  {{- if .Values.georchestra.storage.openldap_config.pv_name }}
-  volumeName: {{ .Values.georchestra.storage.openldap_config.pv_name }}
+  {{- if $webapp_storage.pv_name }}
+  volumeName: {{ $webapp_storage.pv_name }}
   {{- end }}
   resources:
     requests:
-      storage: {{ .Values.georchestra.storage.openldap_config.size }}
+      storage: {{ $webapp_storage.size }}
 {{- end }}
