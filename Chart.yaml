@@ -25,12 +25,12 @@ appVersion: "23.0"
 
 dependencies:
 - name: postgresql
-  version: ~12.11.2
-  repository: "https://charts.bitnami.com/bitnami/"
+  version: 12.11.2
+  repository: "oci://registry-1.docker.io/bitnamicharts"
   condition: database.builtin
   alias: database
 - name: rabbitmq
-  version: ~12.1.4
-  repository: "https://charts.bitnami.com/bitnami/"
+  version: 12.1.7
+  repository: "oci://registry-1.docker.io/bitnamicharts"
   condition: rabbitmq.enabled, rabbitmq.builtin
   alias: rabbitmq
