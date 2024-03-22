@@ -102,6 +102,13 @@ georchestra:
       docker_image: georchestra/geoserver:latest
       jetty_monitoring: false
       extra_environment: []
+      # volumes is the deployment-compliant specification of the pod's extra volume
+      # It should match with an item from the extra_volumeName.name variable below.
+      extra_volumes: []
+      # volumeMounts is the deployment-compliant specification of the georchestra-GeoNetwork
+      # container extra volume. It should match an item from the extra_volumes.name
+      # variable above.
+      extra_volumeMounts: []
       # registry_secret: default
     header:
       enabled: true

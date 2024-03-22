@@ -191,9 +191,8 @@ spec:
             name: geoserver-datadir
           - mountPath: /mnt/geoserver_tiles
             name: geoserver-tiles
-          {{- range $webapp.extra_volumes }}
-          - name: {{ .name }}
-            mountPath: {{ .mountPath }}
+          {{- if $webapp.extra_volumeMounts }}
+            {{ $webapp.extra_volumeMounts | toYaml | nindent 10 }}
           {{- end }}
         ports:
         - containerPort: 8080
@@ -241,16 +240,14 @@ spec:
       - name: geoserver-datadir
         persistentVolumeClaim:
           claimName: {{ include "georchestra.fullname" . }}-geoserver-datadir
-      {{- range $webapp.extra_volumes }}
-      - name: {{ .name }}
-        persistentVolumeClaim:
-          claimName: {{ .claimName }}
-      {{- end }}
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0400
+      {{- end }}
+      {{- if $webapp.extra_volumes }}
+        {{ $webapp.extra_volumes | toYaml | nindent 6 }}
       {{- end }}
       {{- if $webapp.jetty_monitoring }}
       - name: georchestra-monitoring-cm
