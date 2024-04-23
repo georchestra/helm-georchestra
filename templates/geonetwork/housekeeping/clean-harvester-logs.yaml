@@ -11,6 +11,7 @@ spec:
   schedule: "{{ $webapp.housekeeping.harvester_logs.schedule }}"
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 86400
       template:
         spec:
           containers:
