@@ -1,4 +1,5 @@
 {{- $rabbitmq := .Values.rabbitmq -}}
+{{- $rabbitmq_storage := .Values.georchestra.storage.mapstore_datadir -}}
 {{- if and $rabbitmq.enabled $rabbitmq.storage -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -9,14 +10,20 @@ metadata:
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-rabbitmq
 spec:
   accessModes:
-  - ReadWriteOnce
-  {{- if $rabbitmq.storage.storage_class_name }}
-  storageClassName: {{ $rabbitmq.storage.storage_class_name }}
+  {{- if $rabbitmq_storage.accessModes }}
+  {{- range $rabbitmq_storage.accessModes }}
+  - {{ . | quote }}
   {{- end }}
-  {{- if $rabbitmq.storage.pv_name }}
-  volumeName: {{ $rabbitmq.storage.pv_name }}
+  {{- end }}
+  {{- if (eq "-" $rabbitmq_storage.storage_class_name) }}
+  storageClassName: ""
+  {{- else if $rabbitmq_storage.storage_class_name }}
+  storageClassName: {{ $rabbitmq_storage.storage_class_name }}
+  {{- end }}
+  {{- if $rabbitmq_storage.pv_name }}
+  volumeName: {{ $rabbitmq_storage.pv_name }}
   {{- end }}
   resources:
     requests:
-      storage: {{ $rabbitmq.storage.size }}
+      storage: {{ $rabbitmq_storage.size }}
 {{- end }}

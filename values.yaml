@@ -186,7 +186,9 @@ georchestra:
     geoserver_geodata:
       # pv_name: geoserver_geodata
       # works for other storage items
-      # storage_class_name: default
+      # storage_class_name: default or "-" for empty storageClassName
+      # accessModes:
+      # - ReadWriteOnce
       size: 2Gi
     mapstore_datadir:
       # pv_name: mapstore_datadir
@@ -202,7 +204,9 @@ georchestra:
       size: 2Gi
     # We also might need to specify a custom storageClass
     # Leave it commented if not needed
-    # storage_class_name: default
+    # storage_class_name: default or "-" for empty storageClassName
+    accessModes:
+    - ReadWriteOnce
   smtp_smarthost:
     enabled: true
     # mailname: georchestra-127-0-1-1.traefik.me
