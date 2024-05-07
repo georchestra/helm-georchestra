@@ -11,9 +11,21 @@ metadata:
     helm.sh/resource-policy: "keep"
 spec:
   accessModes:
-  - ReadWriteOnce
-  {{- if $webapp_storage.storage_class_name }}
+  {{- if $webapp_storage.accessModes }}
+  {{- range $webapp_storage.accessModes }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- else }}
+  {{- range .Values.georchestra.storage.accessModes }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  {{- if (eq "-" $webapp_storage.storage_class_name) }}
+  storageClassName: ""
+  {{- else if $webapp_storage.storage_class_name }}
   storageClassName: {{ $webapp_storage.storage_class_name }}
+  {{- else if (eq "-" .Values.georchestra.storage.storage_class_name) }}
+  storageClassName: ""
   {{- else if .Values.georchestra.storage.storage_class_name }}
   storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
   {{- end }}
