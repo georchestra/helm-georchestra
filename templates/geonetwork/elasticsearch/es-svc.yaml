@@ -7,6 +7,10 @@ metadata:
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+  {{- with $webapp.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
   - port: 9200
