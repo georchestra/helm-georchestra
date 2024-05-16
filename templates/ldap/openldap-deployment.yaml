@@ -28,9 +28,6 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       containers:
-      {{- if $webapp.extraContainers }}
-        {{ toYaml $webapp.extraContainers | nindent 6 }}
-      {{- end }}
       - name: georchestra-ldap
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
@@ -70,6 +67,9 @@ spec:
             - -b{{ .Values.ldap.baseDn }}
             - {{ .Values.ldap.adminDn }}
           initialDelaySeconds: 30
+      {{- if $webapp.extraContainers }}
+        {{ toYaml $webapp.extraContainers | nindent 6 }}
+      {{- end }}
       volumes:
       - name: openldap-data
         persistentVolumeClaim:
