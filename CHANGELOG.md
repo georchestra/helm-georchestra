@@ -1,3 +1,12 @@
+# 1.0.0
+
+Changelog after 2 years!!!
+
+- Update RabbitMQ and PostgreSQL Helm charts
+- Change healthcheck to a local layer for avoiding geoserver to be down due to external databases being down. (#88)
+- Remove override of entrypoint of geonetwork component (#31)
+- Upgrade to Elasticsearch 7.17.21 for Geonetwork (#89)
+
 # 0.2.11
 
 "Label ALL THE THING !"

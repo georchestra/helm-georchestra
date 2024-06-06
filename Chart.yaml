@@ -15,22 +15,22 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.19.0
+version: 1.0.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "23.0"
+appVersion: "24.0"
 
 dependencies:
 - name: postgresql
-  version: 12.11.2
+  version: 15.5.2
   repository: "oci://registry-1.docker.io/bitnamicharts"
   condition: database.builtin
   alias: database
 - name: rabbitmq
-  version: 12.1.7
+  version: 14.4.0
   repository: "oci://registry-1.docker.io/bitnamicharts"
   condition: rabbitmq.enabled, rabbitmq.builtin
   alias: rabbitmq
