@@ -2,8 +2,29 @@ apiVersion: v1
 entries:
   georchestra:
   - apiVersion: v2
+    appVersion: "24.0"
+    created: "2024-06-06T11:52:59.006477128Z"
+    dependencies:
+    - alias: database
+      condition: database.builtin
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.5.2
+    - alias: rabbitmq
+      condition: rabbitmq.enabled, rabbitmq.builtin
+      name: rabbitmq
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 14.4.0
+    description: A Helm chart to deploy geOrchestra instances into k8s clusters.
+    digest: 1f2e4b29943d2a8f6efebf1f15dcf47b670bb715e3d0b901d8ec3c3a0703fa41
+    name: georchestra
+    type: application
+    urls:
+    - georchestra-1.0.0-main-0324fd3.tgz
+    version: 1.0.0-main-0324fd3
+  - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.077414878Z"
+    created: "2024-06-06T11:52:58.631378823Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -24,7 +45,7 @@ entries:
     version: 0.19.0
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.068835069Z"
+    created: "2024-06-06T11:52:58.622415734Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -45,7 +66,7 @@ entries:
     version: 0.19.0-main-c9e56e3
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.059037071Z"
+    created: "2024-06-06T11:52:58.613858056Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -66,7 +87,7 @@ entries:
     version: 0.19.0-main-c8d6149
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.049610519Z"
+    created: "2024-06-06T11:52:58.605094456Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -87,7 +108,7 @@ entries:
     version: 0.19.0-main-6f675d5
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.040193307Z"
+    created: "2024-06-06T11:52:58.595811244Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -108,7 +129,7 @@ entries:
     version: 0.19.0-main-6b178c1
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.029465144Z"
+    created: "2024-06-06T11:52:58.586487099Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -129,7 +150,7 @@ entries:
     version: 0.19.0-main-1a98999
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.020163433Z"
+    created: "2024-06-06T11:52:58.577550995Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -150,7 +171,7 @@ entries:
     version: 0.18.2
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.010867405Z"
+    created: "2024-06-06T11:52:58.568548682Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -171,7 +192,7 @@ entries:
     version: 0.18.2-main-b626fd8
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:47.002537294Z"
+    created: "2024-06-06T11:52:58.559614499Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -192,7 +213,7 @@ entries:
     version: 0.18.2-main-9b91e4f
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.992850285Z"
+    created: "2024-06-06T11:52:58.550498059Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -213,7 +234,7 @@ entries:
     version: 0.18.2-main-0b558d3
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.983146504Z"
+    created: "2024-06-06T11:52:58.541487771Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -234,7 +255,7 @@ entries:
     version: 0.18.1
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.973894175Z"
+    created: "2024-06-06T11:52:58.533254127Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -255,7 +276,7 @@ entries:
     version: 0.18.1-main-e06f04b
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.964626672Z"
+    created: "2024-06-06T11:52:58.524210398Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -276,7 +297,7 @@ entries:
     version: 0.18.1-main-5fe0af3
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.955242508Z"
+    created: "2024-06-06T11:52:58.514935739Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -297,7 +318,7 @@ entries:
     version: 0.18.1-main-5f17014
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.946819704Z"
+    created: "2024-06-06T11:52:58.5059773Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -318,7 +339,7 @@ entries:
     version: 0.18.0
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.936558312Z"
+    created: "2024-06-06T11:52:58.49695513Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -339,7 +360,7 @@ entries:
     version: 0.18.0-main-f856c87
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.92735328Z"
+    created: "2024-06-06T11:52:58.487989198Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -360,7 +381,7 @@ entries:
     version: 0.18.0-main-1579263
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.91866553Z"
+    created: "2024-06-06T11:52:58.478910006Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -381,7 +402,7 @@ entries:
     version: 0.17.1
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.909176809Z"
+    created: "2024-06-06T11:52:58.47048688Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -402,7 +423,7 @@ entries:
     version: 0.17.1-main-b4b9833
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.899801063Z"
+    created: "2024-06-06T11:52:58.46171903Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -423,7 +444,7 @@ entries:
     version: 0.17.1-main-51bdb7b
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.890541486Z"
+    created: "2024-06-06T11:52:58.452403438Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -444,7 +465,7 @@ entries:
     version: 0.16.1
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.881183588Z"
+    created: "2024-06-06T11:52:58.443438912Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -465,7 +486,7 @@ entries:
     version: 0.16.1-main-caca97b
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.872012223Z"
+    created: "2024-06-06T11:52:58.434516514Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -486,7 +507,7 @@ entries:
     version: 0.16.1-main-bf30087
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.862644731Z"
+    created: "2024-06-06T11:52:58.425517283Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -507,7 +528,7 @@ entries:
     version: 0.16.1-main-acaf055
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.854169999Z"
+    created: "2024-06-06T11:52:58.416685646Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -528,7 +549,7 @@ entries:
     version: 0.16.1-main-a0d29de
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.8444976Z"
+    created: "2024-06-06T11:52:58.408460928Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -549,7 +570,7 @@ entries:
     version: 0.16.1-main-37893ab
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.834982957Z"
+    created: "2024-06-06T11:52:58.398433013Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -570,7 +591,7 @@ entries:
     version: 0.16.0
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.825774908Z"
+    created: "2024-06-06T11:52:58.390198728Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -591,7 +612,7 @@ entries:
     version: 0.16.0-main-2ef1cee
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.816253534Z"
+    created: "2024-06-06T11:52:58.38106969Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -612,7 +633,7 @@ entries:
     version: 0.15.3
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.807164503Z"
+    created: "2024-06-06T11:52:58.371694128Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -633,7 +654,7 @@ entries:
     version: 0.15.3-main-e4ec870
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.79833104Z"
+    created: "2024-06-06T11:52:58.362721878Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -654,7 +675,7 @@ entries:
     version: 0.15.3-main-63aa4e4
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.788595087Z"
+    created: "2024-06-06T11:52:58.353799099Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -675,7 +696,7 @@ entries:
     version: 0.15.3-main-3e66d81
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.779521376Z"
+    created: "2024-06-06T11:52:58.344755386Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -696,7 +717,7 @@ entries:
     version: 0.15.2
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.771045994Z"
+    created: "2024-06-06T11:52:58.335747168Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -717,7 +738,7 @@ entries:
     version: 0.15.1
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.761402048Z"
+    created: "2024-06-06T11:52:58.32763486Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -738,7 +759,7 @@ entries:
     version: 0.15.0
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.751918624Z"
+    created: "2024-06-06T11:52:58.317689646Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -759,7 +780,7 @@ entries:
     version: 0.15.0-main-b0649e5
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.742684332Z"
+    created: "2024-06-06T11:52:58.308736732Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -780,7 +801,7 @@ entries:
     version: 0.14.2
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.7336697Z"
+    created: "2024-06-06T11:52:58.30053145Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -801,7 +822,7 @@ entries:
     version: 0.14.2-main-fb0f163
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.724623198Z"
+    created: "2024-06-06T11:52:58.291366844Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -822,7 +843,7 @@ entries:
     version: 0.14.2-main-cfc7efe
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.715807493Z"
+    created: "2024-06-06T11:52:58.282279546Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -843,7 +864,7 @@ entries:
     version: 0.14.2-main-b044168
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.705969023Z"
+    created: "2024-06-06T11:52:58.273305891Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -864,7 +885,7 @@ entries:
     version: 0.14.2-main-4fdce64
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.697689137Z"
+    created: "2024-06-06T11:52:58.263939778Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -885,7 +906,7 @@ entries:
     version: 0.14.1
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.688278807Z"
+    created: "2024-06-06T11:52:58.254750411Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -906,7 +927,7 @@ entries:
     version: 0.14.1-main-df1ef82
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.678874405Z"
+    created: "2024-06-06T11:52:58.246462175Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -927,7 +948,7 @@ entries:
     version: 0.14.1-main-cb47c25
   - apiVersion: v2
     appVersion: "23.0"
-    created: "2024-06-06T11:22:46.66952694Z"
+    created: "2024-06-06T11:52:58.236947976Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -948,7 +969,7 @@ entries:
     version: 0.14.1-main-16c728a
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.66035263Z"
+    created: "2024-06-06T11:52:58.227597438Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -969,7 +990,7 @@ entries:
     version: 0.14.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.6507943Z"
+    created: "2024-06-06T11:52:58.216109444Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -990,7 +1011,7 @@ entries:
     version: 0.14.0-main-4faa675
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.641263322Z"
+    created: "2024-06-06T11:52:58.207145414Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1011,7 +1032,7 @@ entries:
     version: 0.14.0-main-1f9dd98
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.631745091Z"
+    created: "2024-06-06T11:52:58.198303848Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1027,7 +1048,7 @@ entries:
     version: 0.13.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.626039869Z"
+    created: "2024-06-06T11:52:58.193749801Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1048,7 +1069,7 @@ entries:
     version: 0.13.0-main-f4e765f
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.616852363Z"
+    created: "2024-06-06T11:52:58.184622852Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1064,7 +1085,7 @@ entries:
     version: 0.13.0-main-e1fe62a
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.612238387Z"
+    created: "2024-06-06T11:52:58.179152978Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1080,7 +1101,7 @@ entries:
     version: 0.13.0-main-db6c58b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.606774072Z"
+    created: "2024-06-06T11:52:58.174553206Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1096,7 +1117,7 @@ entries:
     version: 0.13.0-main-80a2428
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.602207224Z"
+    created: "2024-06-06T11:52:58.169125159Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1112,7 +1133,7 @@ entries:
     version: 0.13.0-main-61e301d
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.596852811Z"
+    created: "2024-06-06T11:52:58.164504348Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1128,7 +1149,7 @@ entries:
     version: 0.13.0-main-33d7f7b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.592208128Z"
+    created: "2024-06-06T11:52:58.159115385Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1144,7 +1165,7 @@ entries:
     version: 0.13.0-main-19c1c64
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.586763844Z"
+    created: "2024-06-06T11:52:58.154410116Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1160,7 +1181,7 @@ entries:
     version: 0.13.0-main-09f19a4
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.581959262Z"
+    created: "2024-06-06T11:52:58.149047066Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1176,7 +1197,7 @@ entries:
     version: 0.12.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.576525168Z"
+    created: "2024-06-06T11:52:58.144462953Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1192,7 +1213,7 @@ entries:
     version: 0.12.0-main-9b4ef9a
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.571905793Z"
+    created: "2024-06-06T11:52:58.139118159Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1208,7 +1229,7 @@ entries:
     version: 0.12.0-main-6bfcf8f
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.566390884Z"
+    created: "2024-06-06T11:52:58.134572157Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1224,7 +1245,7 @@ entries:
     version: 0.12.0-main-4348ee4
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.56172967Z"
+    created: "2024-06-06T11:52:58.128628591Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1240,7 +1261,7 @@ entries:
     version: 0.12.0-main-368f365
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.556309001Z"
+    created: "2024-06-06T11:52:58.123932119Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1256,7 +1277,7 @@ entries:
     version: 0.12.0-main-027754e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.55175625Z"
+    created: "2024-06-06T11:52:58.118504081Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1272,7 +1293,7 @@ entries:
     version: 0.11.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.546444748Z"
+    created: "2024-06-06T11:52:58.113853203Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1288,7 +1309,7 @@ entries:
     version: 0.11.0-main-7ff0bd6
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.541944605Z"
+    created: "2024-06-06T11:52:58.108519043Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1304,7 +1325,7 @@ entries:
     version: 0.11.0-main-7bf2c51
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.53596319Z"
+    created: "2024-06-06T11:52:58.103957232Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1320,7 +1341,7 @@ entries:
     version: 0.11.0-main-4188c9e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.531418274Z"
+    created: "2024-06-06T11:52:58.098018003Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1336,7 +1357,7 @@ entries:
     version: 0.10.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.526009322Z"
+    created: "2024-06-06T11:52:58.093524509Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1352,7 +1373,7 @@ entries:
     version: 0.10.0-main-f79c049
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.521487499Z"
+    created: "2024-06-06T11:52:58.087877046Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1368,7 +1389,7 @@ entries:
     version: 0.10.0-main-aab2f42
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.515855878Z"
+    created: "2024-06-06T11:52:58.083462519Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1384,7 +1405,7 @@ entries:
     version: 0.10.0-main-801bff1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.509805543Z"
+    created: "2024-06-06T11:52:58.077796678Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1400,7 +1421,7 @@ entries:
     version: 0.10.0-main-5cca4e9
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.504072675Z"
+    created: "2024-06-06T11:52:58.073371231Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1416,7 +1437,7 @@ entries:
     version: 0.10.0-main-41289ec
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:46.498606105Z"
+    created: "2024-06-06T11:52:58.067675547Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1432,7 +1453,7 @@ entries:
     version: 0.10.0-main-381bf33
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.452080988Z"
+    created: "2024-06-06T11:52:58.995994099Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1448,7 +1469,7 @@ entries:
     version: 0.9.2-main-6ffb05e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.447541753Z"
+    created: "2024-06-06T11:52:58.990405107Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1464,7 +1485,7 @@ entries:
     version: 0.9.2-main-3994261
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.442070422Z"
+    created: "2024-06-06T11:52:58.985949172Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1480,7 +1501,7 @@ entries:
     version: 0.9.1-main-f48cc5f
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.437493616Z"
+    created: "2024-06-06T11:52:58.980532685Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1496,7 +1517,7 @@ entries:
     version: 0.9.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.431979279Z"
+    created: "2024-06-06T11:52:58.97595297Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1512,7 +1533,7 @@ entries:
     version: 0.9.0-main-3f1502b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.42737405Z"
+    created: "2024-06-06T11:52:58.970642126Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1528,7 +1549,7 @@ entries:
     version: 0.9.0-main-2b2f51e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.421623281Z"
+    created: "2024-06-06T11:52:58.966125308Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1544,7 +1565,7 @@ entries:
     version: 0.8.3
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.416991883Z"
+    created: "2024-06-06T11:52:58.960770015Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1560,7 +1581,7 @@ entries:
     version: 0.8.3-main-c6b55c6
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.411505404Z"
+    created: "2024-06-06T11:52:58.956085766Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1576,7 +1597,7 @@ entries:
     version: 0.8.2-main-a5fa95e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.406881981Z"
+    created: "2024-06-06T11:52:58.950717199Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1592,7 +1613,7 @@ entries:
     version: 0.8.1-main-c65b8b9
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.401306678Z"
+    created: "2024-06-06T11:52:58.946249313Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1608,7 +1629,7 @@ entries:
     version: 0.8.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.396909969Z"
+    created: "2024-06-06T11:52:58.940992517Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1624,7 +1645,7 @@ entries:
     version: 0.8.0-main-ffd22fa
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.391369277Z"
+    created: "2024-06-06T11:52:58.936566078Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1640,7 +1661,7 @@ entries:
     version: 0.8.0-main-a6039e5
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.386840341Z"
+    created: "2024-06-06T11:52:58.931312788Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1656,7 +1677,7 @@ entries:
     version: 0.8.0-main-9cdc717
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.381575457Z"
+    created: "2024-06-06T11:52:58.926743112Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1672,7 +1693,7 @@ entries:
     version: 0.8.0-main-9779d93
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.377125068Z"
+    created: "2024-06-06T11:52:58.92136092Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1688,7 +1709,7 @@ entries:
     version: 0.8.0-main-7ae6163
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.371743216Z"
+    created: "2024-06-06T11:52:58.91699792Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1704,7 +1725,7 @@ entries:
     version: 0.8.0-main-7556749
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.367225862Z"
+    created: "2024-06-06T11:52:58.911748947Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1720,7 +1741,7 @@ entries:
     version: 0.8.0-main-722cb70
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.361746185Z"
+    created: "2024-06-06T11:52:58.90731815Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1736,7 +1757,7 @@ entries:
     version: 0.8.0-main-6d0ec3b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.357136547Z"
+    created: "2024-06-06T11:52:58.902009478Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1752,7 +1773,7 @@ entries:
     version: 0.8.0-main-6882447
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.351756357Z"
+    created: "2024-06-06T11:52:58.897569274Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1768,7 +1789,7 @@ entries:
     version: 0.8.0-main-5ed97bc
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.347213364Z"
+    created: "2024-06-06T11:52:58.892064082Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1784,7 +1805,7 @@ entries:
     version: 0.8.0-main-5c182f0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.341687117Z"
+    created: "2024-06-06T11:52:58.887604081Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1800,7 +1821,7 @@ entries:
     version: 0.8.0-main-4ea780e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.337155977Z"
+    created: "2024-06-06T11:52:58.882395379Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1816,7 +1837,7 @@ entries:
     version: 0.8.0-main-44a92e9
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.331705482Z"
+    created: "2024-06-06T11:52:58.877844478Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1832,7 +1853,7 @@ entries:
     version: 0.8.0-main-438bac8
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.327159273Z"
+    created: "2024-06-06T11:52:58.872360653Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1848,7 +1869,7 @@ entries:
     version: 0.7.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.32134557Z"
+    created: "2024-06-06T11:52:58.867952307Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1864,7 +1885,7 @@ entries:
     version: 0.7.0-main-58319b3
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.316871837Z"
+    created: "2024-06-06T11:52:58.862654296Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1880,7 +1901,7 @@ entries:
     version: 0.6.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.311456473Z"
+    created: "2024-06-06T11:52:58.858265938Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1896,7 +1917,7 @@ entries:
     version: 0.6.0-main-31601c6
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.306871372Z"
+    created: "2024-06-06T11:52:58.853046008Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1912,7 +1933,7 @@ entries:
     version: 0.6.0-df-no-envsubst-6b80579
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.301519154Z"
+    created: "2024-06-06T11:52:58.848703065Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1928,7 +1949,7 @@ entries:
     version: 0.6.0-df-no-envsubst-2fdf4ca
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.296980811Z"
+    created: "2024-06-06T11:52:58.843388292Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1944,7 +1965,7 @@ entries:
     version: 0.5.1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.291546267Z"
+    created: "2024-06-06T11:52:58.838977391Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1960,7 +1981,7 @@ entries:
     version: 0.5.1-main-464bb60
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.287061523Z"
+    created: "2024-06-06T11:52:58.833759006Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1976,7 +1997,7 @@ entries:
     version: 0.5.1-main-0f78d15
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.281546834Z"
+    created: "2024-06-06T11:52:58.829385646Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -1992,7 +2013,7 @@ entries:
     version: 0.5.1-gateway-85bf49b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.277061619Z"
+    created: "2024-06-06T11:52:58.823992674Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2008,7 +2029,7 @@ entries:
     version: 0.5.1-gateway-1e1ef77
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.271665871Z"
+    created: "2024-06-06T11:52:58.819593897Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2024,7 +2045,7 @@ entries:
     version: 0.5.0-main-73059fc
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.267214469Z"
+    created: "2024-06-06T11:52:58.814253646Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2040,7 +2061,7 @@ entries:
     version: 0.4.4-main-319ae3b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.261861901Z"
+    created: "2024-06-06T11:52:58.809801279Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2056,7 +2077,7 @@ entries:
     version: 0.4.3-main-5879deb
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.257459011Z"
+    created: "2024-06-06T11:52:58.804537172Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2072,7 +2093,7 @@ entries:
     version: 0.4.3-gateway-406f6a0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.252153039Z"
+    created: "2024-06-06T11:52:58.800134056Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2088,7 +2109,7 @@ entries:
     version: 0.4.3-gateway-0fd7ec6
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.247656723Z"
+    created: "2024-06-06T11:52:58.794908063Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2104,7 +2125,7 @@ entries:
     version: 0.4.2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.242246242Z"
+    created: "2024-06-06T11:52:58.79054924Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2120,7 +2141,7 @@ entries:
     version: 0.4.2-main-f797dfc
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.237795372Z"
+    created: "2024-06-06T11:52:58.785325956Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2136,7 +2157,7 @@ entries:
     version: 0.4.2-main-b877f47
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.232452542Z"
+    created: "2024-06-06T11:52:58.780927018Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2152,7 +2173,7 @@ entries:
     version: 0.4.2-GEO-5997-geonetwwork-web-xml-115941d
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.228079327Z"
+    created: "2024-06-06T11:52:58.775645115Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2168,7 +2189,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.222720123Z"
+    created: "2024-06-06T11:52:58.771238683Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2184,7 +2205,7 @@ entries:
     version: 0.4.1-main-61929e3
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.21829961Z"
+    created: "2024-06-06T11:52:58.765886719Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2200,7 +2221,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.212254205Z"
+    created: "2024-06-06T11:52:58.761549997Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2216,7 +2237,7 @@ entries:
     version: 0.4.0-main-0938620
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.207806681Z"
+    created: "2024-06-06T11:52:58.756355651Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2232,7 +2253,7 @@ entries:
     version: 0.3.3
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.202253177Z"
+    created: "2024-06-06T11:52:58.751961612Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2248,7 +2269,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-961cd33
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.197773012Z"
+    created: "2024-06-06T11:52:58.746431763Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2264,7 +2285,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-8731500
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.192300327Z"
+    created: "2024-06-06T11:52:58.742024339Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2280,7 +2301,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-4d69976
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.187803431Z"
+    created: "2024-06-06T11:52:58.736628807Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2296,7 +2317,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-4747e55
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.182134847Z"
+    created: "2024-06-06T11:52:58.732216274Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2312,7 +2333,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-2bd3bd4
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.17760025Z"
+    created: "2024-06-06T11:52:58.727167785Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2328,7 +2349,7 @@ entries:
     version: 0.3.3-mapstore2022-02-fix-273b86e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.172159521Z"
+    created: "2024-06-06T11:52:58.7228719Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2344,7 +2365,7 @@ entries:
     version: 0.3.3-main-45b5d53
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.167610738Z"
+    created: "2024-06-06T11:52:58.717456124Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2360,7 +2381,7 @@ entries:
     version: 0.3.3-main-19943f5
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.161891118Z"
+    created: "2024-06-06T11:52:58.713047317Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2376,7 +2397,7 @@ entries:
     version: 0.3.2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.157461948Z"
+    created: "2024-06-06T11:52:58.707632595Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2392,7 +2413,7 @@ entries:
     version: 0.3.1
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.151787234Z"
+    created: "2024-06-06T11:52:58.703309999Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2408,7 +2429,7 @@ entries:
     version: 0.3.1-main-d97635c
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.147255051Z"
+    created: "2024-06-06T11:52:58.69815306Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2424,7 +2445,7 @@ entries:
     version: 0.3.1-main-5fa4e4b
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.141749305Z"
+    created: "2024-06-06T11:52:58.693821187Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2440,7 +2461,7 @@ entries:
     version: 0.3.1-GEO-5997-geonetwwork-web-xml-2c7fac7
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.137342788Z"
+    created: "2024-06-06T11:52:58.688697769Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2456,7 +2477,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.131896707Z"
+    created: "2024-06-06T11:52:58.684293381Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2472,7 +2493,7 @@ entries:
     version: 0.3.0-main-cc4ed38
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.127393588Z"
+    created: "2024-06-06T11:52:58.679291198Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2488,7 +2509,7 @@ entries:
     version: 0.3.0-main-b7ef964
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.121866718Z"
+    created: "2024-06-06T11:52:58.674937584Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2504,7 +2525,7 @@ entries:
     version: 0.3.0-main-ab36565
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.117452045Z"
+    created: "2024-06-06T11:52:58.669817424Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2520,7 +2541,7 @@ entries:
     version: 0.3.0-main-9891103
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.112007813Z"
+    created: "2024-06-06T11:52:58.665413968Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2536,7 +2557,7 @@ entries:
     version: 0.3.0-main-8a21ef7
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.107569756Z"
+    created: "2024-06-06T11:52:58.660157304Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2552,7 +2573,7 @@ entries:
     version: 0.3.0-main-5bb4b03
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.102384154Z"
+    created: "2024-06-06T11:52:58.65577657Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: a26f10f96b680eb158386cb717042d65fc0d22cc35a38b41ea2350cd1a40dcd7
     name: georchestra
@@ -2562,7 +2583,7 @@ entries:
     version: 0.2.11
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.101461167Z"
+    created: "2024-06-06T11:52:58.654873267Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2578,7 +2599,7 @@ entries:
     version: 0.2.11-main-db41fbb
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.096685225Z"
+    created: "2024-06-06T11:52:58.649701885Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 7cf4d505c913e6ab286100009bcbea80475eef240e27fa6e2087d2550f778c96
     name: georchestra
@@ -2588,7 +2609,7 @@ entries:
     version: 0.2.11-main-650c2db
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.095085119Z"
+    created: "2024-06-06T11:52:58.648818759Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2604,7 +2625,7 @@ entries:
     version: 0.2.11-main-438071e
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.090677891Z"
+    created: "2024-06-06T11:52:58.644414471Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 4eaca94e7bce85854379363218b07c8d77b33f0db22b362858e4e6dfa606cf6f
     name: georchestra
@@ -2614,7 +2635,7 @@ entries:
     version: 0.2.11-main-3665bc2
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.089797082Z"
+    created: "2024-06-06T11:52:58.642719427Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: a36326964c5cc7066000c0c4a1aa24fbff5f2dc0b912480745b0e792dc41fed2
     name: georchestra
@@ -2624,7 +2645,7 @@ entries:
     version: 0.2.11-main-32bb680
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.088915562Z"
+    created: "2024-06-06T11:52:58.641842272Z"
     description: A Helm chart to deploy geOrchestra instances into k8s clusters.
     digest: 5f6bfb0893affe5ce971665295bdd1953b0f5647fc20429c1161ef685b6ef7a0
     name: georchestra
@@ -2634,7 +2655,7 @@ entries:
     version: 0.2.11-main-13a6aea
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.087224937Z"
+    created: "2024-06-06T11:52:58.640978994Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2650,7 +2671,7 @@ entries:
     version: 0.2.11-main-067fc20
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2024-06-06T11:22:47.082751504Z"
+    created: "2024-06-06T11:52:58.636642081Z"
     dependencies:
     - alias: database
       condition: database.builtin
@@ -2664,4 +2685,4 @@ entries:
     urls:
     - georchestra-0.2.11-main-064bdfe.tgz
     version: 0.2.11-main-064bdfe
-generated: "2024-06-06T11:22:46.493549571Z"
+generated: "2024-06-06T11:52:58.062483552Z"
