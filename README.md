@@ -7,9 +7,9 @@ some of the features and/or implementation choices.
 
 ## How to create a new chart release
 1. Change and push the version in the Chart.yaml
-2. Execute `git tag 1.X.X` (with the same version as the chart)
-3. Execute `git push --tags`
-4. Write a changelog in the CHANGELOG.md
+2. Write a changelog in the CHANGELOG.md
+3. Execute `git tag 1.X.X` (with the same version as the chart)
+4. Execute `git push --tags`
 
 # Usage
 
