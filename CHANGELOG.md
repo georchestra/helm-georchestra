@@ -1,11 +1,12 @@
-# 1.0.0
+# 1.0.1
 
-Changelog after 2 years!!!
+Changelog after 2 years!!! Stable release 1.0!
 
 - Update RabbitMQ and PostgreSQL Helm charts
 - Change healthcheck to a local layer for avoiding geoserver to be down due to external databases being down. (#88)
 - Remove override of entrypoint of geonetwork component (#31)
 - Upgrade to Elasticsearch 7.17.21 for Geonetwork (#89)
+- geOrchestra gateway now by default in the helm chart!
 
 # 0.2.11
 
