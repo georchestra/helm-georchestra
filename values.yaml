@@ -177,7 +177,7 @@ georchestra:
       service:
         annotations: {}
     proxy:
-      enabled: true
+      enabled: false
       replicaCount: "1"
       docker_image: georchestra/security-proxy:latest
       jetty_monitoring: false
@@ -188,7 +188,7 @@ georchestra:
       service:
         annotations: {}
     gateway:
-      enabled: false
+      enabled: true
       replicaCount: "1"
       docker_image: georchestra/gateway:latest
       environment:
