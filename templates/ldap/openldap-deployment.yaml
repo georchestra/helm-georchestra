@@ -58,6 +58,15 @@ spec:
           {{- if $webapp.extraVolumeMounts }}
             {{- toYaml $webapp.extraVolumeMounts | nindent 10 }}
           {{- end }}
+        startupProbe:
+          exec:
+            command:
+            - ldapsearch
+            - -x
+            - -Hldap://localhost:{{ .Values.ldap.port }}/
+            - -b{{ .Values.ldap.baseDn }}
+            - {{ .Values.ldap.adminDn }}
+          initialDelaySeconds: 5
         livenessProbe:
           exec:
             command:
@@ -66,7 +75,7 @@ spec:
             - -Hldap://localhost:{{ .Values.ldap.port }}/
             - -b{{ .Values.ldap.baseDn }}
             - {{ .Values.ldap.adminDn }}
-          initialDelaySeconds: 30
+          periodSeconds: 5
       {{- if $webapp.extraContainers }}
         {{ toYaml $webapp.extraContainers | nindent 6 }}
       {{- end }}

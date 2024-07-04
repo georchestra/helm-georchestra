@@ -102,15 +102,18 @@ spec:
           {{- end }}
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
         livenessProbe:
-          tcpSocket:
-            port: http-proxy
-          periodSeconds: 10
-          initialDelaySeconds: 20
+          httpGet:
+            path: /datafeeder/
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /datafeeder/
+            port: http
       volumes:
       - name: georchestra-datadir
         emptyDir: {}

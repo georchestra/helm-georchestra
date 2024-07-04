@@ -15,7 +15,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: http
   selector:
     org.georchestra.service/name: {{ include "georchestra.fullname" . }}-import
 {{- end }}

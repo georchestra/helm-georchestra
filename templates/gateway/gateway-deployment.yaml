@@ -46,19 +46,22 @@ spec:
           {{- end }}
         ports:
         - containerPort: 8080
-          name: gateway
+          name: http
+        - containerPort: 8090
+          name: actuator
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
         livenessProbe:
           httpGet:
-            path: /actuator/health
-            port: 8090
+            path: /actuator/health/liveness
+            port: actuator
           periodSeconds: 10
           timeoutSeconds: 3
         startupProbe:
-          tcpSocket:
-            port: 8080
+          httpGet:
+            path: /actuator/health/readiness
+            port: actuator
           failureThreshold: 5
           periodSeconds: 15
       volumes:
