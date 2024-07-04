@@ -48,17 +48,15 @@ spec:
             name: georchestra-datadir
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
         livenessProbe:
           httpGet:
-            path: /header/img/logo.png
-            port: 8080
-          periodSeconds: 10
-        startupProbe:
-          tcpSocket:
-            port: 8080
-          failureThreshold: 5
-          periodSeconds: 30
+            path: /header/
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /header/
+            port: http
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
