@@ -63,17 +63,27 @@ spec:
         lifecycle:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+        {{- if $webapp.livenessProbe }}
+        livenessProbe:
+          {{ $webapp.livenessProbe | toYaml | nindent 10 }}
+        {{- else }}
         livenessProbe:
           httpGet:
             path: /mapstore/configs/config.json
             port: 8080
           periodSeconds: 10
+        {{- end }}
+        {{- if $webapp.startupProbe }}
+        startupProbe:
+          {{ $webapp.startupProbe | toYaml | nindent 10 }}
+        {{- else }}
         startupProbe:
           httpGet:
             path: /mapstore/configs/config.json
             port: 8080
           failureThreshold: 5
           periodSeconds: 15
+        {{- end }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
