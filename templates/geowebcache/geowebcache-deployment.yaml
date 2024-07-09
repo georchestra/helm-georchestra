@@ -1,0 +1,89 @@
+{{- $webapp := .Values.georchestra.webapps.geowebcache -}}
+{{- if $webapp.enabled -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-geowebcache
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geowebcache
+spec:
+  replicas: {{ $webapp.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "georchestra.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geowebcache
+  template:
+    metadata:
+      labels:
+        {{- include "georchestra.selectorLabels" . | nindent 8 }}
+        org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geowebcache
+        app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geowebcache
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+        {{- with .Values.georchestra.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      securityContext:
+        fsGroup: 999
+      initContainers:
+      {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
+      containers:
+      - name: georchestra-geowebcache
+        image: {{ $webapp.docker_image }}
+        imagePullPolicy: Always
+        env:
+          {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
+          {{- if $webapp.extra_environment }}
+          {{- $webapp.extra_environment | toYaml | nindent 10 }}
+          {{- end }}
+        volumeMounts:
+          - mountPath: /etc/georchestra
+            name: georchestra-datadir
+          - mountPath: /mnt/geowebcache_tiles
+            name: geowebcache-tiles
+          {{- if $webapp.extra_volumeMounts }}
+            {{ $webapp.extra_volumeMounts | toYaml | nindent 10 }}
+          {{- end }}
+        ports:
+        - containerPort: 80
+          name: http
+        {{- if $webapp.livenessProbe }}
+        {{ $webapp.livenessProbe | toYaml | nindent 8 }}
+        {{- else }}
+        livenessProbe:
+          httpGet:
+            path: /geowebcache/
+            port: http
+        {{- end }}
+        startupProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /geowebcache/
+            port: http
+          initialDelaySeconds: 45
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 1
+      volumes:
+      - name: georchestra-datadir
+        emptyDir: {}
+      - name: geowebcache-tiles
+        persistentVolumeClaim:
+          claimName: {{ include "georchestra.fullname" . }}-geowebcache-tiles
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      - name: ssh-secret
+        secret:
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+          defaultMode: 0400
+      {{- end }}
+      {{- if $webapp.extra_volumes }}
+        {{ $webapp.extra_volumes | toYaml | nindent 6 }}
+      {{- end }}
+      {{- if $webapp.registry_secret }}
+      imagePullSecrets:
+      - name: {{ $webapp.registry_secret }}
+      {{- end }}
+{{- end }}
