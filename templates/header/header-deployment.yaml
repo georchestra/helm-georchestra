@@ -53,14 +53,6 @@ spec:
           httpGet:
             path: /header/
             port: http
-        readinessProbe:
-          httpGet:
-            path: /header/
-            port: http
-        livenessProbe:
-          httpGet:
-            path: /header/
-            port: http
             scheme: HTTP
         startupProbe:
           failureThreshold: 5
