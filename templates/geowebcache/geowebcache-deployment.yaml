@@ -48,7 +48,7 @@ spec:
             {{ $webapp.extra_volumeMounts | toYaml | nindent 10 }}
           {{- end }}
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           name: http
         {{- if $webapp.livenessProbe }}
         {{ $webapp.livenessProbe | toYaml | nindent 8 }}
