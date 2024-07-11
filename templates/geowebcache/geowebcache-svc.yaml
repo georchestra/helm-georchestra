@@ -1,0 +1,21 @@
+{{- $webapp := .Values.georchestra.webapps.geowebcache -}}
+{{- if $webapp.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "georchestra.fullname" . }}-geowebcache-svc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geowebcache
+  {{- with $webapp.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geowebcache
+{{- end }}

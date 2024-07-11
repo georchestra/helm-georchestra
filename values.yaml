@@ -132,6 +132,13 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+    geowebcache:
+      enabled: false
+      replicaCount: "1"
+      docker_image: georchestra/geowebcache:latest
+      extra_environment: []
+      service:
+        annotations: {}
     header:
       enabled: true
       replicaCount: "1"
@@ -236,6 +243,9 @@ georchestra:
     geoserver_tiles:
       # pv_name: geoserver_tiles
       size: 2Gi
+    geowebcache_tiles:
+      # pv_name: geowebcache_tiles
+      size: 5Gi
     # We also might need to specify a custom storageClass
     # Leave it commented if not needed
     # storage_class_name: default or "-" for empty storageClassName

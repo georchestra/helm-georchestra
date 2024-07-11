@@ -1,0 +1,38 @@
+{{- $webapp := .Values.georchestra.webapps.geowebcache -}}
+{{- $webapp_storage := .Values.georchestra.storage.geowebcache_tiles -}}
+{{- if and $webapp.enabled .Values.georchestra.storage.geowebcache_tiles -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "georchestra.fullname" . }}-geowebcache-tiles
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geowebcache
+    helm.sh/resource-policy: "keep"
+spec:
+  accessModes:
+  {{- if $webapp_storage.accessModes }}
+  {{- range $webapp_storage.accessModes }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- else }}
+  {{- range .Values.georchestra.storage.accessModes }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  {{- if (eq "-" $webapp_storage.storage_class_name) }}
+  storageClassName: ""
+  {{- else if $webapp_storage.storage_class_name }}
+  storageClassName: {{ $webapp_storage.storage_class_name }}
+  {{- else if (eq "-" .Values.georchestra.storage.storage_class_name) }}
+  storageClassName: ""
+  {{- else if .Values.georchestra.storage.storage_class_name }}
+  storageClassName: {{ .Values.georchestra.storage.storage_class_name }}
+  {{- end }}
+  {{- if $webapp_storage.pv_name }}
+  volumeName: {{ $webapp_storage.pv_name }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $webapp_storage.size }}
+{{- end }}
