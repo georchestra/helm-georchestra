@@ -14,7 +14,7 @@ georchestra:
     # For all the apps, setting a replica count of more than 1 is not supported
     # by the helm chart (cardinality 0..1).
     analytics:
-      enabled: true
+      enabled: false
       replicaCount: "1"
       docker_image: georchestra/analytics:latest
       extra_environment: []
@@ -88,7 +88,7 @@ georchestra:
       ogc_api_records:
         enabled: true
         replicaCount: "1"
-        image: georchestra/gn-cloud-ogc-api-records-service:2021-12-16
+        image: georchestra/gn-cloud-ogc-api-records-service:4.2.8
         extra_environment: []
         envsubst:
           enabled: true
@@ -327,6 +327,10 @@ database:
     ssl: false
     username: georchestra
   primary:  # section of parameters for builtin database
+    startupProbe:
+      enabled: true
+    containerSecurityContext:
+      readOnlyRootFilesystem: false
     persistentVolumeClaimRetentionPolicy:
       enabled: true
     extraVolumeMounts:
