@@ -108,11 +108,11 @@ spec:
             name: georchestra-datadir
         livenessProbe:
           httpGet:
-            path: /datafeeder/
+            path: /datafeeder
             port: http
         readinessProbe:
           httpGet:
-            path: /datafeeder/
+            path: /datafeeder
             port: http
       volumes:
       - name: georchestra-datadir
