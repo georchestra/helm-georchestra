@@ -119,6 +119,8 @@ georchestra:
     geoserver:
       enabled: true
       replicaCount: "1"
+      livenessProbe: []
+      startupProbe: []
       docker_image: georchestra/geoserver:latest
       jetty_monitoring: false
       extra_environment: []
