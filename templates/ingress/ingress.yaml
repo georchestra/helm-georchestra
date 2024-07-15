@@ -47,11 +47,19 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
+                {{- if $.Values.georchestra.webapps.gateway.enabled }}
+                name: {{ include "georchestra.fullname" $ }}-gateway-svc
+                {{- else }}
                 name: {{ include "georchestra.fullname" $ }}-sp-svc
+                {{- end }}
                 port:
                   number: 8080
               {{- else }}
+              {{- if $.Values.georchestra.webapps.gateway.enabled }}
+              serviceName: {{ include "georchestra.fullname" $ }}-gateway-svc
+              {{- else }}
               serviceName: {{ include "georchestra.fullname" $ }}-sp-svc
+              {{- end }}
               servicePort: 8080
               {{- end }}
           {{- if $.Values.georchestra.webapps.cas.enabled }}
