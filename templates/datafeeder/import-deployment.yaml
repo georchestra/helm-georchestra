@@ -45,14 +45,11 @@ spec:
         livenessProbe:
           httpGet:
             path: /index.html
-            port: 80
-          periodSeconds: 10
-          timeoutSeconds: 5
+            port: http
         startupProbe:
-          tcpSocket:
-            port: 80
-          failureThreshold: 5
-          periodSeconds: 5
+          httpGet:
+            path: /index.html
+            port: http
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir

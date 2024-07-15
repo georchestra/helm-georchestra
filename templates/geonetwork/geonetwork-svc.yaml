@@ -15,7 +15,7 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
-    targetPort: 8080
+    targetPort: http
   selector:
     org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geonetwork
 {{- end }}

@@ -1,12 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "georchestra.fullname" . -}}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 
 kind: Ingress
 metadata:
@@ -18,7 +12,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
   {{- if .Values.ingress.tls }}
@@ -41,11 +35,8 @@ spec:
       http:
         paths:
           - path: /
-            {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
             pathType: Prefix
-            {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 {{- if $.Values.georchestra.webapps.gateway.enabled }}
                 name: {{ include "georchestra.fullname" $ }}-gateway-svc
@@ -53,46 +44,24 @@ spec:
                 name: {{ include "georchestra.fullname" $ }}-sp-svc
                 {{- end }}
                 port:
-                  number: 8080
-              {{- else }}
-              {{- if $.Values.georchestra.webapps.gateway.enabled }}
-              serviceName: {{ include "georchestra.fullname" $ }}-gateway-svc
-              {{- else }}
-              serviceName: {{ include "georchestra.fullname" $ }}-sp-svc
-              {{- end }}
-              servicePort: 8080
-              {{- end }}
+                  name: http
           {{- if $.Values.georchestra.webapps.cas.enabled }}
           - path: /cas
-            {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
             pathType: Prefix
-            {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ include "georchestra.fullname" $ }}-cas-svc
                 port:
-                  number: 8080
-              {{- else }}
-              serviceName: {{ include "georchestra.fullname" $ }}-cas-svc
-              servicePort: 8080
-              {{- end }}
+                  name: http
           {{- end }}
           {{- if and $.Values.georchestra.webapps.geonetwork.enabled $.Values.georchestra.webapps.geonetwork.ogc_api_records.enabled }}
           - path: /ogc-api-records
-            {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
             pathType: Prefix
-            {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ include "georchestra.fullname" $ }}-gn4-ogc-api-records-svc
                 port:
-                  number: 8080
-              {{- else }}
-              serviceName: {{ include "georchestra.fullname" $ }}-gn4-ogc-api-records-svc
-              servicePort: 8080
-              {{- end }}
+                  name: http
           {{- end }}
     {{- end }}
   {{- end }}

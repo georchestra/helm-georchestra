@@ -38,18 +38,19 @@ spec:
         {{- end }}
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
         livenessProbe:
           httpGet:
             path: /mapfishapp/
-            port: 8080
+            port: http
           periodSeconds: 10
         startupProbe:
-          tcpSocket:
-            port: 8080
+          httpGet:
+            path: /mapfishapp/
+            port: http
           failureThreshold: 5
           periodSeconds: 30
       volumes:

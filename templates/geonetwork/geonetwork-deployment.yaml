@@ -58,7 +58,7 @@ spec:
         {{- end }}
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
         env:
           {{- include "georchestra.database-georchestra-envs" . | nindent 10  }}
           {{- include "georchestra.service-envs" . | nindent 10 }}
@@ -68,12 +68,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /geonetwork/srv/eng/catalog.search
-            port: 8080
+            port: http
           periodSeconds: 10
           timeoutSeconds: 5
         startupProbe:
-          tcpSocket:
-            port: 8080
+          httpGet:
+            path: /geonetwork/srv/eng/catalog.search
+            port: http
           failureThreshold: 5
           periodSeconds: 50
       {{- if $webapp.jetty_monitoring }}

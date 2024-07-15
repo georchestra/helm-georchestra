@@ -58,7 +58,7 @@ spec:
           {{- end }}
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
         {{- with $webapp.lifecycle }}
         lifecycle:
           {{- toYaml . | nindent 10 }}
@@ -66,12 +66,12 @@ spec:
         livenessProbe:
           httpGet:
             path: /mapstore/configs/config.json
-            port: 8080
+            port: http
           periodSeconds: 10
         startupProbe:
           httpGet:
             path: /mapstore/configs/config.json
-            port: 8080
+            port: http
           failureThreshold: 5
           periodSeconds: 15
       volumes:

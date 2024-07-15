@@ -46,15 +46,16 @@ spec:
             name: georchestra-datadir
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
         livenessProbe:
           httpGet:
             path: /console/account/new
-            port: 8080
+            port: http
           periodSeconds: 10
         startupProbe:
-          tcpSocket:
-            port: 8080
+          httpGet:
+            path: /console/account/new
+            port: http
           failureThreshold: 5
           periodSeconds: 20
         {{- with $webapp.lifecycle }}

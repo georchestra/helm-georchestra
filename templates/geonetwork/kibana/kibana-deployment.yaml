@@ -33,7 +33,23 @@ spec:
             value: http://{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc:9200
         ports:
         - containerPort: 5601
-          name: kibana
+          name: http
+        startupProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 20
+          successThreshold: 1
+          initialDelaySeconds: 30
+        livenessProbe:
+          tcpSocket:
+            port: http
+          periodSeconds: 20
+          timeoutSeconds: 5
+          failureThreshold: 10
+          successThreshold: 1
+          initialDelaySeconds: 10
         volumeMounts:
           - mountPath: /usr/share/kibana/config
             name: gn4-kibana-config

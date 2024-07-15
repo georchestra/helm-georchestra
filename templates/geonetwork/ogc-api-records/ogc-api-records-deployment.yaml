@@ -73,7 +73,17 @@ spec:
           {{- end }}
         ports:
         - containerPort: 8080
-          name: http-proxy
+          name: http
+        livenessProbe:
+          httpGet:
+            path: /ogc-api-records/collections
+            port: http
+          timeoutSeconds: 5
+        startupProbe:
+          httpGet:
+            path: /ogc-api-records/collections
+            port: http
+          timeoutSeconds: 5
         volumeMounts:
         - mountPath: /etc/georchestra
           name: georchestra-datadir
