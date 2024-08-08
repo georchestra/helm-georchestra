@@ -62,14 +62,6 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
-    extractorapp:
-      enabled: false
-      replicaCount: "1"
-      docker_image: georchestra/extractorapp:latest
-      extra_environment: []
-      # registry_secret: default
-      service:
-        annotations: {}
     geonetwork:
       enabled: true
       replicaCount: "1"
@@ -143,14 +135,6 @@ georchestra:
       enabled: true
       replicaCount: "1"
       docker_image: georchestra/header:latest
-      extra_environment: []
-      # registry_secret: default
-      service:
-        annotations: {}
-    mapfishapp:
-      enabled: false
-      replicaCount: "1"
-      docker_image: georchestra/mapfishapp:latest
       extra_environment: []
       # registry_secret: default
       service:
