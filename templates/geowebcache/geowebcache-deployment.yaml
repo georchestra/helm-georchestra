@@ -10,6 +10,8 @@ metadata:
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geowebcache
 spec:
   replicas: {{ $webapp.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "georchestra.selectorLabels" . | nindent 6 }}
