@@ -106,24 +106,6 @@ spec:
       args: ['http://{{ include "georchestra.fullname" . }}-header-svc:8080/header/']
   restartPolicy: Never
 {{- end }}
-{{- if .Values.georchestra.webapps.mapfishapp.enabled -}}
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: "{{ include "georchestra.fullname" . }}-test-mapfishapp"
-  labels:
-    {{- include "georchestra.labels" . | nindent 4 }}
-    org.georchestra.pod/purpose: test
-  annotations:
-    "helm.sh/hook": test
-spec:
-  containers:
-    - name: curl
-      image: curlimages/curl
-      args: ['http://{{ include "georchestra.fullname" . }}-mapfishapp-svc:8080/mapfishapp/']
-  restartPolicy: Never
-{{- end }}
 {{- if .Values.georchestra.webapps.mapstore.enabled -}}
 ---
 apiVersion: v1
