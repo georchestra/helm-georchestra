@@ -135,6 +135,8 @@ georchestra:
     geowebcache:
       enabled: false
       replicaCount: "1"
+      envsubst:
+        enabled: true
       docker_image: georchestra/geowebcache:latest
       extra_environment: []
       service:
