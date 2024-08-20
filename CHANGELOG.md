@@ -1,3 +1,10 @@
+# 1.1.0
+
+- Add support for geowebcache (#103)
+- Disable geOrchestra analytics by default (doesn't work with gateway)
+- Fix PostgreSQL usage builtin the helm chart
+- Switch geoserver rolling strategy to rolling update
+
 # 1.0.1
 
 Changelog after 2 years!!! Stable release 1.0!
