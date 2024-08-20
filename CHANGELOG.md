@@ -1,3 +1,7 @@
+# 1.2.0
+
+- remove extractorapp and mapfishapp (#106)
+
 # 1.1.0
 
 - Add support for geowebcache (#103)
