@@ -21,6 +21,7 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      tolerations: []
     cas:
       enabled: true
       replicaCount: "1"
@@ -29,6 +30,7 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      tolerations: []
     console:
       enabled: true
       replicaCount: "1"
@@ -38,6 +40,7 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      tolerations: []
     datafeeder:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
       replicaCount: "1"
@@ -52,6 +55,7 @@ georchestra:
         enabled: true
       service:
         annotations: {}
+      tolerations: []
     datafeeder_frontend:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true  # won't deploy if datafeeder is not enable
@@ -62,6 +66,7 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      tolerations: []
     geonetwork:
       enabled: true
       replicaCount: "1"
@@ -77,6 +82,7 @@ georchestra:
       # container extra volume. It should match an item from the extra_volumes.name
       # variable above.
       extra_volumeMounts: []
+      tolerations: []
       ogc_api_records:
         enabled: true
         replicaCount: "1"
@@ -86,6 +92,7 @@ georchestra:
           enabled: true
         service:
           annotations: {}
+        tolerations: []
       elasticsearch:
         replicaCount: "1"
         resources:
@@ -96,11 +103,13 @@ georchestra:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
         service:
           annotations: {}
+        tolerations: []
       kibana:
         replicaCount: "1"
         image: docker.elastic.co/kibana/kibana:7.15.1
         service:
           annotations: {}
+        tolerations: []
       # automatically clean some logs of geonetwork
       housekeeping:
         harvester_logs:
@@ -121,6 +130,7 @@ georchestra:
       # container extra volume. It should match an item from the extra_volumes.name
       # variable above.
       extra_volumeMounts: []
+      tolerations: []
       # registry_secret: default
       service:
         annotations: {}
@@ -131,6 +141,7 @@ georchestra:
         enabled: true
       docker_image: georchestra/geowebcache:latest
       extra_environment: []
+      tolerations: []
       service:
         annotations: {}
     header:
@@ -138,6 +149,7 @@ georchestra:
       replicaCount: "1"
       docker_image: georchestra/header:latest
       extra_environment: []
+      tolerations: []
       # registry_secret: default
       service:
         annotations: {}
@@ -148,6 +160,7 @@ georchestra:
       # registry_secret: default
       # no need to put the original command already managed
       extra_environment: []
+      tolerations: []
       command: []
       args: []
       lifecycle: {}
@@ -169,6 +182,7 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      tolerations: []
     proxy:
       enabled: false
       replicaCount: "1"
@@ -180,6 +194,7 @@ georchestra:
         enabled: true
       service:
         annotations: {}
+      tolerations: []
     gateway:
       enabled: true
       replicaCount: "1"
@@ -189,6 +204,7 @@ georchestra:
       extra_environment: []
       service:
         annotations: {}
+      tolerations: []
   datadir:
     volume:
     - name: georchestra-datadir

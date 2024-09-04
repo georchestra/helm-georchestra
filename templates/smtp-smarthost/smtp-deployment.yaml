@@ -64,4 +64,8 @@ spec:
           tcpSocket:
             port: smtp
           initialDelaySeconds: 30
+      {{- if $webapp.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end -}}
