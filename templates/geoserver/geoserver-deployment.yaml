@@ -256,4 +256,8 @@ spec:
       imagePullSecrets:
       - name: {{ $webapp.registry_secret }}
       {{- end }}
+      {{- if $webapp.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}
