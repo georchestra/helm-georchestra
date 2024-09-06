@@ -34,4 +34,8 @@ spec:
             persistentVolumeClaim:
               claimName: {{ include "georchestra.fullname" . }}-geonetwork-datadir
           restartPolicy: OnFailure
+          {{- if $webapp.housekeeping.tolerations }}
+          tolerations:
+            {{- $webapp.housekeeping.tolerations | toYaml | nindent 10}}
+          {{- end }}
 {{- end -}}

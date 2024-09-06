@@ -115,6 +115,7 @@ georchestra:
         harvester_logs:
           enabled: false
           schedule: "0 1 * * *"
+        tolerations: [] 
       service:
         annotations: {}
     geoserver:
