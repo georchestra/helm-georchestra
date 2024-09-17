@@ -115,7 +115,7 @@ georchestra:
         harvester_logs:
           enabled: false
           schedule: "0 1 * * *"
-        tolerations: [] 
+        tolerations: []
       service:
         annotations: {}
     geoserver:
@@ -392,3 +392,10 @@ rabbitmq:
 #    pv_name: rabbitmq-data
 #    storage_class_name: default
 #    size: 1Gi
+
+# Allow to override /etc/hosts for ALL apps
+# https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
+hostAliases: []
+# - ip: "127.0.0.1"
+#   hostnames:
+#   - "host.alias.com"
