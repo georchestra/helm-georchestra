@@ -393,6 +393,8 @@ rabbitmq:
 #    storage_class_name: default
 #    size: 1Gi
 
+# Allow to override /etc/hosts for ALL apps
+# https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
 hostAliases: []
 # - ip: "127.0.0.1"
 #   hostnames:
