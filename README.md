@@ -6,7 +6,10 @@ some of the features and/or implementation choices.
 # Maintainers
 
 ## How to create a new chart release
-1. Change and push the version in the Chart.yaml
+IMPORTANT: Don't create too many versions, test your changes using git submodules for example. Create new versions with a batch of features if possible.
+
+1. Change and push the version in the Chart.yaml.  
+   Please follow https://semver.org, if you are adding a new feature bump the MINOR version, otherwise if it's a bugfix bump the PATCH version.
 2. Write a changelog in the CHANGELOG.md
 3. Execute `git tag 1.X.X` (with the same version as the chart)
 4. Execute `git push --tags`
