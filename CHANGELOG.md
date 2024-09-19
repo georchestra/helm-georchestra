@@ -1,3 +1,8 @@
+# 1.3.0
+
+- add hostAliases (#109)
+- add required values validation for database secrets (#113)
+
 # 1.2.0
 
 - remove extractorapp and mapfishapp (#106)
