@@ -201,7 +201,7 @@ georchestra:
       replicaCount: "1"
       docker_image: georchestra/gateway:latest
       environment:
-        JAVA_TOOL_OPTIONS: "-Dgeorchestra.datadir=/etc/georchestra"
+        JAVA_TOOL_OPTIONS: "-Dgeorchestra.datadir=/etc/georchestra -Dreactor.netty.http.server.accessLogEnabled=true"
       extra_environment: []
       service:
         annotations: {}
