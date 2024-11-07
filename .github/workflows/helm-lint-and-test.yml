@@ -49,4 +49,4 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          KUBECONFIG=/etc/rancher/k3s/k3s.yaml ct install --chart-dirs . --charts . --helm-extra-args '--timeout 7200s' --target-branch ${{ github.event.repository.default_branch }}
+          KUBECONFIG=/etc/rancher/k3s/k3s.yaml ct install --chart-dirs . --charts . --helm-extra-args '--timeout 7200s' --skip-clean-up --target-branch ${{ github.event.repository.default_branch }}
