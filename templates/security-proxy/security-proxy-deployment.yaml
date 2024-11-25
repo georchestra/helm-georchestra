@@ -82,7 +82,7 @@ spec:
           periodSeconds: 15
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
-        image: camptocamp/jmx-collectd:bullseye
+        image: camptocamp/jmx-collectd:bookworm
         volumeMounts:
         - mountPath: /collectd-template
           name: georchestra-monitoring-cm
