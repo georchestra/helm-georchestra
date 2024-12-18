@@ -55,7 +55,7 @@ spec:
       volumes:
       - name: gn4-es-data
         persistentVolumeClaim:
-          claimName: {{ include "georchestra.fullname" . }}-gn4-es-data
+          claimName: {{ .Values.georchestra.storage.gn4_es.existingClaim | default (print (include "georchestra.fullname" .) "-gn4-es-data") }}
       {{- if $webapp.tolerations }}
       tolerations:
         {{- $webapp.tolerations | toYaml | nindent 8 }}
