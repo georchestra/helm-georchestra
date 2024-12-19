@@ -32,7 +32,7 @@ spec:
           volumes:
           - name: geonetwork-datadir
             persistentVolumeClaim:
-              claimName: {{ include "georchestra.fullname" . }}-geonetwork-datadir
+              claimName: {{ .Values.georchestra.storage.geonetwork_datadir.existingClaim | default (print (include "georchestra.fullname" .) "-geonetwork-datadir") }}
           restartPolicy: OnFailure
           {{- if $webapp.housekeeping.tolerations }}
           tolerations:
