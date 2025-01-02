@@ -393,6 +393,26 @@ rabbitmq:
 #    storage_class_name: default
 #    size: 1Gi
 
+gitCredentials:
+  username: ""  # To be provided during helm install
+  token: ""     # To be provided during helm install
+  ssh: ""       # To be provided during helm install
+
+repo: &repo
+  gitRepo: "https://github.com/georchestra/datadir.git"
+  gitBranch: "docker-master"
+
+operator:
+  image: jemacchi/simple-git-rollout-operator:1.2.5   # TODO: image should be in context of c2c dockerhub account (?)
+  pollInterval: 10
+  deploymentSuffixName: "geoserver"
+  <<: *repo
+  gitCredentials:
+    secretSuffixName: simple-git-rollout-operator-git-credentials
+    usernameKey: username
+    tokenKey: token
+    sshKey: ssh
+
 # Allow to override /etc/hosts for ALL apps
 # https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
 hostAliases: []

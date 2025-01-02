@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+  labels:
+    app: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+  template:
+    metadata:
+      labels:
+        app: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+    spec:
+      serviceAccountName: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+      initContainers:
+      - name: init-permissions
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          echo "Setting up SSH key..."
+          cp /tmp-ssh/id_rsa /tmp/git-rollout-operator/id_rsa || echo "Copy failed"
+          chmod 600 /tmp/git-rollout-operator/id_rsa || echo "Chmod failed"
+        volumeMounts:
+        - name: ssh-key-volume
+          mountPath: /tmp-ssh
+        - name: git-rollout-operator-volume
+          mountPath: /tmp/git-rollout-operator
+      containers:
+      - name: operator
+        image: {{ .Values.operator.image }}
+        env:
+        - name: GIT_REPO_URL
+          value: "{{ .Values.operator.gitRepo }}"
+        - name: GIT_BRANCH
+          value: "{{ .Values.operator.gitBranch }}"
+        - name: POLL_INTERVAL
+          value: "{{ .Values.operator.pollInterval }}"
+        - name: ROLLOUT_DEPLOYMENT
+          value: "{{ include "georchestra.fullname" . }}-{{ .Values.operator.deploymentSuffixName }}"
+        - name: ROLLOUT_NAMESPACE
+          value: "{{ .Release.Namespace }}"
+        {{- if and .Values.gitCredentials.username .Values.gitCredentials.token }}          
+        - name: GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: "{{ .Values.operator.gitCredentials.secretName }}"
+              key: "{{ .Values.operator.gitCredentials.usernameKey }}"
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "{{ .Values.operator.gitCredentials.secretName }}"
+              key: "{{ .Values.operator.gitCredentials.tokenKey }}"
+        {{- end }}
+        {{- if .Values.gitCredentials.ssh }}
+        - name: GIT_SSH_COMMAND
+          value: ssh -i /tmp/git-rollout-operator/id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
+        volumeMounts:
+        - name: ssh-key-volume
+          mountPath: /tmp-ssh/id_rsa
+          subPath: id_rsa
+        - name: git-rollout-operator-volume
+          mountPath: /tmp/git-rollout-operator
+        {{- end }}
+      volumes:
+      - name: ssh-key-volume
+        secret:
+          secretName: {{ include "georchestra.fullname" . }}-{{ .Values.operator.gitCredentials.secretSuffixName }}
+          items:
+          - key: {{ .Values.operator.gitCredentials.sshKey }}
+            path: id_rsa
+      - name: git-rollout-operator-volume
+        emptyDir: {}
