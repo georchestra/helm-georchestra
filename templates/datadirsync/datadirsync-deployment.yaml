@@ -1,20 +1,23 @@
+{{- $webapp := .Values.georchestra.datadirsync  -}}
+{{- if $webapp.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+  name: {{ include "georchestra.fullname" . }}-datadirsync
   labels:
-    app: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datadirsync
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+      app: {{ include "georchestra.fullname" . }}-datadirsync
   template:
     metadata:
       labels:
-        app: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+        app: {{ include "georchestra.fullname" . }}-datadirsync
     spec:
-      serviceAccountName: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator
+      serviceAccountName: {{ include "georchestra.fullname" . }}-datadirsync-serviceaccount
       initContainers:
       - name: init-permissions
         image: busybox
@@ -32,29 +35,29 @@ spec:
           mountPath: /tmp/git-rollout-operator
       containers:
       - name: operator
-        image: {{ .Values.operator.image }}
+        image: {{ $webapp.image }}
         env:
         - name: GIT_REPO_URL
-          value: "{{ .Values.operator.gitRepo }}"
+          value: "{{ $webapp.repo.gitRepo }}"
         - name: GIT_BRANCH
-          value: "{{ .Values.operator.gitBranch }}"
+          value: "{{ $webapp.repo.gitBranch }}"
         - name: POLL_INTERVAL
-          value: "{{ .Values.operator.pollInterval }}"
+          value: "{{ $webapp.pollInterval }}"
         - name: ROLLOUT_DEPLOYMENT
-          value: "{{ include "georchestra.fullname" . }}-{{ .Values.operator.deploymentSuffixName }}"
+          value: "{{ include "georchestra.fullname" . }}-{{ $webapp.deploymentSuffixName }}"
         - name: ROLLOUT_NAMESPACE
           value: "{{ .Release.Namespace }}"
         {{- if and .Values.gitCredentials.username .Values.gitCredentials.token }}          
         - name: GIT_USERNAME
           valueFrom:
             secretKeyRef:
-              name: "{{ .Values.operator.gitCredentials.secretName }}"
-              key: "{{ .Values.operator.gitCredentials.usernameKey }}"
+              name: "{{ $webapp.gitCredentials.secretName }}"
+              key: "{{ $webapp.gitCredentials.usernameKey }}"
         - name: GIT_TOKEN
           valueFrom:
             secretKeyRef:
-              name: "{{ .Values.operator.gitCredentials.secretName }}"
-              key: "{{ .Values.operator.gitCredentials.tokenKey }}"
+              name: "{{ $webapp.gitCredentials.secretName }}"
+              key: "{{ $webapp.gitCredentials.tokenKey }}"
         {{- end }}
         {{- if .Values.gitCredentials.ssh }}
         - name: GIT_SSH_COMMAND
@@ -69,9 +72,10 @@ spec:
       volumes:
       - name: ssh-key-volume
         secret:
-          secretName: {{ include "georchestra.fullname" . }}-{{ .Values.operator.gitCredentials.secretSuffixName }}
+          secretName: {{ include "georchestra.fullname" . }}-{{ $webapp.gitCredentials.secretSuffixName }}
           items:
-          - key: {{ .Values.operator.gitCredentials.sshKey }}
+          - key: {{ $webapp.gitCredentials.sshKey }}
             path: id_rsa
       - name: git-rollout-operator-volume
         emptyDir: {}
+{{- end }}

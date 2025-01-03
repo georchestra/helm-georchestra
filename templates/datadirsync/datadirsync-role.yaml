@@ -1,9 +1,12 @@
+{{- $webapp := .Values.georchestra.datadirsync  -}}
+{{- if $webapp.enabled -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: {{ include "georchestra.fullname" . }}-simple-git-rollout-operator-role
+  name: {{ include "georchestra.fullname" . }}-datadirsync-role
 rules:
   - apiGroups: [""]
     resources: ["pods", "deployments"]
     verbs: ["get", "list", "patch"]
+{{- end }}
