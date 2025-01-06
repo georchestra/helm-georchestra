@@ -265,12 +265,9 @@ georchestra:
     extra_environment: []
   datadirsync:
     enabled: true
-    image: jemacchi/simple-git-rollout-operator:1.2.5   # TODO: image should be in context of c2c dockerhub account (?)
+    image: jemacchi/simple-git-rollout-operator:1.2.9   # TODO: image should be in context of c2c dockerhub account (?)
     pollInterval: 10
     deploymentSuffixName: "geoserver"
-    repo:
-      gitRepo: "https://github.com/georchestra/datadir.git"
-      gitBranch: "docker-master"
     gitCredentials:
       secretSuffixName: datadirsync-credentials
       usernameKey: username

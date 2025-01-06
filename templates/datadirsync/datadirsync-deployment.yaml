@@ -26,8 +26,16 @@ spec:
         - -c
         - |
           echo "Setting up SSH key..."
-          cp /tmp-ssh/id_rsa /tmp/git-rollout-operator/id_rsa || echo "Copy failed"
-          chmod 600 /tmp/git-rollout-operator/id_rsa || echo "Chmod failed"
+          if cp /tmp-ssh/id_rsa /tmp/git-rollout-operator/id_rsa; then
+            echo "SSH key copied successfully"
+          else
+            echo "Copy failed"
+          fi
+          if chown 1001:1001 /tmp/git-rollout-operator/id_rsa && chmod 600 /tmp/git-rollout-operator/id_rsa; then
+                  echo "SSH key permissions and ownership set successfully"
+          else
+                  echo "Failed to set permissions or ownership"
+          fi
         volumeMounts:
         - name: ssh-key-volume
           mountPath: /tmp-ssh
@@ -38,9 +46,9 @@ spec:
         image: {{ $webapp.image }}
         env:
         - name: GIT_REPO_URL
-          value: "{{ $webapp.repo.gitRepo }}"
+          value: "{{ .Values.georchestra.datadir.git.url }}"
         - name: GIT_BRANCH
-          value: "{{ $webapp.repo.gitBranch }}"
+          value: "{{ .Values.georchestra.datadir.git.ref }}"
         - name: POLL_INTERVAL
           value: "{{ $webapp.pollInterval }}"
         - name: ROLLOUT_DEPLOYMENT
