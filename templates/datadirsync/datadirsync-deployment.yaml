@@ -51,8 +51,15 @@ spec:
           value: "{{ .Values.georchestra.datadir.git.ref }}"
         - name: POLL_INTERVAL
           value: "{{ $webapp.pollInterval }}"
-        - name: ROLLOUT_DEPLOYMENT
-          value: "{{ include "georchestra.fullname" . }}-{{ $webapp.deploymentSuffixName }}"
+        - name: ROLLOUT_DEPLOYMENTS
+          value: |
+            {{ $prefix := include "georchestra.fullname" . -}}
+            {{ $suffixes := $webapp.deploymentSuffixNameList -}}
+            {{ $deployments := list -}}
+            {{- range $suffix := $suffixes }}
+            {{ $deployments = append $deployments (printf "%s-%s" $prefix $suffix) }}
+            {{- end -}}
+            {{- join ", " $deployments }}
         - name: ROLLOUT_NAMESPACE
           value: "{{ .Release.Namespace }}"
         {{- if and .Values.gitCredentials.username .Values.gitCredentials.token }}          
