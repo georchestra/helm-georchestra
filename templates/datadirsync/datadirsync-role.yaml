@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   name: {{ include "georchestra.fullname" . }}-datadirsync-role
 rules:
-  - apiGroups: [""]
+  - apiGroups: ["apps"]
     resources: ["pods", "deployments"]
-    verbs: ["get", "list", "patch"]
+    verbs: ["get", "list", "patch", "update"]
 {{- end }}
