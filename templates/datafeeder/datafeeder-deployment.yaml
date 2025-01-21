@@ -111,6 +111,8 @@ spec:
             port: http-proxy
           periodSeconds: 10
           initialDelaySeconds: 20
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
