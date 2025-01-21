@@ -74,6 +74,8 @@ spec:
             port: 8080
           failureThreshold: 5
           periodSeconds: 15
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}

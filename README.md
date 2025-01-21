@@ -172,3 +172,51 @@ every deployments which are making use of Persistent volumes:
 * geoserver
 * mapstore
 * openldap
+
+# Resources allocations and limits
+
+The requested and limits to allocated CPU and RAM is configurable in the `values.yaml` file for each component.
+
+You can configure it with the availables `resources` parameter : 
+
+```
+resources:
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+```
+
+This config will request 1 CPU and 2Gi RAM to launch and limits consumption to 2 CPU and 4Gi RAM.
+
+Bellow are default configs, they were determined for a test environment (request) and are limited (limits) to what an average production environment might require :
+
+|                     | CPU - Requests | CPU - Limits  | RAM - Requests | RAM - Limits |
+| ------------------- | -------------- | ------------- | -------------- | ------------ |
+| analytics           | 500            | 1000          | 512Mi          | 2Gi          |
+| cas                 | 1000           | 2000          | 2Gi            | 4Gi          |
+| console             | 500            | 1000          | 512Mi          | 2Gi          |
+| datafeeder          | 200            | 500           | 512Mi          | 2Gi          |
+| datafeeder-frontend | 100            | 200           | 128Mi          | 256Mi        |
+| geonetwork          | 2000           | 4000          | 2Gi            | 4Gi          |
+| ogc-api-records     | 100            | 500           | 512Mi          | 1Gi          |
+| elasticsearch       | 1000           | 2000          | 3Gi            | 6Gi          |
+| kibana              | 500            | 1000          | 1Gi            | 2Gi          |
+| housekeeping        | 100            | 200           | 8Mi            | 8Mi          |
+| geoserver           | 2000           | 4000          | 4Gi            | 8Gi          |
+| geowebcache         | 1000           | 2000          | 2Gi            | 4Gi          |
+| header              | 200            | 1000          | 512Mi          | 1Gi          |
+| mapstore            | 1000           | 2000          | 2Gi            | 4Gi          |
+| openldap            | 500            | 1000          | 2Gi            | 4Gi          |
+| proxy               | 2000           | 4000          | 2Gi            | 4Gi          |
+| gateway             | 2000           | 4000          | 2Gi            | 4Gi          |
+| database (PG)       | 2000           | 4000          | 4Gi            | 8Gi          |
+| smtp                | 200            | 500           | 128Mi          | 256Mi        |
+
+Feel free to suggest modifications based on your use cases.
+
+***/!\ Important /!\ :*** Default values are for testing purposes !
+
+It _should_ work for an average production, but for production use, you are strongly advised to document yourself on how to estimate resource consumption based on your data and platform traffic.
