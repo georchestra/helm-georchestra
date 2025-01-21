@@ -61,6 +61,8 @@ spec:
         lifecycle:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}

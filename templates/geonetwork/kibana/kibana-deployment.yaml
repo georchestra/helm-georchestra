@@ -37,6 +37,8 @@ spec:
         volumeMounts:
           - mountPath: /usr/share/kibana/config
             name: gn4-kibana-config
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       volumes:
       - name: gn4-kibana-config
         configMap:

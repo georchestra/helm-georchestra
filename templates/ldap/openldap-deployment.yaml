@@ -67,6 +67,8 @@ spec:
             - -b{{ .Values.ldap.baseDn }}
             - {{ .Values.ldap.adminDn }}
           initialDelaySeconds: 30
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       {{- if $webapp.extraContainers }}
         {{ toYaml $webapp.extraContainers | nindent 6 }}
       {{- end }}
