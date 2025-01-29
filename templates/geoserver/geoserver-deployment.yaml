@@ -195,8 +195,9 @@ spec:
         ports:
         - containerPort: 8080
           name: http-proxy
-        {{- if $webapp.custom_liveness_probe }}
-        {{ $webapp.custom_liveness_probe | toYaml | nindent 8 }}
+        {{- if $webapp.livenessProbe }}
+        livenessProbe:
+          {{ $webapp.livenessProbe | toYaml | nindent 10 }}
         {{- else }}
         livenessProbe:
           httpGet:
@@ -208,11 +209,16 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
         {{- end }}
+        {{- if $webapp.startupProbe }}
+        startupProbe:
+          {{ $webapp.startupProbe | toYaml | nindent 10 }}
+        {{- else }}
         startupProbe:
           tcpSocket:
             port: 8080
           failureThreshold: 5
           periodSeconds: 40
+        {{- else }}
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
         image: camptocamp/jmx-collectd:bookworm
