@@ -214,6 +214,8 @@ georchestra:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
       # ssh_secret: my-private-ssh-key
+      # username: my-git-username
+      # token: my-git-token
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
   # uncomment the `pv_name` entries below.
@@ -264,13 +266,11 @@ georchestra:
     # relay_password:  aaaa
     extra_environment: []
   datadirsync:
-    enabled: true
+    enabled: false
     image: jemacchi/simple-git-rollout-operator:1.3.1   # TODO: image should be in context of c2c dockerhub account (?)
     pollInterval: 10
     deploymentSuffixNameList:
       - geoserver
-      - mapstore
-      - header
     gitCredentials:
       secretSuffixName: datadirsync-credentials
       usernameKey: username
@@ -405,11 +405,6 @@ rabbitmq:
 #    pv_name: rabbitmq-data
 #    storage_class_name: default
 #    size: 1Gi
-
-gitCredentials:
-  username: ""  # To be provided during helm install
-  token: ""     # To be provided during helm install
-  ssh: ""       # To be provided during helm install
 
 # Allow to override /etc/hosts for ALL apps
 # https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/

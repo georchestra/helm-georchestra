@@ -62,7 +62,7 @@ spec:
             {{- join ", " $deployments }}
         - name: ROLLOUT_NAMESPACE
           value: "{{ .Release.Namespace }}"
-        {{- if and .Values.gitCredentials.username .Values.gitCredentials.token }}          
+        {{- if and .Values.georchestra.datadir.git.username .Values.georchestra.datadir.git.token }}          
         - name: GIT_USERNAME
           valueFrom:
             secretKeyRef:
@@ -74,7 +74,7 @@ spec:
               name: "{{ $webapp.gitCredentials.secretName }}"
               key: "{{ $webapp.gitCredentials.tokenKey }}"
         {{- end }}
-        {{- if .Values.gitCredentials.ssh }}
+        {{- if .Values.georchestra.datadir.git.ssh_secret }}
         - name: GIT_SSH_COMMAND
           value: ssh -i /tmp/git-rollout-operator/id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
         volumeMounts:
