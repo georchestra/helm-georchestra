@@ -19,6 +19,7 @@ spec:
     spec:
       serviceAccountName: {{ include "georchestra.fullname" . }}-datadirsync-serviceaccount
       initContainers:
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: init-permissions
         image: busybox
         command:
@@ -26,12 +27,12 @@ spec:
         - -c
         - |
           echo "Setting up SSH key..."
-          if cp /tmp-ssh/id_rsa /tmp/git-rollout-operator/id_rsa; then
+          if cp /tmp-ssh/id_rsa /tmp/git-rollout-agent/id_rsa; then
             echo "SSH key copied successfully"
           else
             echo "Copy failed"
           fi
-          if chown 1001:1001 /tmp/git-rollout-operator/id_rsa && chmod 600 /tmp/git-rollout-operator/id_rsa; then
+          if chown 1001:1001 /tmp/git-rollout-agent/id_rsa && chmod 600 /tmp/git-rollout-agent/id_rsa; then
                   echo "SSH key permissions and ownership set successfully"
           else
                   echo "Failed to set permissions or ownership"
@@ -39,10 +40,11 @@ spec:
         volumeMounts:
         - name: ssh-key-volume
           mountPath: /tmp-ssh
-        - name: git-rollout-operator-volume
-          mountPath: /tmp/git-rollout-operator
+        - name: git-rollout-agent-volume
+          mountPath: /tmp/git-rollout-agent
+      {{- end }}
       containers:
-      - name: operator
+      - name: agent
         image: {{ $webapp.image }}
         env:
         - name: GIT_REPO_URL
@@ -62,35 +64,21 @@ spec:
             {{- join ", " $deployments }}
         - name: ROLLOUT_NAMESPACE
           value: "{{ .Release.Namespace }}"
-        {{- if and .Values.georchestra.datadir.git.username .Values.georchestra.datadir.git.token }}          
-        - name: GIT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: "{{ $webapp.gitCredentials.secretName }}"
-              key: "{{ $webapp.gitCredentials.usernameKey }}"
-        - name: GIT_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: "{{ $webapp.gitCredentials.secretName }}"
-              key: "{{ $webapp.gitCredentials.tokenKey }}"
-        {{- end }}
-        {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
         - name: GIT_SSH_COMMAND
-          value: ssh -i /tmp/git-rollout-operator/id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
+          value: ssh -i /tmp/git-rollout-agent/id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
         volumeMounts:
         - name: ssh-key-volume
           mountPath: /tmp-ssh/id_rsa
           subPath: id_rsa
-        - name: git-rollout-operator-volume
-          mountPath: /tmp/git-rollout-operator
-        {{- end }}
+        - name: git-rollout-agent-volume
+          mountPath: /tmp/git-rollout-agent
       volumes:
+      # It's assumed that a subpath id_rsa is in the secret (with the content of the file)
       - name: ssh-key-volume
         secret:
-          secretName: {{ include "georchestra.fullname" . }}-{{ $webapp.gitCredentials.secretSuffixName }}
-          items:
-          - key: {{ $webapp.gitCredentials.sshKey }}
-            path: id_rsa
-      - name: git-rollout-operator-volume
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+      - name: git-rollout-agent-volume
         emptyDir: {}
+      {{- end }}
 {{- end }}

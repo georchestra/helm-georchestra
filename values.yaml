@@ -214,8 +214,6 @@ georchestra:
       url: https://github.com/georchestra/datadir.git
       ref: docker-master
       # ssh_secret: my-private-ssh-key
-      # username: my-git-username
-      # token: my-git-token
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
   # uncomment the `pv_name` entries below.
@@ -271,11 +269,6 @@ georchestra:
     pollInterval: 10
     deploymentSuffixNameList:
       - geoserver
-    gitCredentials:
-      secretSuffixName: datadirsync-credentials
-      usernameKey: username
-      tokenKey: token
-      sshKey: ssh
 
 fqdn: "georchestra-127-0-1-1.traefik.me"
 
