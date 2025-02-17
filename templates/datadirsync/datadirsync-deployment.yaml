@@ -18,31 +18,8 @@ spec:
         app: {{ include "georchestra.fullname" . }}-datadirsync
     spec:
       serviceAccountName: {{ include "georchestra.fullname" . }}-datadirsync-serviceaccount
-      initContainers:
-      {{- if .Values.georchestra.datadir.git.ssh_secret }}
-      - name: init-permissions
-        image: busybox
-        command:
-        - sh
-        - -c
-        - |
-          echo "Setting up SSH key..."
-          if cp /tmp-ssh/id_rsa /tmp/git-rollout-agent/id_rsa; then
-            echo "SSH key copied successfully"
-          else
-            echo "Copy failed"
-          fi
-          if chown 1001:1001 /tmp/git-rollout-agent/id_rsa && chmod 600 /tmp/git-rollout-agent/id_rsa; then
-                  echo "SSH key permissions and ownership set successfully"
-          else
-                  echo "Failed to set permissions or ownership"
-          fi
-        volumeMounts:
-        - name: ssh-key-volume
-          mountPath: /tmp-ssh
-        - name: git-rollout-agent-volume
-          mountPath: /tmp/git-rollout-agent
-      {{- end }}
+      securityContext:
+        fsGroup: 1001
       containers:
       - name: agent
         image: {{ $webapp.image }}
@@ -66,19 +43,17 @@ spec:
           value: "{{ .Release.Namespace }}"
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
         - name: GIT_SSH_COMMAND
-          value: ssh -i /tmp/git-rollout-agent/id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
+          value: ssh -i /id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
         volumeMounts:
-        - name: ssh-key-volume
-          mountPath: /tmp-ssh/id_rsa
+        - name: ssh-secret
+          mountPath: /id_rsa
+          # It's assumed that a subpath ssh-privatekey is in the secret (with the content of the file)
           subPath: ssh-privatekey
-        - name: git-rollout-agent-volume
-          mountPath: /tmp/git-rollout-agent
+          readOnly: true
       volumes:
-      # It's assumed that a subpath id_rsa is in the secret (with the content of the file)
-      - name: ssh-key-volume
+      - name: ssh-secret
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
-      - name: git-rollout-agent-volume
-        emptyDir: {}
+          defaultMode: 0440
       {{- end }}
 {{- end }}
