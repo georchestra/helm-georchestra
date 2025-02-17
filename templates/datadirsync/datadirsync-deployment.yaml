@@ -1,0 +1,84 @@
+{{- $webapp := .Values.georchestra.datadirsync  -}}
+{{- if $webapp.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "georchestra.fullname" . }}-datadirsync
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datadirsync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "georchestra.fullname" . }}-datadirsync
+  template:
+    metadata:
+      labels:
+        app: {{ include "georchestra.fullname" . }}-datadirsync
+    spec:
+      serviceAccountName: {{ include "georchestra.fullname" . }}-datadirsync-serviceaccount
+      initContainers:
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+      - name: init-permissions
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          echo "Setting up SSH key..."
+          if cp /tmp-ssh/id_rsa /tmp/git-rollout-agent/id_rsa; then
+            echo "SSH key copied successfully"
+          else
+            echo "Copy failed"
+          fi
+          if chown 1001:1001 /tmp/git-rollout-agent/id_rsa && chmod 600 /tmp/git-rollout-agent/id_rsa; then
+                  echo "SSH key permissions and ownership set successfully"
+          else
+                  echo "Failed to set permissions or ownership"
+          fi
+        volumeMounts:
+        - name: ssh-key-volume
+          mountPath: /tmp-ssh
+        - name: git-rollout-agent-volume
+          mountPath: /tmp/git-rollout-agent
+      {{- end }}
+      containers:
+      - name: agent
+        image: {{ $webapp.image }}
+        env:
+        - name: GIT_REPO_URL
+          value: "{{ .Values.georchestra.datadir.git.url }}"
+        - name: GIT_BRANCH
+          value: "{{ .Values.georchestra.datadir.git.ref }}"
+        - name: POLL_INTERVAL
+          value: "{{ $webapp.pollInterval }}"
+        - name: ROLLOUT_DEPLOYMENTS
+          value: |
+            {{ $prefix := include "georchestra.fullname" . -}}
+            {{ $suffixes := $webapp.deploymentSuffixNameList -}}
+            {{ $deployments := list -}}
+            {{- range $suffix := $suffixes }}
+            {{ $deployments = append $deployments (printf "%s-%s" $prefix $suffix) }}
+            {{- end -}}
+            {{- join ", " $deployments }}
+        - name: ROLLOUT_NAMESPACE
+          value: "{{ .Release.Namespace }}"
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
+        - name: GIT_SSH_COMMAND
+          value: ssh -i /tmp/git-rollout-agent/id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
+        volumeMounts:
+        - name: ssh-key-volume
+          mountPath: /tmp-ssh/id_rsa
+          subPath: id_rsa
+        - name: git-rollout-agent-volume
+          mountPath: /tmp/git-rollout-agent
+      volumes:
+      # It's assumed that a subpath id_rsa is in the secret (with the content of the file)
+      - name: ssh-key-volume
+        secret:
+          secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
+      - name: git-rollout-agent-volume
+        emptyDir: {}
+      {{- end }}
+{{- end }}

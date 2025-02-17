@@ -263,6 +263,12 @@ georchestra:
     # relay_username:  aaaa
     # relay_password:  aaaa
     extra_environment: []
+  datadirsync:
+    enabled: false
+    image: georchestra/datadirsync-k8s-agent:1.3.3
+    pollInterval: 10
+    deploymentSuffixNameList:
+      - geoserver
 
 fqdn: "georchestra-127-0-1-1.traefik.me"
 
