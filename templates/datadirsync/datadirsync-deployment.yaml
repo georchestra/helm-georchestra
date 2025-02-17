@@ -70,7 +70,7 @@ spec:
         volumeMounts:
         - name: ssh-key-volume
           mountPath: /tmp-ssh/id_rsa
-          subPath: id_rsa
+          subPath: ssh-privatekey
         - name: git-rollout-agent-volume
           mountPath: /tmp/git-rollout-agent
       volumes:
