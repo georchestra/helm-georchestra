@@ -1,3 +1,7 @@
+# 1.4.0
+
+- add automatic restart of the Deployments on geOrchestra datadir changes (#126)
+
 # 1.3.0
 
 - add hostAliases (#109)
