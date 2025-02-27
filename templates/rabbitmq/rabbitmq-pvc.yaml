@@ -1,5 +1,5 @@
 {{- $rabbitmq := .Values.rabbitmq -}}
-{{- $rabbitmq_storage := .Values.georchestra.rabbitmq.storage -}}
+{{- $rabbitmq_storage := .Values.rabbitmq.storage -}}
 {{- if and $rabbitmq.enabled $rabbitmq.storage -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
