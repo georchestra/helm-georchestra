@@ -40,9 +40,9 @@ georchestra:
       resources:
         requests:
           cpu: 100m
-          memory: 1Gi
+          memory: 1256Mi
         limits:
-          memory: 1Gi
+          memory: 1256Mi
     console:
       enabled: true
       replicaCount: "1"
@@ -56,9 +56,9 @@ georchestra:
       resources:
         requests:
           cpu: 100m
-          memory: 512Mi
+          memory: 1Gi
         limits:
-          memory: 512Mi
+          memory: 1Gi
     datafeeder:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
       replicaCount: "1"
@@ -96,7 +96,7 @@ georchestra:
           cpu: 50m
           memory: 128Mi
         limits:
-          memory: 256Mi
+          memory: 128Mi
     geonetwork:
       enabled: true
       replicaCount: "1"
@@ -116,10 +116,10 @@ georchestra:
       resources:
         requests:
           cpu: 200m
-          memory: 1500Mi
+          memory: 1512Mi
         limits:
           cpu: 2000m
-          memory: 1500Mi
+          memory: 1512Mi
       ogc_api_records:
         enabled: true
         replicaCount: "1"
@@ -133,9 +133,9 @@ georchestra:
         resources:
           requests:
             cpu: 100m
-            memory: 512Mi
+            memory: 1Gi
           limits:
-            memory: 512Mi
+            memory: 1Gi
       elasticsearch:
         replicaCount: "1"
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
@@ -145,10 +145,10 @@ georchestra:
         resources:
           requests:
             cpu: 200m
-            memory: 1500Mi
+            memory: 1512Mi
           limits:
             cpu: 2000m
-            memory: 1500Mi
+            memory: 1512Mi
       kibana:
         replicaCount: "1"
         image: docker.elastic.co/kibana/kibana:7.15.1
@@ -158,9 +158,9 @@ georchestra:
         resources:
           requests:
             cpu: 100m
-            memory: 512Mi
+            memory: 1Gi
           limits:
-            memory: 512Mi
+            memory: 1Gi
       # automatically clean some logs of geonetwork
       housekeeping:
         harvester_logs:
@@ -283,10 +283,10 @@ georchestra:
       resources:
         requests:
           cpu: 500m
-          memory: 1500Mi
+          memory: 1Gi
         limits:
           cpu: 4000m
-          memory: 1500Mi
+          memory: 1Gi
     gateway:
       enabled: true
       replicaCount: "1"
@@ -300,10 +300,10 @@ georchestra:
       resources:
         requests:
           cpu: 500m
-          memory: 1500Mi
+          memory: 1Gi
         limits:
           cpu: 4000m
-          memory: 1500Mi
+          memory: 1Gi
   datadir:
     volume:
     - name: georchestra-datadir
@@ -364,9 +364,9 @@ georchestra:
     resources:
       requests:
         cpu: 50m
-        memory: 128Mi
+        memory: 64Mi
       limits:
-        memory: 128Mi
+        memory: 64Mi
   datadirsync:
     enabled: false
     image: georchestra/datadirsync-k8s-agent:1.3.3
@@ -461,11 +461,10 @@ database:
       password: georchestra
     resources:
       requests:
-        cpu: 2000m
-        memory: 4Gi
+        cpu: 200m
+        memory: 512Mi
       limits:
-        cpu: 4000m
-        memory: 8Gi
+        memory: 512Mi
   geodata:
     auth:
       database: geodata
