@@ -29,6 +29,8 @@ spec:
             volumeMounts:
             - mountPath: /mnt/geonetwork_datadir
               name: geonetwork-datadir
+            resources:
+              {{- toYaml $webapp.resources | nindent 14 }}
           volumes:
           - name: geonetwork-datadir
             persistentVolumeClaim:
@@ -36,6 +38,6 @@ spec:
           restartPolicy: OnFailure
           {{- if $webapp.housekeeping.tolerations }}
           tolerations:
-            {{- $webapp.housekeeping.tolerations | toYaml | nindent 10}}
+            {{- $webapp.housekeeping.tolerations | toYaml | nindent 12}}
           {{- end }}
 {{- end -}}

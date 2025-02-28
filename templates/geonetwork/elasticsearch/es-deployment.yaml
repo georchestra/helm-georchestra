@@ -44,14 +44,14 @@ spec:
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
           - name: discovery.type
             value: single-node
-        resources:
-            {{- toYaml $webapp.resources | nindent 12 }}
         ports:
         - containerPort: 9200
           name: elastic
         volumeMounts:
           - mountPath: /usr/share/elasticsearch/data
             name: gn4-es-data
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       volumes:
       - name: gn4-es-data
         persistentVolumeClaim:

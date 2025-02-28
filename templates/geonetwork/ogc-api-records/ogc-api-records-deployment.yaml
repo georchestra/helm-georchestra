@@ -77,6 +77,8 @@ spec:
         volumeMounts:
         - mountPath: /etc/georchestra
           name: georchestra-datadir
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
