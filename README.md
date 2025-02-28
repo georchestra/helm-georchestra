@@ -191,32 +191,49 @@ resources:
 
 This config will request 1 CPU and 2Gi RAM to launch and limits consumption to 2 CPU and 4Gi RAM.
 
-Bellow are default configs, they were determined for a test environment (request) and are limited (limits) to what an average production environment might require :
+Bellow are default configs, they were determined for a test environment (request + limits) :
 
-|                     | CPU - Requests | CPU - Limits  | RAM - Requests | RAM - Limits |
-| ------------------- | -------------- | ------------- | -------------- | ------------ |
-| analytics           | 500            | 1000          | 512Mi          | 2Gi          |
-| cas                 | 1000           | 2000          | 2Gi            | 4Gi          |
-| console             | 500            | 1000          | 512Mi          | 2Gi          |
-| datafeeder          | 200            | 500           | 512Mi          | 2Gi          |
-| datafeeder-frontend | 100            | 200           | 128Mi          | 256Mi        |
-| geonetwork          | 2000           | 4000          | 2Gi            | 4Gi          |
-| ogc-api-records     | 100            | 500           | 512Mi          | 1Gi          |
-| elasticsearch       | 1000           | 2000          | 3Gi            | 6Gi          |
-| kibana              | 500            | 1000          | 1Gi            | 2Gi          |
-| housekeeping        | 100            | 200           | 8Mi            | 8Mi          |
-| geoserver           | 2000           | 4000          | 4Gi            | 8Gi          |
-| geowebcache         | 1000           | 2000          | 2Gi            | 4Gi          |
-| header              | 200            | 1000          | 512Mi          | 1Gi          |
-| mapstore            | 1000           | 2000          | 2Gi            | 4Gi          |
-| openldap            | 500            | 1000          | 2Gi            | 4Gi          |
-| proxy               | 2000           | 4000          | 2Gi            | 4Gi          |
-| gateway             | 2000           | 4000          | 2Gi            | 4Gi          |
-| database (PG)       | 2000           | 4000          | 4Gi            | 8Gi          |
-| smtp                | 200            | 500           | 128Mi          | 256Mi        |
+|                     | CPU - Requests | CPU - Limits | RAM - Requests | RAM - Limits |
+|---------------------|----------------|--------------|----------------|--------------|
+| console             | 100m           | unset        | 1024Mi         | 1024Mi       |
+| datafeeder          | 100m           | unset        | 512Mi          | 512Mi        |
+| datafeeder-frontend | 50m            | unset        | 128Mi          | 128Mi        |
+| geonetwork          | 200m           | 2000m        | 1512Mi         | 1512Mi       |
+| ogc-api-records     | 100m           | unset        | 1024Mi         | 1024Mi       |
+| elasticsearch       | 200            | 2000         | 1512Mi         | 1512Mi       |
+| kibana              | 100m           | unset        | 1024Mi         | 1024Mi       |
+| geoserver           | 100m           | 4000m        | 2048Mi         | 2048Mi       |
+| header              | 50Mi           | unset        | 512Mi          | 512Mi        |
+| mapstore            | 100m           | unset        | 1024Mi         | 1024Mi       |
+| openldap            | 100m           | unset        | 1024Mi         | 1024Mi       |
+| gateway             | 500m           | 4000m        | 1024Mi         | 1024Mi       |
+| database (PG)       | 200m           | unset        | 512Mi          | 512Mi        |
+| smtp                | 50Mi           | unset        | 64Mi           | 64Mi         |
+
+In production you need to configure accordingly to your environment:
+- The CPU requests and limits needed for geonetwork, elasticsearch, geoserver, gateway. And if you are using the built-in database, you may set some CPU limits.  
+   It is not useful to set CPU limits for the other modules because they are not frequently accessed nor use a lot of CPU.
+- The memory requests and limits for all the modules.
+
+Here is a table with recommended values for a production environment with low usage:
+
+|                     | CPU - Requests | CPU - Limits | RAM - Requests | RAM - Limits |
+|---------------------|----------------|--------------|----------------|--------------|
+| console             | 500m           | unset        | 2Gi            | 2Gi          |
+| datafeeder          | 200m           | unset        | 2Gi            | 2Gi          |
+| datafeeder-frontend | 100m           | unset        | 256Mi          | 256Mi        |
+| geonetwork          | 2000m          | 4000m        | 3Gi            | 3Gi          |
+| ogc-api-records     | 100m           | unset        | 2Gi            | 2Gi          |
+| elasticsearch       | 1000m          | 2000m        | 4Gi            | 4Gi          |
+| kibana              | 500m           | unset        | 2Gi            | 2Gi          |
+| geoserver           | 2000m          | 4000m        | 4Gi            | 4Gi          |
+| header              | 200m           | unset        | 1Gi            | 1Gi          |
+| mapstore            | 1000m          | unset        | 2Gi            | 2Gi          |
+| openldap            | 500m           | unset        | 2Gi            | 2Gi          |
+| gateway             | 2000m          | 4000m        | 3Gi            | 3Gi          |
+| database (PG)       | 2000m          | 4000m        | 2Gi            | 2Gi          |
+| smtp                | 200m           | unset        | 128Mi          | 128Mi        |
 
 Feel free to suggest modifications based on your use cases.
 
-***/!\ Important /!\ :*** Default values are for testing purposes !
-
-It _should_ work for an average production, but for production use, you are strongly advised to document yourself on how to estimate resource consumption based on your data and platform traffic.
+These values _should_ work for an average production with low usage, but you are strongly advised to document yourself on how to estimate resource consumption based on your data and platform traffic.
