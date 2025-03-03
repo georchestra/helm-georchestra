@@ -1,3 +1,7 @@
+# 1.5.0
+- disable cas and header by default. (#129)  
+   you need to enable them back if you still want them.
+
 # 1.4.0
 
 - add automatic restart of the Deployments on geOrchestra datadir changes (#126)
