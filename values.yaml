@@ -23,7 +23,7 @@ georchestra:
         annotations: {}
       tolerations: []
     cas:
-      enabled: true
+      enabled: false
       replicaCount: "1"
       docker_image: georchestra/cas:latest
       extra_environment: []
@@ -146,7 +146,7 @@ georchestra:
       service:
         annotations: {}
     header:
-      enabled: true
+      enabled: false
       replicaCount: "1"
       docker_image: georchestra/header:latest
       extra_environment: []
