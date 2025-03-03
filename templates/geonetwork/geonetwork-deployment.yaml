@@ -76,6 +76,8 @@ spec:
             port: 8080
           failureThreshold: 5
           periodSeconds: 50
+        resources:
+          {{- toYaml $webapp.resources | nindent 10 }}
       {{- if $webapp.jetty_monitoring }}
       - name: jmx-collectd
         image: camptocamp/jmx-collectd:bookworm
