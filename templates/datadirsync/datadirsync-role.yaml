@@ -8,11 +8,15 @@ metadata:
 rules:
   - apiGroups: ["apps"]
     resources: ["pods", "replicasets", "deployments"]
-    resourceNames: [{{- $prefix := include "georchestra.fullname" . -}}
-      {{- $suffixes := $webapp.deploymentSuffixNameList -}}
+    resourceNames:
+      {{- $prefix := include "georchestra.fullname" . -}}
       {{- $deployments := list -}}
-      {{- range $index, $suffix := $suffixes }}
-      {{ if $index }}, {{ end }}"{{ printf "%s-%s" $prefix $suffix }}"
+      {{- range $key, $values := $webapp.rolloutDeploymentsMapping }}
+        {{- $deployments = concat $deployments $values }}
+      {{- end }}
+      {{- $deployments = mustUniq $deployments }}
+      [{{- range $index, $item := $deployments }}
+        {{- if $index }}, {{ end }}"{{ printf "%s-%s" $prefix $item }}"
       {{- end }}]
     verbs: ["get", "patch"]
 {{- end }}
