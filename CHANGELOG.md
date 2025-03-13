@@ -1,3 +1,8 @@
+# 1.6.0
+
+- add support for requests and limits into the helm chart. (#127)  
+  with a part in the README about that
+
 # 1.5.0
 - disable cas and header by default. (#129)  
    you need to enable them back if you still want them.
