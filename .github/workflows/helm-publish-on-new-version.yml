@@ -16,7 +16,8 @@ jobs:
       
       # Need to do that because helm releaser does not support repo with single chart
       # https://github.com/helm/chart-releaser-action/issues/87
-      - name: Checkout main branch
+      # Could move into a subfolder but fear of loosing all the history of the various files
+      - name: Checkout main branch into a subsubfolder
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
