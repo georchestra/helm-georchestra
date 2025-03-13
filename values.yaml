@@ -369,12 +369,14 @@ georchestra:
         memory: 64Mi
   datadirsync:
     enabled: false
-    image: georchestra/datadirsync-k8s-agent:1.3.3
+    image: georchestra/datadirsync-k8s-agent:1.4.0
     pollInterval: 30
     tolerations: []
+    # when using wildcard, you need to use "", otherwise it's not necessary
+    rolloutDeploymentsMapping:
+      "*":
+        - geoserver
     # registry_secret: default
-    deploymentSuffixNameList:
-      - geoserver
 
 fqdn: "georchestra-127-0-1-1.traefik.me"
 

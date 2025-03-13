@@ -35,32 +35,36 @@ spec:
           value: "{{ .Values.georchestra.datadir.git.ref }}"
         - name: POLL_INTERVAL
           value: "{{ $webapp.pollInterval }}"
-        - name: ROLLOUT_DEPLOYMENTS
-          value: |
-            {{ $prefix := include "georchestra.fullname" . -}}
-            {{ $suffixes := $webapp.deploymentSuffixNameList -}}
-            {{ $deployments := list -}}
-            {{- range $suffix := $suffixes }}
-            {{ $deployments = append $deployments (printf "%s-%s" $prefix $suffix) }}
-            {{- end -}}
-            {{- join ", " $deployments }}
+        - name: ROLLOUT_MAPPING_FILE
+          value: "/tmp/datadirsync/rollout_mapping_config.yaml"
         - name: ROLLOUT_NAMESPACE
           value: "{{ .Release.Namespace }}"
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
         - name: GIT_SSH_COMMAND
           value: ssh -i /id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
+      {{- end }}
         volumeMounts:
+        - name: rollout-configuration-mapping
+          mountPath: /tmp/datadirsync
+          readOnly: true
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
         - name: ssh-secret
           mountPath: /id_rsa
           # It's assumed that a subpath ssh-privatekey is in the secret (with the content of the file)
           subPath: ssh-privatekey
           readOnly: true
+      {{- end }}
       volumes:
+      - name: rollout-configuration-mapping
+        configMap:
+          name: {{ include "georchestra.fullname" . }}-datadirsync-cm
+      {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
         secret:
           secretName: {{ .Values.georchestra.datadir.git.ssh_secret }}
           defaultMode: 0440
       {{- end }}
+
       {{- if $webapp.registry_secret }}
       imagePullSecrets:
       - name: {{ $webapp.registry_secret }}
