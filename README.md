@@ -6,17 +6,35 @@ some of the features and/or implementation choices.
 # Maintainers
 
 ## How to create a new chart release
-IMPORTANT: Don't create too many versions, test your changes using git submodules for example. Create new versions with a batch of features if possible.
+**IMPORTANT**: Don't create too many versions, test your changes using git submodules for example. Create new versions with a batch of features if possible.
 
-1. Change and push the version in the Chart.yaml.  
+1. Change the version in the Chart.yaml.  
    Please follow https://semver.org, if you are adding a new feature bump the MINOR version, otherwise if it's a bugfix bump the PATCH version.
 2. Write a changelog in the CHANGELOG.md
-3. Execute `git tag 1.X.X` (with the same version as the chart)
-4. Execute `git push --tags`
+3. Push your changes.
+
+# WARNING: New location storage for the helm chart - How to use
+
+All the helm chart are now stored inside the GitHub Docker registry.
+
+Recheck the Quick start tutorial below. In a summary you need to change from:
+
+```
+helm repo update
+helm upgrade --install -f your-values.yaml georchestra georchestra/georchestra
+```
+
+to
+
+```
+helm upgrade -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X
+```
 
 # Usage
 
 ## Install
+
+WARNING: Change `X.X.X` by the latest version of the helm chart found in https://github.com/georchestra/helm-georchestra/blob/main/Chart.yaml#L18
 
 ### Quick start
 
@@ -29,9 +47,7 @@ IMPORTANT: Don't create too many versions, test your changes using git submodule
    ````
 3. Execute these commands for installing the georchestra chart:  
    ```
-   helm repo add georchestra https://charts.georchestra.org
-   helm repo update
-   helm install georchestra georchestra/georchestra --set fqdn=YOURDOMAIN
+   helm install georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X --set fqdn=YOURDOMAIN
    ```
    Note: For the domain you can use `georchestra-127-0-1-1.traefik.me`, just replace `127-0-1-1` with the IP address of your server.
 
@@ -49,9 +65,7 @@ IMPORTANT: Don't create too many versions, test your changes using git submodule
    ````
 3. Execute these commands for installing the georchestra chart:  
    ```
-   helm repo add georchestra https://charts.georchestra.org
-   helm repo update
-   helm install -f your-values.yaml georchestra georchestra/georchestra
+   helm install -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X
    ```
 
 4. Go to [https://YOURDOMAIN](https://YOURDOMAIN)
@@ -61,7 +75,7 @@ IMPORTANT: Don't create too many versions, test your changes using git submodule
 Apply only for a customized installation.
 
 ```
-helm upgrade -f your-values.yaml georchestra georchestra/georchestra
+helm upgrade -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X
 ```
 
 # geOrchestra Datadir bootstrap
