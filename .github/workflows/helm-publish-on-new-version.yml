@@ -23,8 +23,9 @@ jobs:
           fetch-depth: 0
           path: charts/georchestra
 
-      - name: Configure Git
+      - name: Configure Git + add charts folder for git tracking with chart releaser
         run: |
+          git add charts
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
