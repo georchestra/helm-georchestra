@@ -72,7 +72,7 @@ spec:
           httpGet:
             path: /mapstore/configs/config.json
             port: 8080
-          failureThreshold: 20
+          failureThreshold: 5
           periodSeconds: 15
         resources:
           {{- toYaml $webapp.resources | nindent 10 }}
