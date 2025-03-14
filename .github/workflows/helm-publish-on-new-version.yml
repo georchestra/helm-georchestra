@@ -8,6 +8,9 @@ on:
 jobs:
   chart-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # to push chart release and create a release (helm/chart-releaser-action)
+      packages: write # needed for ghcr access
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v3
