@@ -1,6 +1,10 @@
 name: Lint and Test Charts
 
-on: pull_request
+on:
+  pull_request:
+    paths-ignore:
+      - "*.md"
+      - LICENCE
 
 jobs:
   lint-test:

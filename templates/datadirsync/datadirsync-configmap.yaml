@@ -1,0 +1,16 @@
+{{- $webapp := .Values.georchestra.datadirsync -}}
+{{- $fullname := include "georchestra.fullname" . -}}
+{{- if $webapp.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullname }}-datadirsync-cm
+data:
+  rollout_mapping_config.yaml: |
+{{- range $key, $values := $webapp.rolloutDeploymentsMapping }}
+    "{{ $key }}":
+{{- range $values }}
+      - {{ $fullname }}-{{ . }}
+{{- end }}
+{{- end }}
+{{- end }}

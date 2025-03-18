@@ -1,3 +1,21 @@
+# 1.7.0
+
+- change the way how automatic restart of the Deployments on geOrchestra datadir works. (#130)  
+  now you can only restart some applications based on which folder in the datadir was modified.
+
+# 1.6.0
+
+- add support for requests and limits into the helm chart. (#127)  
+  with a part in the README about that
+
+# 1.5.0
+- disable cas and header by default. (#129)  
+   you need to enable them back if you still want them.
+
+# 1.4.0
+
+- add automatic restart of the Deployments on geOrchestra datadir changes (#126)
+
 # 1.3.0
 
 - add hostAliases (#109)

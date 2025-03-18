@@ -22,8 +22,14 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 512Mi
     cas:
-      enabled: true
+      enabled: false
       replicaCount: "1"
       docker_image: georchestra/cas:latest
       extra_environment: []
@@ -31,6 +37,12 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1256Mi
+        limits:
+          memory: 1256Mi
     console:
       enabled: true
       replicaCount: "1"
@@ -41,6 +53,12 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
     datafeeder:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
       replicaCount: "1"
@@ -56,6 +74,12 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 512Mi
     datafeeder_frontend:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true  # won't deploy if datafeeder is not enable
@@ -67,6 +91,12 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 128Mi
     geonetwork:
       enabled: true
       replicaCount: "1"
@@ -83,6 +113,13 @@ georchestra:
       # variable above.
       extra_volumeMounts: []
       tolerations: []
+      resources:
+        requests:
+          cpu: 200m
+          memory: 1512Mi
+        limits:
+          cpu: 2000m
+          memory: 1512Mi
       ogc_api_records:
         enabled: true
         replicaCount: "1"
@@ -93,29 +130,44 @@ georchestra:
         service:
           annotations: {}
         tolerations: []
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            memory: 1Gi
       elasticsearch:
         replicaCount: "1"
-        resources:
-          limits:
-            memory: 5120Mi
-          requests:
-            memory: 5120Mi
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
         service:
           annotations: {}
         tolerations: []
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1512Mi
+          limits:
+            cpu: 2000m
+            memory: 1512Mi
       kibana:
         replicaCount: "1"
         image: docker.elastic.co/kibana/kibana:7.15.1
         service:
           annotations: {}
         tolerations: []
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            memory: 1Gi
       # automatically clean some logs of geonetwork
       housekeeping:
         harvester_logs:
           enabled: false
           schedule: "0 1 * * *"
         tolerations: []
+        resources: {}
       service:
         annotations: {}
     geoserver:
@@ -135,6 +187,13 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+        limits:
+          cpu: 4000m
+          memory: 2Gi
     geowebcache:
       enabled: false
       replicaCount: "1"
@@ -145,8 +204,15 @@ georchestra:
       tolerations: []
       service:
         annotations: {}
+      resources:
+        requests:
+          cpu: 500m
+          memory: 2Gi
+        limits:
+          cpu: 2000m
+          memory: 2Gi
     header:
-      enabled: true
+      enabled: false
       replicaCount: "1"
       docker_image: georchestra/header:latest
       extra_environment: []
@@ -154,6 +220,12 @@ georchestra:
       # registry_secret: default
       service:
         annotations: {}
+      resources:
+        requests:
+          cpu: 50m
+          memory: 512Mi
+        limits:
+          memory: 512Mi
     mapstore:
       enabled: true
       replicaCount: "1"
@@ -167,6 +239,12 @@ georchestra:
       lifecycle: {}
       service:
         annotations: {}
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
     openldap:
       enabled: true
       replicaCount: "1"
@@ -184,6 +262,12 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
     proxy:
       enabled: false
       replicaCount: "1"
@@ -196,6 +280,13 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 4000m
+          memory: 1Gi
     gateway:
       enabled: true
       replicaCount: "1"
@@ -206,6 +297,13 @@ georchestra:
       service:
         annotations: {}
       tolerations: []
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 4000m
+          memory: 1Gi
   datadir:
     volume:
     - name: georchestra-datadir
@@ -265,6 +363,22 @@ georchestra:
     # relay_username:  aaaa
     # relay_password:  aaaa
     extra_environment: []
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 64Mi
+  datadirsync:
+    enabled: false
+    image: georchestra/datadirsync-k8s-agent:1.4.0
+    pollInterval: 30
+    tolerations: []
+    # when using wildcard, you need to use "", otherwise it's not necessary
+    rolloutDeploymentsMapping:
+      "*":
+        - geoserver
+    # registry_secret: default
 
 fqdn: "georchestra-127-0-1-1.traefik.me"
 
@@ -349,6 +463,12 @@ database:
     initdb:
       username: georchestra
       password: georchestra
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        memory: 512Mi
   geodata:
     auth:
       database: geodata
