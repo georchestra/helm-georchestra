@@ -42,7 +42,7 @@ spec:
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       - name: fix-permissions-pvc
-        image: busybox:latest
+        image: busybox:1.37
         command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]
         volumeMounts:
         - mountPath: /mnt/geoserver_datadir
