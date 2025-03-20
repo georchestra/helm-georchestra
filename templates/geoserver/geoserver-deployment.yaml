@@ -46,8 +46,8 @@ spec:
           name: geoserver-geodata
       containers:
       - name: georchestra-geoserver
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         env:
           {{ if $database.builtin }}
           - name: GEODATA_PGHOST

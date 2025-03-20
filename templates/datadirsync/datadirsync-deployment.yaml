@@ -30,7 +30,8 @@ spec:
         fsGroup: 1001
       containers:
       - name: agent
-        image: {{ $webapp.image }}
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         env:
         - name: GIT_REPO_URL
           value: "{{ .Values.georchestra.datadir.git.url }}"
