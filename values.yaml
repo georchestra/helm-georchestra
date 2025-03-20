@@ -103,7 +103,6 @@ georchestra:
       docker_image: georchestra/geonetwork:latest
       # the registry secret is only used for the GeoNetwork image
       # registry_secret: default
-      jetty_monitoring: false
       extra_environment: []
       # volumes is the deployment-compliant specification of the pod's extra volume
       # It should match with an item from the extra_volumeName.name variable below.
@@ -174,7 +173,6 @@ georchestra:
       enabled: true
       replicaCount: "1"
       docker_image: georchestra/geoserver:latest
-      jetty_monitoring: false
       extra_environment: []
       # volumes is the deployment-compliant specification of the pod's extra volume
       # It should match with an item from the extra_volumeName.name variable below.
@@ -272,7 +270,6 @@ georchestra:
       enabled: false
       replicaCount: "1"
       docker_image: georchestra/security-proxy:latest
-      jetty_monitoring: false
       extra_environment: []
       # registry_secret: default
       envsubst:
