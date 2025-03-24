@@ -369,7 +369,7 @@ georchestra:
         memory: 64Mi
   datadirsync:
     enabled: false
-    image: georchestra/datadirsync-k8s-agent:1.4.0
+    image: georchestra/datadirsync-k8s-agent:1.4.1
     pollInterval: 30
     tolerations: []
     # when using wildcard, you need to use "", otherwise it's not necessary
