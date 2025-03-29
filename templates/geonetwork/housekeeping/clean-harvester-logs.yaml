@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
           - name: clean-harvester-logs
-            image: busybox:latest
+            image: busybox:1.37
             imagePullPolicy: IfNotPresent
             command:
             - find
