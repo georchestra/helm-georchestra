@@ -1,6 +1,6 @@
 {{- $rabbitmq := .Values.rabbitmq -}}
 {{- $rabbitmq_storage := .Values.rabbitmq.storage -}}
-{{- if and $rabbitmq.enabled $rabbitmq.storage -}}
+{{- if and $rabbitmq.enabled $rabbitmq.storage (not $rabbitmq_storage.existingClaim) -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

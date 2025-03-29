@@ -1,6 +1,6 @@
 {{- $webapp := .Values.georchestra.webapps.geowebcache -}}
 {{- $webapp_storage := .Values.georchestra.storage.geowebcache_tiles -}}
-{{- if and $webapp.enabled .Values.georchestra.storage.geowebcache_tiles -}}
+{{- if and $webapp.enabled .Values.georchestra.storage.geowebcache_tiles (not $webapp_storage.existingClaim) -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
