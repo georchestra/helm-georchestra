@@ -49,7 +49,7 @@ spec:
           - mountPath: /mnt/mapstore2
             name: mapstore-datadir
         env:
-          - name: JAVA_OPTS
+          - name: JAVA_OPTIONS
             value: -DPRINT_BASE_URL=pdf -Dgeorchestra.datadir=/etc/georchestra -Dgeorchestra.extensions=/mnt/mapstore2
           {{- include "georchestra.ldap-envs" . | nindent 10 }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}
