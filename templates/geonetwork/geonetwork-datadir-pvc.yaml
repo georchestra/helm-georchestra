@@ -1,6 +1,6 @@
 {{- $webapp := .Values.georchestra.webapps.geonetwork -}}
 {{- $webapp_storage := .Values.georchestra.storage.geonetwork_datadir -}}
-{{- if $webapp.enabled -}}
+{{- if and $webapp.enabled (not $webapp_storage.existingClaim) -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
