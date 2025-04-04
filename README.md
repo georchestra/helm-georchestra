@@ -83,30 +83,6 @@ helm upgrade -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-geor
 The helm chart provides the possibility to clone the datadir from a remote repository using git. A
 secret SSH key can be provided to do so.
 
-# JMX monitoring
-
-A flag can be set in the `values.yaml` so that a collectd-based container is running next to the
-main Java one, on the following deployments:
-
-* `geoserver`
-* `geonetwork`
-* `security-proxy`
-
-If the flag is set to `true` (e.g. `georchestra.webapps.proxy.jetty_monitoring: true`),
-then a `collectd` process along with a minimal configuration to scrape common Java and Jetty specific
-exposed JMX metrics will be configured. The following annotations will be set on the deployed pod as well:
-
-```
-    prometheus.io/path: /metrics
-    prometheus.io/port: "9103"
-    prometheus.io/scrape: "true"
-```
-
-Some `podMonitor` objects will be created as well for each concerned pods (sp, gn, gs).
-
-As a result, if the `prometheus` operator is deployed into the cluster, it will configure itself and be able to scrape the
-exposed metrics.
-
 # Mapstore2 / geOrchestra datadir
 
 On the mapstore2 webapp, we are using the following strategy:
