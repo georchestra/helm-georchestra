@@ -373,9 +373,9 @@ georchestra:
     pollInterval: 30
     tolerations: []
     # when using wildcard, you need to use "", otherwise it's not necessary
-    rolloutDeploymentsMapping:
-      "*":
-        - geoserver
+    # rolloutDeploymentsMapping:
+    #  "*":
+    #    - geoserver
     # registry_secret: default
 
 fqdn: "georchestra-127-0-1-1.traefik.me"
