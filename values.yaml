@@ -373,7 +373,7 @@ georchestra:
     pollInterval: 30
     tolerations: []
     # when using wildcard, you need to use "", otherwise it's not necessary
-    #rolloutDeploymentsMapping:
+    # rolloutDeploymentsMapping:
     #  "*":
     #    - geoserver
     # registry_secret: default
