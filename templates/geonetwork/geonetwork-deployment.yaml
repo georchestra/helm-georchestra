@@ -22,12 +22,6 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geonetwork
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geonetwork
-      {{- if $webapp.jetty_monitoring }}
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: "9103"
-        prometheus.io/scrape: "true"
-      {{- end }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
@@ -78,22 +72,6 @@ spec:
           periodSeconds: 50
         resources:
           {{- toYaml $webapp.resources | nindent 10 }}
-      {{- if $webapp.jetty_monitoring }}
-      - name: jmx-collectd
-        image: camptocamp/jmx-collectd:bookworm
-        volumeMounts:
-        - mountPath: /collectd-template
-          name: georchestra-monitoring-cm
-        ports:
-        - containerPort: 9103
-          name: prometheus
-        command:
-        - /bin/sh
-        - -c
-        - mkdir /etc/collectd/collectd.conf.d/ ;
-          cat /collectd-template/collectd-jmx-jetty.conf | sed "s/localhost/$(hostname)/g" > /etc/collectd/collectd.conf.d/jmx.conf ;
-          collectd -f
-      {{- end }}
       volumes:
       - name: georchestra-datadir
         emptyDir: {}
@@ -108,11 +86,6 @@ spec:
       {{- end }}
       {{- if $webapp.extra_volumes }}
           {{ $webapp.extra_volumes | toYaml | nindent 6 }}
-      {{- end }}
-      {{- if $webapp.jetty_monitoring }}
-      - name: georchestra-monitoring-cm
-        configMap:
-          name: {{ include "georchestra.fullname" . }}-monitoring-cm
       {{- end }}
       {{- if $webapp.registry_secret }}
       imagePullSecrets:
