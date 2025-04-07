@@ -60,5 +60,11 @@ jobs:
             if [ -z "${pkg:-}" ]; then
               break
             fi
-            helm push "${pkg}" "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}/helm-georchestra"
+            CHART_NAME=$(echo ${pkg##*/} | grep -oP '^.*?(?=-[0-9])')
+            CHART_VERSION=$(echo ${pkg##*/} | grep -Po '(?<=-)[0-9][^/]*?(?=\.tgz)')
+            if helm show all "oci://ghcr.io/${GITHUB_REPOSITORY}/${CHART_NAME}" --version "$CHART_VERSION" > /dev/null 2>&1; then
+              echo "Helm chart $CHART_NAME with version $CHART_VERSION already exist."
+            else
+              helm push "${pkg}" "oci://ghcr.io/${GITHUB_REPOSITORY}"
+            fi
           done
