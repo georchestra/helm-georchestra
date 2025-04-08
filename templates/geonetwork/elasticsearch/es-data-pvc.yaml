@@ -1,6 +1,6 @@
 {{- $webapp := .Values.georchestra.webapps.geonetwork.elasticsearch -}}
 {{- $webapp_storage := .Values.georchestra.storage.gn4_es -}}
-{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+{{- if and .Values.georchestra.webapps.geonetwork.enabled (not $webapp_storage.existingClaim) -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
