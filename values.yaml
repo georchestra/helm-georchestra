@@ -302,6 +302,9 @@ georchestra:
           cpu: 4000m
           memory: 1Gi
   datadir:
+    image:
+      repository: bitnami/git
+      tag: 2
     volume:
     - name: georchestra-datadir
       emptyDir: {}
