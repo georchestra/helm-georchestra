@@ -1,6 +1,6 @@
 {{- define "georchestra.bootstrap_georchestra_datadir" -}}
 - name: bootstrap-georchestra-datadir
-  image: bitnami/git
+  image: "{{ .Values.georchestra.datadir.image.repository }}:{{ .Values.georchestra.datadir.image.tag }}"
   command:
   - /bin/sh
   - -c
