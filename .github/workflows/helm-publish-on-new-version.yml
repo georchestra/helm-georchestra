@@ -13,7 +13,7 @@ jobs:
       packages: write # needed for ghcr access
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       
@@ -21,7 +21,7 @@ jobs:
       # https://github.com/helm/chart-releaser-action/issues/87
       # Could move into a subfolder but fear of loosing all the history of the various files
       - name: Checkout main branch into a subsubfolder
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           path: charts/georchestra
