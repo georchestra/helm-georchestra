@@ -29,7 +29,7 @@ jobs:
           swap-storage: false
 
       - name: Helm Installation
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@v4
 
       - uses: actions/setup-python@main
         with:
