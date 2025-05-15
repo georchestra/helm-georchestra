@@ -1,3 +1,8 @@
+# 1.8.0
+
+- add ability to customize all docker images through values.yaml (#147)
+- remove all jmx + monitoring in the helm chart (#136)
+
 # 1.7.0
 
 - change the way how automatic restart of the Deployments on geOrchestra datadir works. (#130)  
