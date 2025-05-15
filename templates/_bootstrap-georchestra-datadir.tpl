@@ -1,6 +1,6 @@
 {{- define "georchestra.bootstrap_georchestra_datadir" -}}
 - name: bootstrap-georchestra-datadir
-  image: "{{ .Values.georchestra.datadir.image.repository }}:{{ .Values.georchestra.datadir.image.tag }}"
+  image: "{{ .Values.tooling.general.image.repository }}:{{ .Values.tooling.general.image.tag }}"
   command:
   - /bin/sh
   - -c

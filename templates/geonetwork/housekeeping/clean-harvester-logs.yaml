@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
           - name: clean-harvester-logs
-            image: busybox:1.37
+            image: "{{ .Values.tooling.general.image.repository }}:{{ .Values.tooling.general.image.tag }}"
             imagePullPolicy: IfNotPresent
             command:
             - find
