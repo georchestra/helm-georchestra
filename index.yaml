@@ -3,6 +3,27 @@ entries:
   georchestra:
   - apiVersion: v2
     appVersion: "24.0"
+    created: "2025-05-15T15:37:35.966935846Z"
+    dependencies:
+    - alias: database
+      condition: database.builtin
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.5.2
+    - alias: rabbitmq
+      condition: rabbitmq.enabled, rabbitmq.builtin
+      name: rabbitmq
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 14.4.0
+    description: A Helm chart to deploy geOrchestra instances into k8s clusters.
+    digest: f1f295266b73912ba1eb93df7be00ea6e5951366c3c02c0da06fd6d91952a300
+    name: georchestra
+    type: application
+    urls:
+    - https://github.com/georchestra/helm-georchestra/releases/download/georchestra-1.8.0/georchestra-1.8.0.tgz
+    version: 1.8.0
+  - apiVersion: v2
+    appVersion: "24.0"
     created: "2025-04-04T10:33:51.423267918Z"
     dependencies:
     - alias: database
@@ -3945,4 +3966,4 @@ entries:
     urls:
     - georchestra-0.2.11-main-064bdfe.tgz
     version: 0.2.11-main-064bdfe
-generated: "2025-04-04T10:33:51.42405578Z"
+generated: "2025-05-15T15:37:35.968516494Z"
