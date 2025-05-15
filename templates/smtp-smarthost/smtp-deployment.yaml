@@ -27,7 +27,7 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-smtp
-        image: camptocamp/exim:latest
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
         env:
           {{- if $webapp.relay_host }}
           - name: RELAY_HOST

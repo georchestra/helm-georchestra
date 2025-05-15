@@ -302,9 +302,6 @@ georchestra:
           cpu: 4000m
           memory: 1Gi
   datadir:
-    image:
-      repository: bitnami/git
-      tag: 2
     volume:
     - name: georchestra-datadir
       emptyDir: {}
@@ -360,6 +357,9 @@ georchestra:
     # relay_port: 25
     # relay_username:  aaaa
     # relay_password:  aaaa
+    image:
+      repository: camptocamp/exim
+      tag: latest
     extra_environment: []
     resources:
       requests:
@@ -519,3 +519,14 @@ hostAliases: []
 # - ip: "127.0.0.1"
 #   hostnames:
 #   - "host.alias.com"
+
+tooling:
+  # Global image used for toolbox: chmod + git clone
+  general:
+    image:
+      repository: alpine/git
+      tag: 2.47.2
+  envsubst:
+    image:
+      repository: georchestra/k8s-initcontainer-envsubst
+      tag: latest

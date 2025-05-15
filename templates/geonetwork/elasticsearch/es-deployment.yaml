@@ -31,7 +31,7 @@ spec:
         fsGroup: 1000
       initContainers:
       - name: fix-permissions-pvc
-        image: busybox:1.37
+        image: "{{ .Values.tooling.general.image.repository }}:{{ .Values.tooling.general.image.tag }}"
         command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
         volumeMounts:
         - mountPath: /usr/share/elasticsearch/data

@@ -32,7 +32,7 @@ spec:
       {{- include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       {{- if $webapp.envsubst.enabled }}
       - name: envsubst
-        image: georchestra/k8s-initcontainer-envsubst
+        image: "{{ .Values.tooling.envsubst.image.repository }}:{{ .Values.tooling.envsubst.image.tag }}"
         volumeMounts:
         - mountPath: /etc/georchestra
           name: georchestra-datadir
