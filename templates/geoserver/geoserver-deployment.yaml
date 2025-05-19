@@ -42,8 +42,6 @@ spec:
           name: geoserver-datadir
         - mountPath: /mnt/geoserver_geodata
           name: geoserver-geodata
-        - mountPath: /mnt/geoserver_tiles
-          name: geoserver-tiles
       containers:
       - name: georchestra-geoserver
         image: {{ $webapp.docker_image }}
