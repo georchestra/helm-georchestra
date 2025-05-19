@@ -36,7 +36,7 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" . | nindent 6 }}
       - name: fix-permissions-pvc
         image: "{{ .Values.tooling.general.image.repository }}:{{ .Values.tooling.general.image.tag }}"
-        command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata /mnt/geoserver_tiles"]
+        command: ["sh", "-c", "chown -R 999:999 /mnt/geoserver_datadir /mnt/geoserver_geodata"]
         volumeMounts:
         - mountPath: /mnt/geoserver_datadir
           name: geoserver-datadir
