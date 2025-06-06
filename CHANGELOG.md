@@ -1,3 +1,7 @@
+# 1.8.1
+- remove chmod permission initcontainer on geoserver_tiles (#148)
+- fix the healthcheck for geoserver related to control flow (#151)
+
 # 1.8.0
 
 - add ability to customize all docker images through values.yaml (#147)
