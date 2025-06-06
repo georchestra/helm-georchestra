@@ -195,7 +195,7 @@ spec:
             port: 8080
             httpHeaders:
             - name: ctrl-flow-priority
-              value: "true"
+              value: "10"
           periodSeconds: 10
           timeoutSeconds: 5
         {{- end }}
