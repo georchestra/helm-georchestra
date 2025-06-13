@@ -44,6 +44,12 @@ spec:
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
           - name: discovery.type
             value: single-node
+          {{- if contains ":8" $webapp.image }}
+          - name: xpack.security.enabled
+            value: "false"
+          - name: xpack.security.enrollment.enabled
+            value: "false"
+          {{- end }}
         ports:
         - containerPort: 9200
           name: elastic
