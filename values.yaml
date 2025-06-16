@@ -136,11 +136,14 @@ georchestra:
           limits:
             memory: 1Gi
       elasticsearch:
+        # if not enabled, also disable kibana deployment
+        enabled: true
         replicaCount: "1"
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
         service:
           annotations: {}
         tolerations: []
+        elasticPassword: changeme
         resources:
           requests:
             cpu: 200m
@@ -160,6 +163,9 @@ georchestra:
             memory: 1Gi
           limits:
             memory: 1Gi
+        # For configuring external kibana with geonetwork
+        #host: mykibana
+        #port: myport
       # automatically clean some logs of geonetwork
       housekeeping:
         harvester_logs:
@@ -417,6 +423,14 @@ ldap:
   # Optionally, you can also provide the GEORCHESTRA_PRIVILEGED_USER_PASSWORD env var, that will
   # be used to replace the default one on first run, see https://github.com/georchestra/georchestra/blob/master/ldap/docker-root/docker-entrypoint.d/01-populate#L47-L54
   # existingSecret: mysecretldapenvvars
+
+# When using external ElasticSearch
+# Set parameters used by the apps (only geonetwork for now)
+elasticsearch: {}
+  # host: myhost
+  # port: myport
+  # username: myusername
+  # password: mypassword
 
 database:
   builtin: true
