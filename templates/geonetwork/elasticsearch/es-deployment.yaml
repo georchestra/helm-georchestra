@@ -44,6 +44,10 @@ spec:
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
           - name: discovery.type
             value: single-node
+          - name: xpack.security.transport.ssl.enabled
+            value: "false"
+          - name: xpack.security.http.ssl.enabled
+            value: "false"
           - name: ELASTIC_PASSWORD
             value: {{ $webapp.elasticPassword | quote }}
         ports:

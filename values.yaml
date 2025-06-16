@@ -136,7 +136,6 @@ georchestra:
           limits:
             memory: 1Gi
       elasticsearch:
-        # if not enabled, also disable kibana deployment
         enabled: true
         replicaCount: "1"
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
@@ -152,11 +151,14 @@ georchestra:
             cpu: 2000m
             memory: 1512Mi
       kibana:
+        enabled: false
         replicaCount: "1"
         image: docker.elastic.co/kibana/kibana:7.15.1
         service:
           annotations: {}
         tolerations: []
+        # The password that you set using bin/elasticsearch-reset-password -u kibana_system
+        kibanaSystemPassword: ""
         resources:
           requests:
             cpu: 100m
@@ -164,8 +166,8 @@ georchestra:
           limits:
             memory: 1Gi
         # For configuring external kibana with geonetwork
-        #host: mykibana
-        #port: myport
+        # host: mykibana
+        # port: myport
       # automatically clean some logs of geonetwork
       housekeeping:
         harvester_logs:
