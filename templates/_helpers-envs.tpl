@@ -27,13 +27,13 @@ Insert service host environment variables
 - name: OGC_API_RECORDS_HOST
   value: "{{ include "georchestra.fullname" . }}-gn4-ogc-api-records-svc"
 - name: ES_HOST
-  value: "{{ include "georchestra.fullname" . }}-gn4-elasticsearch-svc"
+  value: "{{ .Values.elasticsearch.host | default (include "georchestra.fullname" .) }}-gn4-elasticsearch-svc"
 - name: ES_PORT
-  value: "9200"
+  value: "{{ .Values.elasticsearch.port | default 9200 }}"
 - name: KB_HOST
-  value: "{{ include "georchestra.fullname" . }}-gn4-kibana-svc"
+  value: "{{ .Values.georchestra.webapps.geonetwork.kibana.host | default (include "georchestra.fullname" .) }}-gn4-kibana-svc"
 - name: KB_PORT
-  value: "5601"
+  value: "{{ .Values.georchestra.webapps.geonetwork.kibana.port | default 5601 }}"
 {{- end }}
 
 {{/*

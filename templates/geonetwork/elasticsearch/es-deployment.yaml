@@ -1,5 +1,5 @@
 {{- $webapp := .Values.georchestra.webapps.geonetwork.elasticsearch -}}
-{{- if .Values.georchestra.webapps.geonetwork.enabled -}}
+{{- if and .Values.georchestra.webapps.geonetwork.enabled $webapp.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,9 +44,39 @@ spec:
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true
           - name: discovery.type
             value: single-node
+          - name: xpack.security.transport.ssl.enabled
+            value: "false"
+          - name: xpack.security.http.ssl.enabled
+            value: "false"
+          - name: ELASTIC_PASSWORD
+            value: {{ $webapp.elasticPassword | quote }}
         ports:
         - containerPort: 9200
           name: elastic
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - 'curl -u elastic:$ELASTIC_PASSWORD -fsSL http://localhost:9200/_cluster/health > /dev/null'
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - |
+                status=$(curl -u elastic:$ELASTIC_PASSWORD -fsSL http://localhost:9200/_cluster/health | grep -oP '"status":"\K[^"]+')
+                [ "$status" = "green" ] || [ "$status" = "yellow" ]
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+          successThreshold: 1
         volumeMounts:
           - mountPath: /usr/share/elasticsearch/data
             name: gn4-es-data
