@@ -2,6 +2,7 @@
 {{- if and $webapp.enabled .Values.georchestra.webapps.datafeeder_frontend.enabled -}}
 {{- $database := .Values.database -}}
 {{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict $webapp.podAnnotations) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,6 +22,8 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-datafeeder
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-datafeeder
+      annotations:
+        {{- toYaml $podAnnotations | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

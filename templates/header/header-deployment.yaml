@@ -1,5 +1,6 @@
-{{- if .Values.georchestra.webapps.header.enabled -}}
 {{- $webapp := .Values.georchestra.webapps.header -}}
+{{- if $webapp.enabled -}}
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict $webapp.podAnnotations) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +20,8 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-header
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-header
+      annotations:
+        {{- toYaml $podAnnotations | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

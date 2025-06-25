@@ -1,5 +1,6 @@
 {{- $webapp := .Values.georchestra.webapps.geonetwork -}}
 {{- if and $webapp.enabled $webapp.housekeeping.harvester_logs.enabled -}}
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict $webapp.housekeeping.podAnnotations) }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -7,6 +8,8 @@ metadata:
   labels:
     {{- include "georchestra.labels" . | nindent 4 }}
     app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-housekeeping-clean-harvester-logs
+  annotations:
+    {{- toYaml $podAnnotations | nindent 4 }}
 spec:
   schedule: "{{ $webapp.housekeeping.harvester_logs.schedule }}"
   jobTemplate:
@@ -30,7 +33,7 @@ spec:
             - mountPath: /mnt/geonetwork_datadir
               name: geonetwork-datadir
             resources:
-              {{- toYaml $webapp.resources | nindent 14 }}
+              {{- toYaml $webapp.housekeeping.resources | nindent 14 }}
           volumes:
           - name: geonetwork-datadir
             persistentVolumeClaim:
