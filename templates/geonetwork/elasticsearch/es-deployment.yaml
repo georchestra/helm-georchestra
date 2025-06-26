@@ -22,10 +22,8 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
-      {{- with $webapp.podAnnotations }}
       annotations:
         {{- toYaml $podAnnotations | nindent 8 }}
-      {{- end }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
