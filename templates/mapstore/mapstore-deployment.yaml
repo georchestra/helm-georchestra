@@ -33,16 +33,6 @@ spec:
       - name: georchestra-mapstore
         image: {{ $webapp.docker_image }}
         imagePullPolicy: Always
-        {{ if and $webapp.command $webapp.args -}}
-        command:
-        {{- range $webapp.command }}
-        - {{ . }}
-        {{- end }}
-        args:
-        {{- range $webapp.args }}
-        - {{ . }}
-        {{- end }}
-        {{- end }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
