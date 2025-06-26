@@ -31,6 +31,7 @@ spec:
       containers:
       - name: georchestra-smtp
         image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         env:
           {{- if $webapp.relay_host }}
           - name: RELAY_HOST
@@ -59,7 +60,6 @@ spec:
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
-        imagePullPolicy: Always
         ports:
         - containerPort: 25
           name: smtp

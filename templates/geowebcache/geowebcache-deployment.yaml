@@ -53,8 +53,8 @@ spec:
 
       containers:
       - name: georchestra-geowebcache
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         env:
           {{- include "georchestra.common-envs" . | nindent 10 }}
           {{- include "georchestra.database-georchestra-envs" . | nindent 10 }}

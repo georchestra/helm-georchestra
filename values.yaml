@@ -16,9 +16,13 @@ georchestra:
     analytics:
       enabled: false
       replicaCount: "1"
-      docker_image: georchestra/analytics:latest
-      extra_environment: []
+      image:
+        repository: georchestra/analytics
+        pullPolicy: IfNotPresent
+        tag: latest
       # registry_secret: default
+      extra_environment: []
+      
       service:
         annotations: {}
       tolerations: []
@@ -31,7 +35,10 @@ georchestra:
     cas:
       enabled: false
       replicaCount: "1"
-      docker_image: georchestra/cas:latest
+      image:
+        repository: georchestra/cas
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       # registry_secret: default
       service:
@@ -46,7 +53,10 @@ georchestra:
     console:
       enabled: true
       replicaCount: "1"
-      docker_image: georchestra/console:latest
+      image:
+        repository: georchestra/console
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       lifecycle: {}
       # registry_secret: default
@@ -62,7 +72,10 @@ georchestra:
     datafeeder:
       enabled: true  # won't deploy if datafeeder_frontend is not enable
       replicaCount: "1"
-      docker_image: georchestra/datafeeder:latest
+      image:
+        repository: georchestra/datafeeder
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       # - name: SMTPHOST
       #   value: "my_smtp_host"
@@ -84,7 +97,10 @@ georchestra:
       # Matches datafeeder/import-xxx.yaml templates in the helm chart
       enabled: true  # won't deploy if datafeeder is not enable
       replicaCount: "1"
-      docker_image: georchestra/datafeeder-frontend:latest
+      image:
+        repository: georchestra/datafeeder-frontend
+        pullPolicy: IfNotPresent
+        tag: latest
       lifecycle: {}
       extra_environment: []
       # registry_secret: default
@@ -100,9 +116,10 @@ georchestra:
     geonetwork:
       enabled: true
       replicaCount: "1"
-      docker_image: georchestra/geonetwork:latest
-      # the registry secret is only used for the GeoNetwork image
-      # registry_secret: default
+      image:
+        repository: georchestra/geonetwork
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       # volumes is the deployment-compliant specification of the pod's extra volume
       # It should match with an item from the extra_volumeName.name variable below.
@@ -122,7 +139,10 @@ georchestra:
       ogc_api_records:
         enabled: true
         replicaCount: "1"
-        image: georchestra/gn-cloud-ogc-api-records-service:4.2.8
+        image:
+          repository: georchestra/gn-cloud-ogc-api-records-service
+          pullPolicy: IfNotPresent
+          tag: "4.2.8"
         extra_environment: []
         envsubst:
           enabled: true
@@ -138,7 +158,10 @@ georchestra:
       elasticsearch:
         enabled: true
         replicaCount: "1"
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+        image:
+          repository: docker.elastic.co/elasticsearch/elasticsearch
+          pullPolicy: IfNotPresent
+          tag: "8.14.3"
         service:
           annotations: {}
         tolerations: []
@@ -154,7 +177,10 @@ georchestra:
       kibana:
         enabled: false
         replicaCount: "1"
-        image: docker.elastic.co/kibana/kibana:8.14.3
+        image:
+          repository: docker.elastic.co/kibana/kibana
+          pullPolicy: IfNotPresent
+          tag: "8.14.3"
         service:
           annotations: {}
         tolerations: []
@@ -181,7 +207,10 @@ georchestra:
     geoserver:
       enabled: true
       replicaCount: "1"
-      docker_image: georchestra/geoserver:latest
+      image:
+        repository: georchestra/geoserver
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       # volumes is the deployment-compliant specification of the pod's extra volume
       # It should match with an item from the extra_volumeName.name variable below.
@@ -206,7 +235,10 @@ georchestra:
       replicaCount: "1"
       envsubst:
         enabled: true
-      docker_image: georchestra/geowebcache:latest
+      image:
+        repository: georchestra/geowebcache
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       tolerations: []
       service:
@@ -221,7 +253,10 @@ georchestra:
     header:
       enabled: false
       replicaCount: "1"
-      docker_image: georchestra/header:latest
+      image:
+        repository: georchestra/header
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       tolerations: []
       # registry_secret: default
@@ -236,9 +271,10 @@ georchestra:
     mapstore:
       enabled: true
       replicaCount: "1"
-      docker_image: georchestra/mapstore:latest
-      # registry_secret: default
-      # no need to put the original command already managed
+      image:
+        repository: georchestra/mapstore
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       tolerations: []
       command: []
@@ -255,7 +291,10 @@ georchestra:
     openldap:
       enabled: true
       replicaCount: "1"
-      docker_image: georchestra/ldap:latest
+      image:
+        repository: georchestra/ldap
+        pullPolicy: IfNotPresent
+        tag: latest
       extraVolumeMounts: []
       #  - name: copy-portal-skins
       #   mountPath: /var/lib/lemonldap-ng/portal/skins
@@ -278,7 +317,10 @@ georchestra:
     proxy:
       enabled: false
       replicaCount: "1"
-      docker_image: georchestra/security-proxy:latest
+      image:
+        repository: georchestra/security-proxy
+        pullPolicy: IfNotPresent
+        tag: latest
       extra_environment: []
       # registry_secret: default
       envsubst:
@@ -296,7 +338,10 @@ georchestra:
     gateway:
       enabled: true
       replicaCount: "1"
-      docker_image: georchestra/gateway:latest
+      image:
+        repository: georchestra/gateway
+        pullPolicy: IfNotPresent
+        tag: latest
       environment:
         JAVA_TOOL_OPTIONS: "-Dgeorchestra.datadir=/etc/georchestra"
       extra_environment: []
@@ -368,6 +413,7 @@ georchestra:
     # relay_password:  aaaa
     image:
       repository: camptocamp/exim
+      pullPolicy: IfNotPresent
       tag: latest
     extra_environment: []
     resources:
@@ -378,7 +424,10 @@ georchestra:
         memory: 64Mi
   datadirsync:
     enabled: false
-    image: georchestra/datadirsync-k8s-agent:1.4.1
+    image:
+      repository: georchestra/datadirsync-k8s-agent
+      pullPolicy: IfNotPresent
+      tag: "1.4.1"
     pollInterval: 30
     tolerations: []
     # when using wildcard, you need to use "", otherwise it's not necessary

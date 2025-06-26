@@ -43,8 +43,8 @@ spec:
           name: geonetwork-datadir
       containers:
       - name: georchestra-geonetwork
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir
