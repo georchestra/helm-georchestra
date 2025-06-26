@@ -84,7 +84,7 @@ spec:
         emptyDir: {}
       - name: mapstore-datadir
         persistentVolumeClaim:
-          claimName: {{ include "georchestra.fullname" . }}-mapstore-datadir
+          claimName: {{ .Values.georchestra.storage.mapstore_datadir.existingClaim | default (print (include "georchestra.fullname" .) "-mapstore-datadir") }}
       {{- if .Values.georchestra.datadir.git.ssh_secret }}
       - name: ssh-secret
         secret:

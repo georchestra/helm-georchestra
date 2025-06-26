@@ -321,8 +321,10 @@ georchestra:
   # Some cloud providers automatically create & assign PVs to PVCs
   # some other need to create a PV first ; if so, then you can
   # uncomment the `pv_name` entries below.
+  # You can use existingClaim to provide the name of an existing PVC to use for persistence
   storage:
     gn4_es:
+      # existingClaim: gn4-es-data
       # pv_name: gn4_es_data
       size: 2Gi
     geonetwork_datadir:
