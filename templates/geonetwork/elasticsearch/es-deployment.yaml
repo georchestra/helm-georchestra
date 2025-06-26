@@ -1,5 +1,6 @@
 {{- $webapp := .Values.georchestra.webapps.geonetwork.elasticsearch -}}
 {{- if and .Values.georchestra.webapps.geonetwork.enabled $webapp.enabled -}}
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict $webapp.podAnnotations) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,6 +22,8 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-gn4-elasticsearch
+      annotations:
+        {{- toYaml $podAnnotations | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux

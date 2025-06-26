@@ -4,7 +4,7 @@
 {{- $database_secret_geodata_name := printf "%s-database-geodata-secret" (include "georchestra.fullname" .) -}}
 {{- $database_secret_datafeeder_name := printf "%s-database-datafeeder-secret" (include "georchestra.fullname" .) -}}
 {{- $database_secret_gwc_name := printf "%s-database-georchestra-secret" (include "georchestra.fullname" .) -}}
-
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict $webapp.podAnnotations) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,6 +24,8 @@ spec:
         {{- include "georchestra.selectorLabels" . | nindent 8 }}
         org.georchestra.service/name: {{ include "georchestra.fullname" . }}-geoserver
         app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-geoserver
+      annotations:
+        {{- toYaml $podAnnotations | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
