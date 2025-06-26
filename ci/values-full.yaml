@@ -255,7 +255,7 @@ georchestra:
           value: test
       # volumes is the deployment-compliant specification of the pod's extra volume
       # It should match with an item from the extra_volumeName.name variable below.
-      extra_volumes: []
+      extra_volumes:
         - name: mount-test
           emptyDir: {}
       extra_volumeMounts:
@@ -484,12 +484,12 @@ georchestra:
     - ReadWriteOnce
   smtp_smarthost:
     enabled: true
-    # mailname: georchestra-127-0-1-1.traefik.me
-    # postmaster: postmaster@georchestra-127-0-1-1.traefik.me
-    # relay_host: my-external-smtp
-    # relay_port: 25
-    # relay_username:  aaaa
-    # relay_password:  aaaa
+    mailname: georchestra-127-0-1-1.traefik.me
+    postmaster: postmaster@georchestra-127-0-1-1.traefik.me
+    relay_host: my-external-smtp
+    relay_port: 25
+    relay_username: aaaa
+    relay_password: aaaa
     image:
       repository: camptocamp/exim
       tag: latest
@@ -512,9 +512,9 @@ georchestra:
         value: "value1"
         effect: "NoSchedule"
     # when using wildcard, you need to use "", otherwise it's not necessary
-    # rolloutDeploymentsMapping:
-    #  "*":
-    #    - geoserver
+    rolloutDeploymentsMapping:
+      "*":
+        - geoserver
     # registry_secret: default
 
 fqdn: "georchestra-127-0-1-1.traefik.me"
@@ -542,20 +542,11 @@ ldap:
   adminDn: "cn=admin,dc=georchestra,dc=org"
   rolesRdn: "ou=roles"
   orgsRdn: "ou=orgs"
-  # By default, a secret is automatically created with the password declared above.
-  # You can override this by using an existingSecret declaring some environment variables
-  # and that should at least declare the ldap admin password
-  # Example of valid secret content (limited to the data part) would be
-  # "data": {
-  #     "SLAPD_PASSWORD": "mysecretldapadminpasswor_base64encoded"
-  # },
-  # Optionally, you can also provide the GEORCHESTRA_PRIVILEGED_USER_PASSWORD env var, that will
-  # be used to replace the default one on first run, see https://github.com/georchestra/georchestra/blob/master/ldap/docker-root/docker-entrypoint.d/01-populate#L47-L54
   # existingSecret: mysecretldapenvvars
 
 # When using external ElasticSearch
 # Set parameters used by the apps (only geonetwork for now)
-elasticsearch: {}
+elasticsearch:
   host: myhost
   port: myport
   username: myusername
@@ -568,19 +559,11 @@ database:
     tag: latest
   auth:
     database: georchestra
-    # If using an existing secret: this one will both be used by the bitnami chart managing the DB
-    # and by the georchestra db secret
-    # (https://github.com/georchestra/helm-georchestra/blob/main/templates/database/database-georchestra-secret.yaml)
-    # that is used by the apps
-    # So you must be quite careful. It should follow the pattern from the previsouly mentioned secret
-    # and tell the bitnami chart which variable provide the user and password
-    # And the `database`, `username` and `ssl` params still have to be defined here and match the ones
-    # provided by the secret
     # existingSecret: mysecret
     # secretKeys:
     #   adminPasswordKey: postgresPassword
     #   userPasswordKey: password # This one should stay as it is
-#   host: georchestra
+    host: georchestra
     password: georchestra
     postgresPassword: georchestra
     port: "5432"
@@ -613,11 +596,6 @@ database:
   geodata:
     auth:
       database: geodata
-      # If using the builtin database, you cannot use an existingSecret configuration: the init script (see above)
-      # is only able to use the basic yaml params.
-      # If using an existing secret: this one will need to match the pattern followed by
-      # https://github.com/georchestra/helm-georchestra/blob/main/templates/database/database-geodata-secret.yaml
-      # The other configuration params will not be used.
       # existingSecret: mysecret
       host: geodata
       password: geodata
@@ -627,11 +605,6 @@ database:
   datafeeder:
     auth:
       database: datafeeder
-      # If using the builtin database, you cannot use an existingSecret configuration: the init script (see above)
-      # is only able to use the basic yaml params.
-      # If using an existing secret: this one will need to match the pattern followed by
-      # https://github.com/georchestra/helm-georchestra/blob/main/templates/database/database-datafeeder-secret.yaml
-      # The other configuration params will not be used.
       # existingSecret: mysecret
       host: datafeeder
       port: "5432"
@@ -649,8 +622,6 @@ rabbitmq:
     host: rabbitmq
     port: "5672"
     existingSecret: mysecret
-  # if you want to attach any existing PV - don't use this parameter
-  # if you just automatically want storage, consult the bitnam helm chart doc
   storage:
     pv_name: rabbitmq-data
     storage_class_name: default
