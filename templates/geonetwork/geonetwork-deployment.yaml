@@ -62,7 +62,7 @@ spec:
           - name: ES_USERNAME
             value: {{ .Values.elasticsearch.username | default "elastic" | quote }}
           - name: ES_PASSWORD
-            value: {{ .Values.elasticsearch.password | default $webapp.elasticPassword | quote }}
+            value: {{ .Values.elasticsearch.password | default $webapp.elasticsearch.elasticPassword | quote }}
           {{- if $webapp.extra_environment }}
           {{- $webapp.extra_environment | toYaml | nindent 10 }}
           {{- end }}
