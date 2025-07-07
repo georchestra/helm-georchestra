@@ -1,0 +1,63 @@
+{{- if and .Values.georchestra.webapps.geonetwork.enabled .Values.georchestra.webapps.geoserver.enabled -}}
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict .Values.tooling.fixPermissionsPvc.podAnnotations ) }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "georchestra.fullname" . }}-fix-permissions-pvc
+  labels:
+    {{- include "georchestra.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "georchestra.fullname" . }}-fix-permissions-pvc
+  annotations:
+    {{- toYaml $podAnnotations | nindent 4 }}
+spec:
+  schedule: "{{ .Values.tooling.fixPermissionsPvc.schedule }}"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          containers:
+          - name: fix-permissions-pvc
+            image: "{{ .Values.tooling.general.image.repository }}:{{ .Values.tooling.general.image.tag }}"
+            imagePullPolicy: IfNotPresent
+            command:
+            - sh
+            - -c
+            - ionice
+            - -c2
+            - -n7
+            - chown
+            - -R
+            - 999:999
+            - /mnt/geoserver_datadir
+            - /mnt/geoserver_geodata
+            - /mnt/geoserver_tiles
+            - /mnt/geonetwork_datadir
+            volumeMounts:
+            - mountPath: /mnt/geonetwork_datadir
+              name: geonetwork-datadir
+            - mountPath: /mnt/geoserver_geodata
+              name: geoserver-geodata
+            - mountPath: /mnt/geoserver_datadir
+              name: geoserver-datadir
+            - mountPath: /mnt/geoserver_tiles
+              name: geoserver-tiles
+          volumes:
+          - name: geonetwork-datadir
+            persistentVolumeClaim:
+              claimName: {{ include "georchestra.fullname" . }}-geonetwork-datadir
+          - name: geoserver-tiles
+            persistentVolumeClaim:
+              claimName: {{ include "georchestra.fullname" . }}-geoserver-tiles
+          - name: geoserver-geodata
+            persistentVolumeClaim:
+              claimName: {{ include "georchestra.fullname" . }}-geoserver-geodata
+          - name: geoserver-datadir
+            persistentVolumeClaim:
+              claimName: {{ include "georchestra.fullname" . }}-geoserver-datadir
+          restartPolicy: OnFailure
+          {{- if .Values.tooling.fixPermissionsPvc.tolerations }}
+          tolerations:
+            {{- .Values.tooling.fixPermissionsPvc.tolerations | toYaml | nindent 12}}
+          {{- end }}
+{{- end }}

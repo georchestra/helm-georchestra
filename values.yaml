@@ -547,6 +547,12 @@ tooling:
     image:
       repository: georchestra/k8s-initcontainer-envsubst
       tag: latest
+  # Fix the permissions for the PVCs at midnight
+  fixPermissionsPvc:
+    schedule: "0 0 * * *"
+    tolerations: []
+    podAnnotations: {}
+
 
 # Annotations for all pods, can be merge/override for each webapp, and also smtp smarthost, datadirsync and rabbitmq
 # For builtin database use them under database.primary
