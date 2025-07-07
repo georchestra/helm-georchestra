@@ -35,12 +35,6 @@ spec:
         fsGroup: 999
       initContainers:
       {{ include "georchestra.bootstrap_georchestra_datadir" $ | nindent 6 }}
-      - name: fix-permissions-pvc
-        image: "{{ .Values.tooling.general.image.repository }}:{{ .Values.tooling.general.image.tag }}"
-        command: ["sh", "-c", "chown -R 999:999 /mnt/geonetwork_datadir"]
-        volumeMounts:
-        - mountPath: /mnt/geonetwork_datadir
-          name: geonetwork-datadir
       containers:
       - name: georchestra-geonetwork
         image: {{ $webapp.docker_image }}
