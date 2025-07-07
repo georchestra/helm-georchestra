@@ -37,8 +37,8 @@ spec:
       {{ include "georchestra.bootstrap_georchestra_datadir" $ | nindent 6 }}
       containers:
       - name: georchestra-geonetwork
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         volumeMounts:
           - mountPath: /etc/georchestra
             name: georchestra-datadir

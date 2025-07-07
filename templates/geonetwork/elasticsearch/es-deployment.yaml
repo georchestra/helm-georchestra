@@ -34,7 +34,8 @@ spec:
         fsGroup: 1000
       containers:
       - name: elasticsearch
-        image: {{ $webapp.image }}
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         env:
           - name: ES_JAVA_OPTS
             value: -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.disable.jmx=true

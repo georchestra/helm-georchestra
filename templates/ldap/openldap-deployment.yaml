@@ -32,8 +32,8 @@ spec:
         {{- end }}
       containers:
       - name: georchestra-ldap
-        image: {{ $webapp.docker_image }}
-        imagePullPolicy: Always
+        image: "{{ $webapp.image.repository }}:{{ $webapp.image.tag }}"
+        imagePullPolicy: {{ $webapp.image.pullPolicy | default "IfNotPresent" }}
         env:
           - name: SLAPD_ORGANISATION
             value: georchestra
