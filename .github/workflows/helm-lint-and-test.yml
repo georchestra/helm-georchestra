@@ -3,8 +3,8 @@ name: Lint and Test Charts
 on:
   pull_request:
     paths-ignore:
-      - "*.md"
-      - LICENCE
+      - "**/*.md"
+      - "**/LICENCE"
 
 jobs:
   lint-test:
@@ -39,9 +39,19 @@ jobs:
         uses: helm/chart-testing-action@main
 
       - name: Run chart-testing (lint)
-        run: ct lint --validate-maintainers=false --chart-repos bitnami=https://charts.bitnami.com/bitnami/ --chart-dirs . --charts . --target-branch ${{ github.event.repository.default_branch }}
+        run: ct lint --validate-maintainers=false --chart-dirs . --target-branch ${{ github.event.repository.default_branch }}
+
+      - name: Validate the Kubernetes manifest with yannh/kubeconform
+        run: |
+          helm plugin install https://github.com/jtyr/kubeconform-helm
+          sudo pip install pyyaml
+          for helmcharts in */; do
+            helm kubeconform --summary "$helmcharts"
+          done
 
       - name: k3s install + add more swap
+        # chart testing do not work on main branch
+        if: github.ref != '${{ github.event.repository.default_branch }}'
         run: |
           curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
           sudo dd if=/dev/zero of=/swapfile bs=1M count=8k status=progress
@@ -52,5 +62,7 @@ jobs:
           until KUBECONFIG=/etc/rancher/k3s/k3s.yaml kubectl get --raw='/readyz?verbose'; do echo "wait for k3s to finish"; done
 
       - name: Run chart-testing (install)
+        # chart testing do not work on main branch
+        if: github.ref != '${{ github.event.repository.default_branch }}'
         run: |
-          KUBECONFIG=/etc/rancher/k3s/k3s.yaml ct install --chart-dirs . --charts . --helm-extra-args '--timeout 7200s' --skip-clean-up --target-branch ${{ github.event.repository.default_branch }}
+          KUBECONFIG=/etc/rancher/k3s/k3s.yaml ct install --chart-dirs . --helm-extra-args '--timeout 7200s' --skip-clean-up --target-branch ${{ github.event.repository.default_branch }}

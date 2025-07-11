@@ -8,29 +8,16 @@ on:
 jobs:
   chart-publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # to push chart release and create a release (helm/chart-releaser-action)
-      packages: write # needed for ghcr access
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
-      # Need to do that because helm releaser does not support repo with single chart
-      # https://github.com/helm/chart-releaser-action/issues/87
-      # Could move into a subfolder but fear of loosing all the history of the various files
-      - name: Checkout main branch into a subsubfolder
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          path: charts/georchestra
 
-      - name: Configure Git + add charts folder for git tracking with chart releaser
+      - name: Configure Git
         run: |
-          git add charts
-          git config --global user.name "$GITHUB_ACTOR"
-          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Set up Helm
         uses: azure/setup-helm@v4
@@ -40,7 +27,7 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         with:
-          charts_dir: charts
+          charts_dir: .
           config: cr.yaml
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
