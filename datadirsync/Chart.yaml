@@ -1,0 +1,6 @@
+apiVersion: v2
+name: datadirsync
+description: A Helm chart to deploy datadirsync-k8s-agent
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
