@@ -4,8 +4,8 @@ maelstro_frontend:
   image:
     repository: georchestra/maelstro-frontend
     tag: latest
-    imagePullSecrets: 
-    pullPolicy: 
+    imagePullSecrets: []
+    pullPolicy: IfNotPresent
   tolerations: []
   affinity: {}
   extra_environment: []
@@ -26,7 +26,8 @@ maelstro_backend:
   image:
     repository: georchestra/maelstro-backend
     tag: latest
-    imagePullSecrets: 
+    imagePullSecrets: []
+    pullPolicy: IfNotPresent
   tolerations: []
   affinity: {}
   extra_environment: []
@@ -72,4 +73,3 @@ database:
     password: georchestra
     # here specify the name of the secret to use
     # existingSecret: mysecret
-
