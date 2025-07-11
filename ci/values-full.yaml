@@ -1,0 +1,646 @@
+georchestra:
+  # Set additional nodeSelector items
+  nodeSelector: {}
+    # "georchestra": "true"
+  webapps:
+    # the georchestra analytics module
+    analytics:
+      enabled: false
+      replicaCount: "1"
+      docker_image: georchestra/analytics:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      #registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 512Mi
+    # the georchestra cas module
+    cas:
+      enabled: false
+      replicaCount: "1"
+      docker_image: georchestra/cas:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      #registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1256Mi
+        limits:
+          memory: 1256Mi
+    # the georchestra console module
+    console:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/console:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/bin/sh", "-c", "echo 'Post start command executed'"]
+      #registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"      
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
+    # the georchestra datafeeder module
+    datafeeder:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/datafeeder:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      # registry_secret: default
+      envsubst:
+        enabled: true
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 512Mi
+    datafeeder_frontend:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/datafeeder-frontend:latest
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/bin/sh", "-c", "echo 'Post start command executed'"]
+      extra_environment:
+        - name: TEST
+          value: test
+      # registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 128Mi
+    geonetwork:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/geonetwork:latest
+      # the registry secret is only used for the GeoNetwork image
+      # registry_secret: default
+      extra_environment:
+        - name: TEST
+          value: test
+
+      # volumes is the deployment-compliant specification of the pod's extra volume
+      # It should match with an item from the extra_volumeName.name variable below.
+      extra_volumes: []
+      # volumeMounts is the deployment-compliant specification of the georchestra-GeoNetwork
+      # container extra volume. It should match an item from the extra_volumes.name
+      # variable above.
+      extra_volumeMounts: []
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 200m
+          memory: 1512Mi
+        limits:
+          cpu: 2000m
+          memory: 1512Mi
+      ogc_api_records:
+        enabled: true
+        replicaCount: "1"
+        image: georchestra/gn-cloud-ogc-api-records-service:4.2.8
+        extra_environment:
+          - name: TEST
+            value: test
+        envsubst:
+          enabled: true
+        service:
+          annotations:
+            annotation1: "annotation test1"
+            annotation2: "annotation test2"
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            memory: 1Gi
+      elasticsearch:
+        enabled: true
+        replicaCount: "1"
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+        service:
+          annotations:
+            annotation1: "annotation test1"
+            annotation2: "annotation test2"
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+        # Password of the elastic user
+        elasticPassword: changeme
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1512Mi
+          limits:
+            cpu: 2000m
+            memory: 1512Mi
+      kibana:
+        enabled: false
+        replicaCount: "1"
+        image: docker.elastic.co/kibana/kibana:8.14.3
+        service:
+          annotations:
+            annotation1: "annotation test1"
+            annotation2: "annotation test2"          
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+        # The password that you set using bin/elasticsearch-reset-password -u kibana_system
+        kibanaSystemPassword: ""
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            memory: 1Gi
+        # For configuring external kibana with geonetwork
+        # host: mykibana
+        # port: myport
+      # automatically clean some logs of geonetwork
+      housekeeping:
+        harvester_logs:
+          enabled: false
+          schedule: "0 1 * * *"
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+        resources: {}
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"        
+    geoserver:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/geoserver:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      # volumes is the deployment-compliant specification of the pod's extra volume
+      # It should match with an item from the extra_volumeName.name variable below.
+      extra_volumes:
+        - name: mount-test
+          emptyDir: {}
+      extra_volumeMounts:
+        - name: mount-test
+          mountPath: /test
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      # registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+        limits:
+          cpu: 4000m
+          memory: 2Gi
+    geowebcache:
+      enabled: false
+      replicaCount: "1"
+      envsubst:
+        enabled: true
+      docker_image: georchestra/geowebcache:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      resources:
+        requests:
+          cpu: 500m
+          memory: 2Gi
+        limits:
+          cpu: 2000m
+          memory: 2Gi
+    header:
+      enabled: false
+      replicaCount: "1"
+      docker_image: georchestra/header:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      # registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"
+      resources:
+        requests:
+          cpu: 50m
+          memory: 512Mi
+        limits:
+          memory: 512Mi
+    mapstore:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/mapstore:latest
+      # registry_secret: default
+      extra_environment:
+        - name: TEST
+          value: test
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/bin/sh", "-c", "echo 'Post start command executed'"]
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"       
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
+    openldap:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/ldap:latest
+      extraVolumeMounts:
+        - name: openldap-test
+          mountPath: /test
+      extraVolumes:
+        - name: openldap-test
+          emptyDir: {}
+      extraContainers:
+        - name: sidecar-test
+          image: busybox
+          command: ["/bin/sh", "-c", "sleep 9999999999"]
+      # registry_secret: default
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"   
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          memory: 1Gi
+    proxy:
+      enabled: false
+      replicaCount: "1"
+      docker_image: georchestra/security-proxy:latest
+      extra_environment:
+        - name: TEST
+          value: test
+      # registry_secret: default
+      envsubst:
+        enabled: true
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"       
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 4000m
+          memory: 1Gi
+    gateway:
+      enabled: true
+      replicaCount: "1"
+      docker_image: georchestra/gateway:latest
+      environment:
+        JAVA_TOOL_OPTIONS: "-Dgeorchestra.datadir=/etc/georchestra"
+      extra_environment:
+        - name: TEST
+          value: test
+      service:
+        annotations:
+          annotation1: "annotation test1"
+          annotation2: "annotation test2"        
+      tolerations:
+        - key: "key1"
+          operator: "Equal"
+          value: "value1"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 4000m
+          memory: 1Gi
+  datadir:
+    volume:
+    - name: georchestra-datadir
+      emptyDir: {}
+    git:
+      url: https://github.com/georchestra/datadir.git
+      ref: docker-master
+      # ssh_secret: my-private-ssh-key
+  # Some cloud providers automatically create & assign PVs to PVCs
+  # some other need to create a PV first ; if so, then you can
+  # uncomment the `pv_name` entries below.
+  storage:
+    gn4_es:
+      # pv_name: gn4_es_data
+      size: 2Gi
+    geonetwork_datadir:
+      # pv_name: geonetwork_datadir
+      size: 2Gi
+    geoserver_datadir:
+      # pv_name: geoserver_datadir
+      size: 256Mi
+    geoserver_geodata:
+      # pv_name: geoserver_geodata
+      # works for other storage items
+      # storage_class_name: default or "-" for empty storageClassName
+      # accessModes:
+      # - ReadWriteOnce
+      size: 2Gi
+    mapstore_datadir:
+      # pv_name: mapstore_datadir
+      size: 256Mi
+    openldap_data:
+      # pv_name: openldap_data
+      size: 256Mi
+    openldap_config:
+      # pv_name: openldap_config
+      size: 1Mi
+    geoserver_tiles:
+      # pv_name: geoserver_tiles
+      size: 2Gi
+    geowebcache_tiles:
+      # pv_name: geowebcache_tiles
+      size: 5Gi
+    # We also might need to specify a custom storageClass
+    # Leave it commented if not needed
+    # storage_class_name: default or "-" for empty storageClassName
+    accessModes:
+    - ReadWriteOnce
+  smtp_smarthost:
+    enabled: true
+    mailname: georchestra-127-0-1-1.traefik.me
+    postmaster: postmaster@georchestra-127-0-1-1.traefik.me
+    relay_host: my-external-smtp
+    relay_port: 25
+    relay_username: aaaa
+    relay_password: aaaa
+    image:
+      repository: camptocamp/exim
+      tag: latest
+    extra_environment:
+        - name: TEST
+          value: test
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 64Mi
+  datadirsync:
+    enabled: false
+    image: georchestra/datadirsync-k8s-agent:1.4.1
+    pollInterval: 30
+    tolerations:
+      - key: "key1"
+        operator: "Equal"
+        value: "value1"
+        effect: "NoSchedule"
+    # when using wildcard, you need to use "", otherwise it's not necessary
+    rolloutDeploymentsMapping:
+      "*":
+        - geoserver
+    # registry_secret: default
+
+fqdn: "georchestra-127-0-1-1.traefik.me"
+
+ingress:
+  enabled: true
+  annotations:
+    annotation1: "annotation test1"
+    annotation2: "annotation test2"        
+  hosts:
+    - host: georchestra-127-0-1-1.traefik.me
+  tls: 
+    - secretName: testsecret
+      hosts:
+        - georchestra-127-0-1-1.traefik.me
+  className: ""
+
+ldap:
+  host: "myldaphost"
+  port: "389"
+  adminPassword: "secret"
+  scheme: "ldap"
+  baseDn: "dc=georchestra,dc=org"
+  usersRdn: "ou=users"
+  adminDn: "cn=admin,dc=georchestra,dc=org"
+  rolesRdn: "ou=roles"
+  orgsRdn: "ou=orgs"
+  # existingSecret: mysecretldapenvvars
+
+# When using external ElasticSearch
+# Set parameters used by the apps (only geonetwork for now)
+elasticsearch:
+  host: myhost
+  port: myport
+  username: myusername
+  password: mypassword
+
+database:
+  builtin: true
+  image:  # section of parameters for builtin database
+    repository: georchestra/database
+    tag: latest
+  auth:
+    database: georchestra
+    # existingSecret: mysecret
+    # secretKeys:
+    #   adminPasswordKey: postgresPassword
+    #   userPasswordKey: password # This one should stay as it is
+    host: georchestra
+    password: georchestra
+    postgresPassword: georchestra
+    port: "5432"
+    ssl: false
+    username: georchestra
+  primary:  # section of parameters for builtin database
+    startupProbe:
+      enabled: true
+    containerSecurityContext:
+      readOnlyRootFilesystem: false
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+    extraVolumeMounts:
+      - name: "00-initsql"
+        mountPath: "/docker-entrypoint-initdb.d/00_init.sql"
+        subPath: "00_init.sql"
+    extraVolumes:
+      - name: "00-initsql"
+        configMap:
+          name: "{{ .Release.Name }}-database-init"
+    initdb:
+      username: georchestra
+      password: georchestra
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        memory: 512Mi
+  geodata:
+    auth:
+      database: geodata
+      # existingSecret: mysecret
+      host: geodata
+      password: geodata
+      port: "5432"
+      ssl: false
+      username: geodata
+  datafeeder:
+    auth:
+      database: datafeeder
+      # existingSecret: mysecret
+      host: datafeeder
+      port: "5432"
+      ssl: false
+      password: datafeeder
+      username: datafeeder
+
+rabbitmq:
+  enabled: false
+  builtin: true
+  auth:
+    username: georchestra
+    password: georchestra
+    erlangCookie: georchestra
+    host: rabbitmq
+    port: "5672"
+    existingSecret: mysecret
+  storage:
+    pv_name: rabbitmq-data
+    storage_class_name: default
+    size: 1Gi
+
+# Allow to override /etc/hosts for ALL apps
+# https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
+hostAliases:
+ - ip: "127.0.0.1"
+   hostnames:
+   - "host.alias.com"
+
+tooling:
+  # Global image used for toolbox: chmod + git clone
+  general:
+    image:
+      repository: alpine/git
+      tag: 2.49.0
+  envsubst:
+    image:
+      repository: georchestra/k8s-initcontainer-envsubst
+      tag: latest
