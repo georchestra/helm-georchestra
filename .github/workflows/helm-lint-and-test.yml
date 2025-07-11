@@ -45,7 +45,12 @@ jobs:
 
       - name: Validate the Kubernetes manifest with yannh/kubeconform
         run: |
-          helm plugin install https://github.com/jtyr/kubeconform-helm
+          # sometimes it fail to download the binary
+          for i in {1..5}; do
+            helm plugin install https://github.com/jtyr/kubeconform-helm && break
+            echo "Retry $i failed... trying again in 5 seconds"
+            sleep 5
+          done
           sudo pip install pyyaml
           for helmcharts in */; do
             helm kubeconform --summary "$helmcharts"
