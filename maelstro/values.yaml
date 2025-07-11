@@ -1,0 +1,75 @@
+maelstro_frontend:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: georchestra/maelstro-frontend
+    tag: latest
+    imagePullSecrets: []
+    pullPolicy: IfNotPresent
+  tolerations: []
+  affinity: {}
+  extra_environment: []
+  service:
+    type: ClusterIP
+    port: 8080
+    annotations: {}
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+maelstro_backend:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: georchestra/maelstro-backend
+    tag: latest
+    imagePullSecrets: []
+    pullPolicy: IfNotPresent
+  tolerations: []
+  affinity: {}
+  extra_environment: []
+  service:
+    type: ClusterIP
+    port: 8000
+    annotations: {}
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+credentials: {}
+# credentials:
+#  - name: MAELSTRO_GENERIC1
+#    username: toto
+#    url: https://plateforme1.com
+#    password: to1
+#  - name: MAELSTRO_GENERIC2
+#    username: todfsd
+#    url: https://plateforme2.com
+#    password: llll
+datadir:
+  volume:
+  - name: georchestra-datadir
+    emptyDir: {}
+  image:
+    repository: bitnami/git
+    tag: latest
+
+  git:
+    url: https://github.com/georchestra/datadir.git
+    ref: docker-master
+
+database:
+  auth:
+    database: georchestra
+    host: georchestra
+    port: "5432"
+    username: georchestra
+    password: georchestra
+    # here specify the name of the secret to use
+    # existingSecret: mysecret

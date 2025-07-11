@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-maelstro.fullname" . }}-maelstro-backend-deployment
+  labels:
+    {{- include "helm-maelstro.selectorLabelsBackend" . | nindent 4 }}
+    {{- include "helm-maelstro.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.maelstro_backend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-maelstro.selectorLabelsBackend" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.maelstro_backend.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "helm-maelstro.selectorLabelsBackend" . | nindent 8 }}
+    spec:
+      {{- if .Values.datadir.git.url }}
+      initContainers:
+      {{- include "maelstro.bootstrap_maelstro_configuration" $ | nindent 6 }}
+      {{- end }}
+      {{- with .Values.maelstro_backend.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.maelstro_backend.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.maelstro_backend.securityContext | nindent 12 }}
+          image: "{{ .Values.maelstro_backend.image.repository }}:{{ .Values.maelstro_backend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.maelstro_backend.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.maelstro_backend.resources | nindent 12 }}
+          env:
+            - name: DEBUG
+              value: "False"
+            - name: MAELSTRO_CONFIG
+              value: "/etc/georchestra/maelstro/config.yaml"
+            {{- include "maelstro.bootstrap_maelstro_database_envs" . | nindent 12 }}
+            {{- range .Values.credentials }}
+            - name: {{ .name }}_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: maelstro-creds-ext-plateform-secret
+                  key: {{ .name }}_USERNAME
+                  optional: false
+            - name: {{ .name }}_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: maelstro-creds-ext-plateform-secret
+                  key: {{ .name }}_PASSWORD
+                  optional: false
+            {{- end }}
+          {{- with .Values.maelstro_backend.extra_environment }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: georchestra-datadir
+              mountPath: /etc/georchestra
+      volumes:
+        - name: georchestra-datadir
+          emptyDir: {}
+        {{- if .Values.datadir.git.ssh_secret }}
+        - name: ssh-secret
+          secret:
+            secretName: {{ .Values.datadir.git.ssh_secret }}
+            defaultMode: 0400
+        {{- end }}
+      {{- with .Values.maelstro_backend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.maelstro_backend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.maelstro_backend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.maelstro_backend.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.maelstro_backend.image.imagePullSecrets }}
+      {{- end }}

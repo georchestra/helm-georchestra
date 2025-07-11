@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-maelstro.fullname" . }}-maelstro-frontend-deployment
+  labels:
+    {{- include "helm-maelstro.selectorLabelsFrontend" . | nindent 4 }}
+    {{- include "helm-maelstro.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.maelstro_frontend.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-maelstro.selectorLabelsFrontend" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.maelstro_frontend.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "helm-maelstro.selectorLabelsFrontend" . | nindent 8 }}
+    spec:
+      {{- if .Values.datadir.git.url }}
+      initContainers:
+      {{- include "maelstro.bootstrap_maelstro_configuration" $ | nindent 6 }}
+      {{- end }}
+      {{- with .Values.maelstro_frontend.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.maelstro_frontend.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.maelstro_frontend.securityContext | nindent 12 }}
+          image: "{{ .Values.maelstro_frontend.image.repository }}:{{ .Values.maelstro_frontend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.maelstro_frontend.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /maelstro/
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /maelstro/
+              port: 8080
+          resources:
+            {{- toYaml .Values.maelstro_frontend.resources | nindent 12 }}
+          env:
+            - name: CUSTOM_SCRIPTS_DIRECTORY
+              value: "/etc/georchestra/maelstro/scripts"
+            - name: MAELSTRO_BACK_HOST
+              value: "{{ include "helm-maelstro.fullname" . }}-maelstro-backend-svc"
+          {{- with .Values.maelstro_frontend.extra_environment }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: georchestra-datadir
+              mountPath: /etc/georchestra
+      volumes:
+        - name: georchestra-datadir
+          emptyDir: {}
+        {{- if .Values.datadir.git.ssh_secret }}
+        - name: ssh-secret
+          secret:
+            secretName: {{ .Values.datadir.git.ssh_secret }}
+            defaultMode: 0400
+        {{- end }}
+      {{- with .Values.maelstro_frontend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.maelstro_frontend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.maelstro_frontend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.maelstro_frontend.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.maelstro_frontend.image.imagePullSecrets }}
+      {{- end }}

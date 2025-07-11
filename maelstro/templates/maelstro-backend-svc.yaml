@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helm-maelstro.fullname" . }}-maelstro-backend-svc
+  labels:
+    {{- include "helm-maelstro.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.maelstro_backend.service.type }}
+  ports:
+    - port: {{ .Values.maelstro_backend.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+     app.kubernetes.io/name: {{ include "helm-maelstro.fullname" . }}-maelstro-backend
