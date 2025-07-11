@@ -3,6 +3,7 @@
 - Add ability to set podAnnotations (#156)
 - Remove all chown in the initContainers and replace with a cron (#160)
 - Add support for ES 8 (#153 and #159)
+- Remove Kibana deployment by default (#153)
 
 # 1.8.1
 - remove chmod permission initcontainer on geoserver_tiles (#148)
