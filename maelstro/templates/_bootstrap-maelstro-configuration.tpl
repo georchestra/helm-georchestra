@@ -63,14 +63,14 @@ Insert database environment variables
         optional: false
 {{- else }}
 - name: PGHOST
-  value: {{ .Values.database.auth.host }}
+  value: "{{ .Values.database.auth.host }}"
 - name: PGPORT
-  value: {{ .Values.database.auth.port }}
+  value: "{{ .Values.database.auth.port }}"
 - name: PGDATABASE
-  value: {{ .Values.database.auth.database }}
+  value: "{{ .Values.database.auth.database }}"
 - name: PGUSER
-  value: {{ .Values.database.auth.username }}
+  value: "{{ .Values.database.auth.username }}"
 - name: PGPASSWORD
-  value: {{ .Values.database.auth.password }}
+  value: "{{ .Values.database.auth.password }}"
 {{- end }}
 {{- end }}
