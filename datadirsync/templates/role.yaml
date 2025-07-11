@@ -1,0 +1,22 @@
+{{- $agent := .Values.datadirsync.agent -}}
+{{- if $agent.enabled -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ include "datadirsync.fullname" . }}-datadirsync-role
+rules:
+  - apiGroups: ["apps"]
+    resources: ["pods", "replicasets", "deployments"]
+    resourceNames:
+      {{- $prefix := include "datadirsync.fullname" . -}}
+      {{- $deployments := list -}}
+      {{- range $key, $values := $agent.rolloutDeploymentsMapping }}
+        {{- $deployments = concat $deployments $values }}
+      {{- end }}
+      {{- $deployments = mustUniq $deployments }}
+      [{{- range $index, $item := $deployments }}
+        {{- if $index }}, {{ end }}"{{ printf "%s-%s" $prefix $item }}"
+      {{- end }}]
+    verbs: ["get", "patch"]
+{{- end }}

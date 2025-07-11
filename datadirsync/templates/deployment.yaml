@@ -1,0 +1,78 @@
+{{- $agent := .Values.datadirsync.agent -}}
+{{- if $agent.enabled -}}
+{{- $podAnnotations := mergeOverwrite .Values.podAnnotations (default dict $agent.podAnnotations) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "datadirsync.fullname" . }}-datadirsync
+  labels:
+    {{- include "datadirsync.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "datadirsync.fullname" . }}-datadirsync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "datadirsync.fullname" . }}-datadirsync
+  template:
+    metadata:
+      labels:
+        app: {{ include "datadirsync.fullname" . }}-datadirsync
+      annotations:
+        {{- toYaml $podAnnotations | nindent 8 }}
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+        {{- with .Values.datadirsync.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      serviceAccountName: {{ include "datadirsync.fullname" . }}-datadirsync-serviceaccount
+      securityContext:
+        fsGroup: 1001
+      containers:
+      - name: agent
+        image: {{ $agent.image }}
+        env:
+        - name: GIT_REPO_URL
+          value: "{{ .Values.datadirsync.repo.git.url }}"
+        - name: GIT_BRANCH
+          value: "{{ .Values.datadirsync.repo.git.ref }}"
+        - name: POLL_INTERVAL
+          value: "{{ $agent.pollInterval }}"
+        - name: ROLLOUT_MAPPING_FILE
+          value: "/tmp/datadirsync/rollout_mapping_config.yaml"
+        - name: ROLLOUT_NAMESPACE
+          value: "{{ .Release.Namespace }}"
+      {{- if .Values.datadirsync.repo.git.ssh_secret }}
+        - name: GIT_SSH_COMMAND
+          value: ssh -i /id_rsa -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no"
+      {{- end }}
+        volumeMounts:
+        - name: rollout-configuration-mapping
+          mountPath: /tmp/datadirsync
+          readOnly: true
+      {{- if .Values.datadirsync.repo.git.ssh_secret }}
+        - name: ssh-secret
+          mountPath: /id_rsa
+          # It's assumed that a subpath ssh-privatekey is in the secret (with the content of the file)
+          subPath: ssh-privatekey
+          readOnly: true
+      {{- end }}
+      volumes:
+      - name: rollout-configuration-mapping
+        configMap:
+          name: {{ include "datadirsync.fullname" . }}-datadirsync-cm
+      {{- if .Values.datadirsync.repo.git.ssh_secret }}
+      - name: ssh-secret
+        secret:
+          secretName: {{ .Values.datadirsync.repo.git.ssh_secret }}
+          defaultMode: 0440
+      {{- end }}
+      {{- if $agent.registry_secret }}
+      imagePullSecrets:
+      - name: {{ $agent.registry_secret }}
+      {{- end }}
+      {{- if $agent.tolerations }}
+      tolerations:
+        {{- $agent.tolerations | toYaml | nindent 8 }}
+      {{- end }}
+{{- end }}
