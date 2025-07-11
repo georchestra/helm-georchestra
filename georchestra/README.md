@@ -1,6 +1,6 @@
 # About
 
-This repository holds a helm chart for geOrchestra. This README file aims to present
+This folder holds the helm chart for geOrchestra. This README file aims to present
 some of the features and/or implementation choices.
 
 # Maintainers
@@ -13,28 +13,11 @@ some of the features and/or implementation choices.
 2. Write a changelog in the CHANGELOG.md
 3. Push your changes.
 
-# WARNING: New location storage for the helm chart - How to use
-
-All the helm chart are now stored inside the GitHub Docker registry.
-
-Recheck the Quick start tutorial below. In a summary you need to change from:
-
-```
-helm repo update
-helm upgrade --install -f your-values.yaml georchestra georchestra/georchestra
-```
-
-to
-
-```
-helm upgrade -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X
-```
-
 # Usage
 
 ## Install
 
-WARNING: Change `X.X.X` by the latest version of the helm chart found in https://github.com/georchestra/helm-georchestra/blob/main/Chart.yaml#L18
+WARNING: Change `X.X.X` by the latest version of the helm chart found in https://github.com/georchestra/helm-charts/blob/main/Chart.yaml#L18
 
 ### Quick start
 
@@ -47,7 +30,7 @@ WARNING: Change `X.X.X` by the latest version of the helm chart found in https:/
    ````
 3. Execute these commands for installing the georchestra chart:  
    ```
-   helm install georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X --set fqdn=YOURDOMAIN
+   helm install georchestra oci://ghcr.io/georchestra/helm-charts/georchestra --version X.X.X --set fqdn=YOURDOMAIN
    ```
    Note: For the domain you can use `georchestra-127-0-1-1.traefik.me`, just replace `127-0-1-1` with the IP address of your server.
 
@@ -65,7 +48,7 @@ WARNING: Change `X.X.X` by the latest version of the helm chart found in https:/
    ````
 3. Execute these commands for installing the georchestra chart:  
    ```
-   helm install -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X
+   helm install -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-charts/georchestra --version X.X.X
    ```
 
 4. Go to [https://YOURDOMAIN](https://YOURDOMAIN)
@@ -75,7 +58,7 @@ WARNING: Change `X.X.X` by the latest version of the helm chart found in https:/
 Apply only for a customized installation.
 
 ```
-helm upgrade -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-georchestra/georchestra --version X.X.X
+helm upgrade -f your-values.yaml georchestra oci://ghcr.io/georchestra/helm-charts/georchestra --version X.X.X
 ```
 
 # geOrchestra Datadir bootstrap

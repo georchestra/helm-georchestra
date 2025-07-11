@@ -1,7 +1,11 @@
 version: 2
 updates:
   - package-ecosystem: "helm"
-    directory: "/"
+    directory: "/georchestra"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "helm"
+    directory: "/maelstro"
     schedule:
       interval: "weekly"
   - package-ecosystem: github-actions
