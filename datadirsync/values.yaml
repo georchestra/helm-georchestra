@@ -1,0 +1,27 @@
+datadirsync:
+  nodeSelector: {}
+    # "datadirsync": "true"
+  repo:
+    volume:
+    - name: datadir
+      emptyDir: {}
+    git:
+      url: https://github.com/georchestra/datadir.git  # sample repo
+      ref: docker-master
+      # ssh_secret: my-private-ssh-key
+  # Some cloud providers automatically create & assign PVs to PVCs
+  # some other need to create a PV first ; if so, then you can
+  # uncomment the `pv_name` entries below.
+  agent:
+    enabled: true
+    image: georchestra/datadirsync-k8s-agent:1.4.1
+    pollInterval: 30
+    tolerations: []
+    # when using wildcard, you need to use "", otherwise it's not necessary
+    # rolloutDeploymentsMapping:
+    #  "*":
+    #    - geoserver
+    # registry_secret: default
+
+# Annotations for all pods, can be merge/override
+podAnnotations: {}
