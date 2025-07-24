@@ -23,6 +23,13 @@ maelstro_frontend:
 maelstro_backend:
   enabled: true
   replicaCount: 1
+  # A custom livenessProbe can be passed, as follows:
+  # custom_liveness_probe:
+  #   httpGet:
+  #     path: /health
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   [...]
   image:
     repository: georchestra/maelstro-backend
     tag: latest
@@ -30,6 +37,13 @@ maelstro_backend:
     pullPolicy: IfNotPresent
   tolerations: []
   affinity: {}
+  # A custom livenessProbe can be passed, as follows:
+  # custom_liveness_probe:
+  #   httpGet:
+  #     path: /health
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   [...]
   extra_environment: []
   service:
     type: ClusterIP
