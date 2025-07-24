@@ -40,9 +40,13 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
+          {{- if .Values.maelstro_frontend.custom_liveness_probe -}}
+          {{ .Values.maelstro_frontend.custom_liveness_probe | toYaml | nindent 12 }}
+          {{- else }}
             httpGet:
               path: /maelstro/
               port: 8080
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /maelstro/
