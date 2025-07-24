@@ -39,10 +39,15 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+          {{- if .Values.custom_liveness_probe }}
+          {{ .Values.custom_liveness_probe | toYaml | nindent 10 }}
+          {{- else }}
           livenessProbe:
             httpGet:
               path: /health
               port: http
+            initialDelaySeconds: 45
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /health
