@@ -45,13 +45,13 @@ spec:
           {{- else }}
             httpGet:
               path: /gaia/
-              port: http
+              port: 5002
             initialDelaySeconds: 45
           {{- end }}
           readinessProbe:
             httpGet:
               path: /gaia/
-              port: http
+              port: 5002
           resources:
             {{- toYaml .Values.gaia.resources | nindent 12 }}
           env:

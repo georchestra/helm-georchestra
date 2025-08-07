@@ -43,14 +43,22 @@ spec:
           {{- if .Values.gaia_celery.custom_liveness_probe -}}
           {{ .Values.gaia_celery.custom_liveness_probe | toYaml | nindent 12 }}
           {{- else }}
-            httpGet:
-              path: /gaia/
-              port: 5002
+            exec:
+              command:
+                - celery
+                - inspect ping
+              initialDelaySeconds: 20
+              timeoutSeconds: 5
+              periodSeconds: 3
           {{- end }}
           readinessProbe:
-            httpGet:
-              path: /gaia/
-              port: 5002
+            exec:
+              command:
+                - celery
+                - inspect ping
+              initialDelaySeconds: 20
+              timeoutSeconds: 5
+              periodSeconds: 3
           resources:
             {{- toYaml .Values.gaia_celery.resources | nindent 12 }}
           env:
