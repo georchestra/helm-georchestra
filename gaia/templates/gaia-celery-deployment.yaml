@@ -71,6 +71,7 @@ spec:
             - name: REDISURL
               value: "redis://{{ include "helm-gaia.fullname" . }}-gaia-redis-svc:6379/1"
             {{- include "gaia.bootstrap_gaia_database_envs" . | nindent 12 }}
+            {{- include "gaia.service-envs" . | nindent 12 }}
           {{- with .Values.gaia_celery.extra_environment }}
             {{- toYaml . | nindent 12 }}
           {{- end }}

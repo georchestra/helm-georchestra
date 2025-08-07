@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.gaia_celery.service.type }}
   ports:
     - port: {{ .Values.gaia_celery.service.port }}
-      targetPort: http
+      targetPort: 5002
       protocol: TCP
-      name: http
+      name: gaia-celery
   selector:
      app.kubernetes.io/name: {{ include "helm-gaia.fullname" . }}-gaia-celery

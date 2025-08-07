@@ -102,7 +102,9 @@ datadir:
   git:
     url: https://github.com/georchestra/datadir.git
     ref: docker-master
-
+georchestra:
+  fullname: georchestra
+  fqdn: georchestra-127-0-0-1.nip.io
 database:
   auth:
     database: georchestra

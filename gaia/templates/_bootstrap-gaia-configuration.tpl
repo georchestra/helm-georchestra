@@ -74,3 +74,43 @@ Insert database environment variables
   value: "{{ .Values.database.auth.password }}"
 {{- end }}
 {{- end }}
+
+{{/*
+Insert service host environment variables
+*/}}
+{{- define "gaia.service-envs" -}}
+- name: FQDN
+  value: "{{ .Values.georchestra.fqdn }}"
+- name: ANALYTICS_HOST
+  value: "{{ .Values.georchestra.fullname }}-analytics-svc"
+- name: CAS_HOST
+  value: "{{ .Values.georchestra.fullname }}-cas-svc"
+- name: CONSOLE_HOST
+  value: "{{ .Values.georchestra.fullname }}-console-svc"
+- name: GEONETWORK_HOST
+  value: "{{ .Values.georchestra.fullname }}-geonetwork-svc"
+- name: GEOSERVER_HOST
+  value: "{{ .Values.georchestra.fullname }}-geoserver-svc"
+- name: HEADER_HOST
+  value: "{{ .Values.georchestra.fullname }}-header-svc"
+- name: GEOWEBCACHE_HOST
+  value: "{{ .Values.georchestra.fullname }}-geowebcache-svc"
+- name: MAPSTORE_HOST
+  value: "{{ .Values.georchestra.fullname }}-mapstore-svc"
+- name: DATAFEEDER_HOST
+  value: "{{ .Values.georchestra.fullname }}-datafeeder-svc"
+- name: IMPORT_HOST
+  value: "{{ .Values.georchestra.fullname }}-import-svc"
+- name: DATAHUB_HOST
+  value: "datahub-datahub-svc"
+- name: OGC_API_RECORDS_HOST
+  value: "{{ .Values.georchestra.fullname }}-gn4-ogc-api-records-svc"
+- name: ES_HOST
+  value: "{{ .Values.georchestra.fullname }}-gn4-elasticsearch-svc"
+- name: ES_PORT
+  value: "9200"
+- name: KB_HOST
+  value: "{{ .Values.georchestra.fullname }}-gn4-kibana-svc"
+- name: KB_PORT
+  value: "5601"
+{{- end }}

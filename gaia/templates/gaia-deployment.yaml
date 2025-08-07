@@ -55,8 +55,6 @@ spec:
           resources:
             {{- toYaml .Values.gaia.resources | nindent 12 }}
           env:
-            - name: CUSTOM_SCRIPTS_DIRECTORY
-              value: "/etc/georchestra/gaia/scripts"
             - name: FLASK_APP
               value: geordash
             - name:  FLASK_OPTS
@@ -64,6 +62,7 @@ spec:
             - name: REDISURL
               value: "redis://{{ include "helm-gaia.fullname" . }}-gaia-redis-svc:6379/1"
             {{- include "gaia.bootstrap_gaia_database_envs" . | nindent 12 }}
+            {{- include "gaia.service-envs" . | nindent 12 }}
           {{- with .Values.gaia.extra_environment }}
             {{- toYaml . | nindent 12 }}
           {{- end }}

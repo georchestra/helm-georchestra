@@ -7,9 +7,9 @@ metadata:
 spec:
   type: {{ .Values.gaia.service.type }}
   ports:
-    - port: {{ .Values.gaia.service.port }}
-      targetPort: http
+    - port: {{ .Values.redis.service.port }}
+      targetPort: 6379
       protocol: TCP
-      name: http
+      name: redis
   selector:
      app.kubernetes.io/name: {{ include "helm-gaia.fullname" . }}-redis
