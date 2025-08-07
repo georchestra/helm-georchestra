@@ -70,6 +70,15 @@ spec:
           volumeMounts:
             - name: georchestra-datadir
               mountPath: /etc/georchestra
+            - name: georchestra-datadir
+              mountPath: /geordash/gunicorn.conf.py
+              subPath: gaia/gunicorn.conf.py
+            - name: georchestra-datadir
+              mountPath: /geordash/config.py
+              subPath: gaia/config.py
+            - name: georchestra-datadir
+              mountPath: /geordash/geordash/celeryconfig.py
+              subPath: gaia/celeryconfig.py
       volumes:
         - name: georchestra-datadir
           emptyDir: {}
