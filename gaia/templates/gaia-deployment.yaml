@@ -39,8 +39,19 @@ spec:
             - name: http
               containerPort: 5002
               protocol: TCP
-
-
+          livenessProbe:
+          {{- if .Values.gaia.custom_liveness_probe -}}
+          {{ .Values.gaia.custom_liveness_probe | toYaml | nindent 12 }}
+          {{- else }}
+            httpGet:
+              path: /gaia/
+              port: 5002
+            initialDelaySeconds: 45
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /gaia/
+              port: 5002
           resources:
             {{- toYaml .Values.gaia.resources | nindent 12 }}
           env:
