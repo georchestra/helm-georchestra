@@ -11,4 +11,5 @@ spec:
       targetPort: {{ .Values.redis.service.port }}
       protocol: TCP
   selector:
-     app.kubernetes.io/name: {{ include "helm-gaia.fullname" . }}-redis
+     app.kubernetes.io/name: {{ include "helm-gaia.fullname" . }}
+     app.kubernetes.io/instance: {{ include "helm-gaia.fullname" . }}-gaia-redis

@@ -45,23 +45,23 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "helm-gaia.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "helm-gaia.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "helm-gaia.name" . }}
 {{- end }}
 
 {{- define "helm-gaia.selectorLabelsCelery" -}}
-app.kubernetes.io/name: {{ include "helm-gaia.name" . }}-gaia-frontend
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "helm-gaia.name" . }}-gaia-celery
 {{- end }}
 
 {{- define "helm-gaia.selectorLabelsBack" -}}
-app.kubernetes.io/name: {{ include "helm-gaia.name" . }}-gaia
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "helm-gaia.name" . }}-gaia
 {{- end }}
 
 {{- define "helm-gaia.selectorLabelsRedis" -}}
-app.kubernetes.io/name: {{ include "helm-gaia.name" . }}-gaia-redis
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "helm-gaia.name" . }}-gaia-redis
 {{- end }}
 
 {{/*

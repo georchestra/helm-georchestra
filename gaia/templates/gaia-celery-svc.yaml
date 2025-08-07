@@ -11,4 +11,5 @@ spec:
       targetPort: {{ .Values.gaia_celery.service.port }}
       protocol: TCP
   selector:
-     app.kubernetes.io/name: {{ include "helm-gaia.fullname" . }}-gaia-celery
+    app.kubernetes.io/name: { { include "helm-gaia.fullname" . } }
+    app.kubernetes.io/instance: { { include "helm-gaia.fullname" . } }-gaia-celery
