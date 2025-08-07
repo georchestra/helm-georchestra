@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-gaia.fullname" . }}-gaia-celery-deployment
+  labels:
+    {{- include "helm-gaia.selectorLabelsCelery" . | nindent 4 }}
+    {{- include "helm-gaia.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.gaia_celery.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-gaia.selectorLabelsCelery" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.gaia_celery.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "helm-gaia.selectorLabelsCelery" . | nindent 8 }}
+    spec:
+      {{- if .Values.datadir.git.url }}
+      initContainers:
+      {{- include "gaia.bootstrap_gaia_configuration" $ | nindent 6 }}
+      {{- end }}
+      {{- with .Values.gaia_celery.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.gaia_celery.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.gaia_celery.securityContext | nindent 12 }}
+          image: "{{ .Values.gaia_celery.image.repository }}:{{ .Values.gaia_celery.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.gaia_celery.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 5002
+              protocol: TCP
+          livenessProbe:
+          {{- if .Values.gaia_celery.custom_liveness_probe -}}
+          {{ .Values.gaia_celery.custom_liveness_probe | toYaml | nindent 12 }}
+          {{- else }}
+            httpGet:
+              path: /gaia/
+              port: 5002
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /gaia/
+              port: 5002
+          resources:
+            {{- toYaml .Values.gaia_celery.resources | nindent 12 }}
+          env:
+            - name: CUSTOM_SCRIPTS_DIRECTORY
+              value: "/etc/georchestra/gaia/scripts"
+            - name: FLASK_APP
+              value: geordash
+            - name:  FLASK_OPTS
+              value: "-h 0.0.0.0 -p 5002"
+            - name: REDISURL
+              value: "redis://{{ include "helm-gaia.fullname" . }}-gaia-redis-svc:6379/1"
+          {{- with .Values.gaia_celery.extra_environment }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: georchestra-datadir
+              mountPath: /etc/georchestra
+      volumes:
+        - name: georchestra-datadir
+          emptyDir: {}
+        {{- if .Values.datadir.git.ssh_secret }}
+        - name: ssh-secret
+          secret:
+            secretName: {{ .Values.datadir.git.ssh_secret }}
+            defaultMode: 0400
+        {{- end }}
+      {{- with .Values.gaia_celery.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.gaia_celery.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.gaia_celery.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.gaia_celery.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.gaia_celery.image.imagePullSecrets }}
+      {{- end }}

@@ -1,0 +1,115 @@
+gaia_celery:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: georchestra/gaia-celery
+    tag: latest
+    imagePullSecrets: []
+    pullPolicy: IfNotPresent
+  tolerations: []
+  affinity: {}
+  extra_environment: []
+  service:
+    type: ClusterIP
+    port: 5002
+    annotations: {}
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+gaia:
+  enabled: true
+  replicaCount: 1
+  # A custom livenessProbe can be passed, as follows:
+  # custom_liveness_probe:
+  #   httpGet:
+  #     path: /health
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   [...]
+  image:
+    repository: georchestra/gaia
+    tag: latest
+    imagePullSecrets: []
+    pullPolicy: IfNotPresent
+  tolerations: []
+  affinity: {}
+  # A custom livenessProbe can be passed, as follows:
+  # custom_liveness_probe:
+  #   httpGet:
+  #     path: /health
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   [...]
+  extra_environment: []
+  service:
+    type: ClusterIP
+    port: 5002
+    annotations: {}
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+redis:
+  enabled: true
+  replicaCount: 1
+  # A custom livenessProbe can be passed, as follows:
+  # custom_liveness_probe:
+  #   httpGet:
+  #     path: /health
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   [...]
+  image:
+    repository: redis:alpine
+    tag: latest
+    imagePullSecrets: [ ]
+    pullPolicy: IfNotPresent
+  tolerations: [ ]
+  affinity: { }
+  # A custom livenessProbe can be passed, as follows:
+  # custom_liveness_probe:
+  #   httpGet:
+  #     path: /health
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   [...]
+  extra_environment: [ ]
+  service:
+    type: ClusterIP
+    port: 6379
+    annotations: { }
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+datadir:
+  volume:
+  - name: georchestra-datadir
+    emptyDir: {}
+  image:
+    repository: bitnami/git
+    tag: latest
+
+  git:
+    url: https://github.com/georchestra/datadir.git
+    ref: docker-master
+
+database:
+  auth:
+    database: georchestra
+    host: georchestra
+    port: "5432"
+    username: georchestra
+    password: georchestra
+    # here specify the name of the secret to use
+    # existingSecret: mysecret

@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-gaia.fullname" . }}-gaia-redis-deployment
+  labels:
+    {{- include "helm-gaia.selectorLabelsRedis" . | nindent 4 }}
+    {{- include "helm-gaia.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "helm-gaia.selectorLabelsRedis" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.redis.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "helm-gaia.selectorLabelsBack" . | nindent 8 }}
+    spec:
+      {{- if .Values.datadir.git.url }}
+      initContainers:
+      {{- include "gaia.bootstrap_gaia_configuration" $ | nindent 6 }}
+      {{- end }}
+      {{- with .Values.redis.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.redis.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.redis.securityContext | nindent 12 }}
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          livenessProbe:
+          {{- if .Values.redis.custom_liveness_probe -}}
+          {{ .Values.redis.custom_liveness_probe | toYaml | nindent 12 }}
+          {{- else }}
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 45
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.redis.resources | nindent 12 }}
+          env:
+            - name: REDIS_REPLICATION_MODE
+              value: master
+          {{- with .Values.redis.extra_environment }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: georchestra-datadir
+              mountPath: /etc/georchestra
+      volumes:
+        - name: georchestra-datadir
+          emptyDir: {}
+        {{- if .Values.datadir.git.ssh_secret }}
+        - name: ssh-secret
+          secret:
+            secretName: {{ .Values.datadir.git.ssh_secret }}
+            defaultMode: 0400
+        {{- end }}
+      {{- with .Values.redis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.redis.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.redis.image.imagePullSecrets }}
+      {{- end }}
