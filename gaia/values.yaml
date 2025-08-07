@@ -68,7 +68,6 @@ redis:
   #   [...]
   image:
     repository: redis:alpine
-    tag: latest
     imagePullSecrets: []
     pullPolicy: IfNotPresent
   tolerations: []

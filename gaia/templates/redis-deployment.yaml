@@ -43,15 +43,23 @@ spec:
           {{- if .Values.redis.custom_liveness_probe -}}
           {{ .Values.redis.custom_liveness_probe | toYaml | nindent 12 }}
           {{- else }}
-            httpGet:
-              path: /health
-              port: http
-            initialDelaySeconds: 45
+          livenessProbe:
+            tcpSocket:
+              port: redis
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 5
+            failureThreshold: 5
+            successThreshold: 1
           {{- end }}
           readinessProbe:
-            httpGet:
-              path: /health
-              port: http
+            exec:
+              command:
+                - redis-cli
+                - ping
+              initialDelaySeconds: 20
+              timeoutSeconds: 5
+              periodSeconds: 3
           resources:
             {{- toYaml .Values.redis.resources | nindent 12 }}
           env:
