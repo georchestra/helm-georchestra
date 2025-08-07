@@ -8,8 +8,7 @@ spec:
   type: {{ .Values.gaia.service.type }}
   ports:
     - port: {{ .Values.gaia.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.gaia.service.port }}
       protocol: TCP
-      name: gaia
   selector:
      app.kubernetes.io/name: {{ include "helm-gaia.fullname" . }}-gaia
