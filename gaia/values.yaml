@@ -69,10 +69,10 @@ redis:
   image:
     repository: redis:alpine
     tag: latest
-    imagePullSecrets: [ ]
+    imagePullSecrets: []
     pullPolicy: IfNotPresent
-  tolerations: [ ]
-  affinity: { }
+  tolerations: []
+  affinity: {}
   # A custom livenessProbe can be passed, as follows:
   # custom_liveness_probe:
   #   httpGet:
@@ -80,11 +80,11 @@ redis:
   #     port: http
   #   initialDelaySeconds: 60
   #   [...]
-  extra_environment: [ ]
+  extra_environment: []
   service:
     type: ClusterIP
     port: 6379
-    annotations: { }
+    annotations: {}
   resources:
     limits:
       cpu: 100m
