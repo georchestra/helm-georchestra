@@ -15,8 +15,8 @@ gaia_celery:
     annotations: {}
   resources:
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 200m
+      memory: 1024Mi
     requests:
       cpu: 100m
       memory: 128Mi
@@ -51,8 +51,8 @@ gaia:
     annotations: {}
   resources:
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 200m
+      memory: 1024Mi
     requests:
       cpu: 100m
       memory: 128Mi
@@ -86,8 +86,8 @@ redis:
     annotations: {}
   resources:
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 200m
+      memory: 1024Mi
     requests:
       cpu: 100m
       memory: 128Mi
