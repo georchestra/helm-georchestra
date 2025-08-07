@@ -39,31 +39,9 @@ spec:
             - name: http
               containerPort: 5002
               protocol: TCP
-          livenessProbe:
-          {{- if .Values.gaia_celery.custom_liveness_probe -}}
-          {{ .Values.gaia_celery.custom_liveness_probe | toYaml | nindent 12 }}
-          {{- else }}
-            exec:
-              command:
-                - celery
-                - inspect ping
-              initialDelaySeconds: 20
-              timeoutSeconds: 5
-              periodSeconds: 3
-          {{- end }}
-          readinessProbe:
-            exec:
-              command:
-                - celery
-                - inspect ping
-              initialDelaySeconds: 20
-              timeoutSeconds: 5
-              periodSeconds: 3
           resources:
             {{- toYaml .Values.gaia_celery.resources | nindent 12 }}
           env:
-            - name: CUSTOM_SCRIPTS_DIRECTORY
-              value: "/etc/georchestra/gaia/scripts"
             - name: FLASK_APP
               value: geordash
             - name:  FLASK_OPTS
