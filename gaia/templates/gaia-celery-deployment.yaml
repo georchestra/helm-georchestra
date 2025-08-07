@@ -30,7 +30,7 @@ spec:
       securityContext:
         {{- toYaml .Values.gaia_celery.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-celery
           securityContext:
             {{- toYaml .Values.gaia_celery.securityContext | nindent 12 }}
           image: "{{ .Values.gaia_celery.image.repository }}:{{ .Values.gaia_celery.image.tag | default .Chart.AppVersion }}"

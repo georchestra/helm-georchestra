@@ -26,7 +26,7 @@ spec:
       securityContext:
         {{- toYaml .Values.redis.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Chart.Name }}-redis
           securityContext:
             {{- toYaml .Values.redis.securityContext | nindent 12 }}
           image: "{{ .Values.redis.image.repository }}"
