@@ -62,8 +62,6 @@ spec:
           resources:
             {{- toYaml .Values.gaia_celery.resources | nindent 12 }}
           env:
-            - name: CUSTOM_SCRIPTS_DIRECTORY
-              value: "/etc/georchestra/gaia/scripts"
             - name: FLASK_APP
               value: geordash
             - name:  FLASK_OPTS
