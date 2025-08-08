@@ -45,20 +45,22 @@ spec:
           {{- else }}
             exec:
               command:
-                - celery
-                - inspect ping
-              initialDelaySeconds: 20
-              timeoutSeconds: 5
-              periodSeconds: 3
+                - "/bin/bash"
+                - "-c"
+                - "celery inspect ping "
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 60
           {{- end }}
           readinessProbe:
             exec:
               command:
-                - celery
-                - inspect ping
-              initialDelaySeconds: 20
-              timeoutSeconds: 5
-              periodSeconds: 3
+                - "/bin/bash"
+                - "-c"
+                - "celery inspect ping "
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 10
           resources:
             {{- toYaml .Values.gaia_celery.resources | nindent 12 }}
           env:
