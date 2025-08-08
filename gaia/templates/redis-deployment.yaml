@@ -53,9 +53,9 @@ spec:
               command:
                 - redis-cli
                 - ping
-              initialDelaySeconds: 20
-              timeoutSeconds: 5
-              periodSeconds: 3
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 3
           resources:
             {{- toYaml .Values.redis.resources | nindent 12 }}
           env:
