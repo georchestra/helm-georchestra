@@ -1,0 +1,6 @@
+releases:
+  - name: gaia
+    chart: ./
+    version: 0.1.0
+    values:
+      - values.yaml
